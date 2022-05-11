@@ -21,7 +21,8 @@ To integrate ShurjoPay you need few credentials to access shurjopay:
 ---
 ```
 Step 1:
-Install the "ShurjoPay Plugin.jar" into your project library.
+Install the "ShurjoPay-Java.jar" into your project library. 
+Yoou can download the jar file from here: https://github.com/shurjoPay-Plugins/java/blob/main/out/artifacts/ShurjoPay_Java_jar/ShurjoPay-Java.jar
 
 Step 2:
 import shurjopay.Settings;
