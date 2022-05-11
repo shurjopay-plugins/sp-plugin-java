@@ -27,10 +27,12 @@ Yoou can download the jar file from here: https://github.com/shurjoPay-Plugins/j
 Step 2:
 import shurjopay.Settings;
 import shurjopay.ShurjoPay;
+import org.json.JSONObject;
+import java.io.IOException;
 
 Step 3:
+You have to set your live credentials by creating a JSONObject and put the necessary values as shown below and execute the Settings.configure(Boolean sandbox, JSONObject configCredential) method.
 Put sandbox to false and set the configCredentials after getting your live API credentials from ShurjoPay.
-You have to set your live credentials by creating a JSONObject and put the necessary values as shown below and execute the Settings.configure(Boolean sandbox, JSONObject configCredential).
 
 Example (For Sandbox)::
         Boolean sandbox = true;
@@ -44,26 +46,27 @@ Example (For Sandbox)::
         configCredentials.put("merchantReturnUrl", "");
         configCredentials.put("merchantCancelUrl", "");
 
-        Settings.configure(sandbox, configCredentials); 
+        Settings.configure(sandbox, configCredentials); //<--- EXECUTING
         
 Step 4:
-Now put all of your checkout information into a JSONObject and execute the ShurjoPay.executeChecout(JSONObject checkoutInfo) method. You have to fill up the fields as shown below.
+Now put all of your checkout information into a JSONObject and execute the ShurjoPay.executeChecout(JSONObject checkoutInfo) method.
+You have to fill up the fields as shown below.
 
 Example (For Sandbox):
-        JSONObject checkoutInfo = new JSONObject(); //make a json object and put the necessary checkout data parameters inside it.
         JSONObject getTokenAndStoreId = ShurjoPay.getToken(); 
+        JSONObject checkoutInfo = new JSONObject(); //make a json object and put the necessary checkout data parameters inside it.
         checkoutInfo.put("prefix", Settings.prefix );
         checkoutInfo.put("token",getTokenAndStoreId.getString("token")); 
-        checkoutInfo.put("amount", "420" );
-        checkoutInfo.put("order_id", "sp315689");
         checkoutInfo.put("store_id", getTokenAndStoreId.getInt("store_id")); 
-        checkoutInfo.put("currency", "BDT");
         checkoutInfo.put("return_url", Settings.merchantReturnUrl);
         checkoutInfo.put("cancel_url", Settings.merchantCancelUrl);
+        checkoutInfo.put("order_id", "sp315689");
+        checkoutInfo.put("amount", "420" );
+        checkoutInfo.put("currency", "BDT");
         checkoutInfo.put("client_ip", "102.101.1.1");
         checkoutInfo.put("customer_name", "Maharab Kibria");
         checkoutInfo.put("customer_phone", "01777777777");
-        checkoutInfo.put("customer_email", "junakkibria56@gmail.com");
+        checkoutInfo.put("customer_email", "maharab.kibria@gmail.com");
         checkoutInfo.put("customer_address", "221 Baker Street");
         checkoutInfo.put("customer_city", "Dhaka");
         checkoutInfo.put("customer_state", "Dhaka");
