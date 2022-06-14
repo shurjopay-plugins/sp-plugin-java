@@ -1,0 +1,8 @@
+/.classpath
+/.factorypath
+/.project
+/.mvn
+bin/
+target/
+src/main/resources/META-INF/
+.settings/
