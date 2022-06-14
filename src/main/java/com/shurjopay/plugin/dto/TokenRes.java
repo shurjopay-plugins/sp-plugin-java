@@ -23,9 +23,7 @@ public class TokenRes implements Serializable {
 	@JsonProperty("sp_code")
 	private String spCode;
 	
-	private String massage;
-	
-	@JsonProperty("TokenCreateTime")
+	@JsonProperty("token_create_time")
 	private String tokenCreateTime;
 	
 	@JsonProperty("expires_in")
@@ -68,14 +66,6 @@ public class TokenRes implements Serializable {
 		this.spCode = spCode;
 	}
 
-	public String getMassage() {
-		return massage;
-	}
-
-	public void setMassage(String massage) {
-		this.massage = massage;
-	}
-
 	public String getTokenCreateTime() {
 		return tokenCreateTime;
 	}
@@ -111,7 +101,7 @@ public class TokenRes implements Serializable {
 	@Override
 	public String toString() {
 		return "TokenRes [token=" + token + ", executeUrl=" + executeUrl + ", tokenType=" + tokenType + ", spCode="
-				+ spCode + ", massage=" + massage + ", tokenCreateTime=" + tokenCreateTime + ", expiresIn=" + expiresIn
+				+ spCode + ", tokenCreateTime=" + tokenCreateTime + ", expiresIn=" + expiresIn
 				+ ", storeId=" + storeId + ", message=" + message + "]";
 	}
 }
