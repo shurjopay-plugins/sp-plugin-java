@@ -2,3 +2,5 @@ username = sp_sandbox
 password = pyyk97hu&6u6
 shurjopay-api = https://sandbox.shurjopayment.com/api/
 
+#callback URL is used for cancel payment or success payment
+callback-url = https://sandbox.shurjopayment.com/response
