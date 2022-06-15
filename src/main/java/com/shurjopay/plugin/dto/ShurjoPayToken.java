@@ -9,29 +9,29 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author Al - Amin
  * @since 2022-06-13
  */
-public class TokenRes implements Serializable {
+public class ShurjoPayToken implements Serializable {
 	private static final long serialVersionUID = 1960827183789531739L;
-	
+
 	private String token;
-	
+
 	@JsonProperty("execute_url")
 	private String executeUrl;
-	
+
 	@JsonProperty("token_type")
 	private String tokenType;
-	
+
 	@JsonProperty("sp_code")
 	private String spCode;
-	
+
 	@JsonProperty("token_create_time")
 	private String tokenCreateTime;
-	
+
 	@JsonProperty("expires_in")
 	private Integer expiresIn;
-	
+
 	@JsonProperty("store_id")
 	private Integer storeId;
-	
+
 	private String message;
 
 	public String getToken() {
@@ -101,7 +101,7 @@ public class TokenRes implements Serializable {
 	@Override
 	public String toString() {
 		return "TokenRes [token=" + token + ", executeUrl=" + executeUrl + ", tokenType=" + tokenType + ", spCode="
-				+ spCode + ", tokenCreateTime=" + tokenCreateTime + ", expiresIn=" + expiresIn
-				+ ", storeId=" + storeId + ", message=" + message + "]";
+				+ spCode + ", tokenCreateTime=" + tokenCreateTime + ", expiresIn=" + expiresIn + ", storeId=" + storeId
+				+ ", message=" + message + "]";
 	}
 }

@@ -12,7 +12,7 @@ import org.junit.jupiter.api.TestInstance.Lifecycle;
 
 import com.shurjopay.plugin.dto.CheckoutReq;
 import com.shurjopay.plugin.dto.CheckoutRes;
-import com.shurjopay.plugin.dto.TokenRes;
+import com.shurjopay.plugin.dto.ShurjoPayToken;
 import com.shurjopay.plugin.dto.VerifiedOrder;
 
 /**
@@ -21,28 +21,28 @@ import com.shurjopay.plugin.dto.VerifiedOrder;
  */
 @DisplayName("Testing plugin =>")
 @TestInstance(Lifecycle.PER_CLASS)
-class ShurjoPluginTest {
+class ShurjoPayPluginTest {
 
-	private ShurjoPlugin plugin;
-	private TokenRes tokenRes;
+	private ShurjoPayPlugin shurjopay;
+	private ShurjoPayToken token;
 
 	@BeforeAll
 	void setup() {
-		plugin = new ShurjoPlugin();
-		tokenRes = plugin.getToken();
+		shurjopay = new ShurjoPayPlugin();
+		token = shurjopay.authenticate();
 	}
 
 	@Test
 	@DisplayName("Result for getToken(): ")
 	void testGetToken() {
-		assertNotNull(tokenRes.getToken(), () -> "Token couldn't generated");
+		assertNotNull(token.getToken(), () -> "Token couldn't generated");
 	}
 
 	@Test
 	@DisplayName("Result for checkoutPayment(): ")
 	void testCheckoutPayment() {
 		CheckoutReq req = getCheckoutReq();
-		CheckoutRes res = plugin.checkoutPayment(req);
+		CheckoutRes res = shurjopay.makePayment(req);
 
 		assertNotNull(res.getCheckoutUrl(), () -> "Checkout Payment returns null");
 	}
@@ -50,7 +50,7 @@ class ShurjoPluginTest {
 	@Test
 	@DisplayName("Result for verifyOrder(): ")
 	void testVerifyOrder() {
-		List<VerifiedOrder> orders = plugin.getPaymentStatus("sp62a5dff32855a", tokenRes.getToken(), tokenRes.getTokenType());
+		List<VerifiedOrder> orders = shurjopay.getPaymentStatus("sp62a5dff32855a", token.getToken(), token.getTokenType());
 		
 		assertTrue(orders.size() > 0,
 				() -> "Order is not found.");
@@ -59,7 +59,7 @@ class ShurjoPluginTest {
 	@Test
 	@DisplayName("Result for getPaymentStatus(): ")
 	void testGetPaymentStatus() {
-		List<VerifiedOrder> orders = plugin.getPaymentStatus("sp62a5dff32855a", tokenRes.getToken(), tokenRes.getTokenType());
+		List<VerifiedOrder> orders = shurjopay.getPaymentStatus("sp62a5dff32855a", token.getToken(), token.getTokenType());
 
 		assertTrue(orders.size()> 0, 
 				() -> "Place valid params");
@@ -69,7 +69,7 @@ class ShurjoPluginTest {
 		CheckoutReq req = new CheckoutReq();
 
 		req.setPrefix("sp");
-		req.setAuthToken(tokenRes.getToken());
+		req.setAuthToken(token.getToken());
 		req.setReturnUrl("https://www.sandbox.shurjopayment.com/response");
 		req.setCancelUrl(req.getReturnUrl());
 		req.setStoreId("1");

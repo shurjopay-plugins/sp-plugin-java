@@ -4,45 +4,45 @@ import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class CheckoutReq implements Serializable{
+public class CheckoutReq implements Serializable {
 	private static final long serialVersionUID = 4191752321718444127L;
-	
+
 	private String prefix;
-	
+
 	@JsonProperty("token")
 	private String authToken;
-	
+
 	@JsonProperty("return_url")
 	private String returnUrl;
-	
+
 	@JsonProperty("cancel_url")
 	private String cancelUrl;
-	
+
 	@JsonProperty("store_id")
 	private String storeId;
-	
+
 	private String amount;
-	
+
 	@JsonProperty("order_id")
 	private String orderId;
-	
+
 	private String currency;
-	
+
 	@JsonProperty("customer_name")
 	private String customerName;
-	
+
 	@JsonProperty("customer_address")
 	private String customerAddr;
-	
+
 	@JsonProperty("customer_phone")
 	private String customerPhn;
-	
+
 	@JsonProperty("customer_city")
 	private String customerCity;
-	
+
 	@JsonProperty("customer_post_code")
 	private String customerPostCode;
-	
+
 	@JsonProperty("client_ip")
 	private String clintIp;
 

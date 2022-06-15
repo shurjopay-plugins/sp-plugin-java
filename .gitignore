@@ -1,8 +1,51 @@
-/.classpath
-/.factorypath
-/.project
-/.mvn
+*.properties
+!*-sample.properties
+!*.properties.sample
+
+# https://github.com/github/gitignore/blob/master/Java.gitignore
+*.jpage
+*.jar
+*.war
+*.ear
+*.nar
+*.zip
+*.tar.gz
+*.rar
+hs_err_pid*
+replay_pid*
+
+# Build tool
 bin/
+dist/
+# https://github.com/github/gitignore/blob/master/Maven.gitignore
+build/
+log/
 target/
-src/main/resources/META-INF/
+# https://github.com/github/gitignore/blob/master/Gradle.gitignore
+gradle/
+.gradle/
+gradle-app.setting
+!gradle-wrapper.jar
+
+# Eclipse
+.classpath
+.project
 .settings/
+.springBeans
+# IntelliJ IDEA [http://gary-rowe.com/agilestack/2012/10/12/a-gitignore-file-for-intellij-and-eclipse-with-maven]
+/.idea/
+*.iml
+*.iws
+
+.DS_Store
+Thumbs.db
+
+# Android [https://github.com/github/gitignore/blob/master/Android.gitignore]
+*.apk
+*.ap_
+*.dex
+*.class
+*.log
+gen/
+/*/build/
+proguard/

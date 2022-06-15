@@ -2,8 +2,7 @@ env = sandbox
 username = sp_sandbox
 password = pyyk97hu&6u6
 
-shurjopay-api=
 sandbox-path = https://sandbox.shurjopayment.com/api/
 live-path =  https://engine.shurjopayment.com/api/
-return-url = https://www.sandbox.shurjopayment.com/response
-cancel-url = https://www.sandbox.shurjopayment.com/response
+return-url = https://sandbox.shurjopayment.com/response
+cancel-url = https://sandbox.shurjopayment.com/response

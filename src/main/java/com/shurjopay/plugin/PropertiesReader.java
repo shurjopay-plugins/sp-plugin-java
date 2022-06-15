@@ -12,30 +12,24 @@ import java.util.logging.Logger;
  */
 public class PropertiesReader {
 	Logger logger = Logger.getLogger(PropertiesReader.class.getName());
-	
 	private static PropertiesReader instance = null;
-	Properties prop = new Properties();
-	
+
 	private PropertiesReader() {
-		
 	}
 
 	public Properties getProperties() {
-		
 		try {
-			prop.load(PropertiesReader.class.getClassLoader().getResourceAsStream("config.properties"));
+			Properties prop = new Properties();
+			prop.load(PropertiesReader.class.getClassLoader().getResourceAsStream("shurjopay.properties"));
 			return prop;
 		} catch (IOException e) {
-			logger.log(Level.FINE, "config.properties is missing in resource path");
+			logger.log(Level.FINE, "shurjopay.properties is missing in resource path");
 			return null;
 		}
 	}
-	
-	public static PropertiesReader instance()
-    {
-        if (instance == null)
-            instance = new PropertiesReader();
-  
-        return instance;
-    }
+
+	public static PropertiesReader instance() {
+		if (instance == null) instance = new PropertiesReader();
+		return instance;
+	}
 }

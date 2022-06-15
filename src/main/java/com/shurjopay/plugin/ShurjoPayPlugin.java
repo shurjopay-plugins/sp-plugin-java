@@ -7,12 +7,13 @@ import java.net.http.HttpRequest;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Properties;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shurjopay.plugin.dto.CheckoutReq;
 import com.shurjopay.plugin.dto.CheckoutRes;
 import com.shurjopay.plugin.dto.TokenReq;
-import com.shurjopay.plugin.dto.TokenRes;
+import com.shurjopay.plugin.dto.ShurjoPayToken;
 import com.shurjopay.plugin.dto.VerifiedOrder;
 import com.shurjopay.plugin.enums.EndPoints;
 
@@ -21,9 +22,18 @@ import com.shurjopay.plugin.enums.EndPoints;
  * @author Al - Amin
  * @since 2022-06-13
  */
-public class ShurjoPlugin {
+public class ShurjoPayPlugin {
+	Properties spProps = PropertiesReader.instance().getProperties();
+	String authString;
+	ShurjoPayToken authToken;
 
-	public TokenRes getToken() {
+	/**
+	 * Return authorization token for shurjoPay payment gateway system.
+	 * Setup shurjopay.properties file .
+	 * 
+	 * @return
+	 */
+	public ShurjoPayToken authenticate() {
 		var tokenReq = new TokenReq();
 		tokenReq.setUsername(getProperty("username"));
 		tokenReq.setPassword(getProperty("password"));
@@ -38,7 +48,7 @@ public class ShurjoPlugin {
 					.POST(HttpRequest.BodyPublishers.ofString(httpBody)).header("Content-Type", "application/json")
 					.build();
 
-			var response = client.send(request, new JsonBodyHandler<>(TokenRes.class));
+			var response = client.send(request, new JsonBodyHandler<>(ShurjoPayToken.class));
 			return response.body().get();
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
@@ -46,8 +56,8 @@ public class ShurjoPlugin {
 		}
 	}
 
-	public CheckoutRes checkoutPayment(CheckoutReq req) {
-
+	public CheckoutRes makePayment(CheckoutReq req) {
+		// check for existence of token. if not found authenticate first.
 		var basePath = getPath(getProperty("env"));
 
 		var client = getClient();
@@ -55,7 +65,7 @@ public class ShurjoPlugin {
 		try {
 			var mapper = new ObjectMapper();
 			var httpBody = mapper.writeValueAsString(req);
-			
+
 			var request = HttpRequest.newBuilder(URI.create(basePath.concat(EndPoints.SECRET_PAY.getValue())))
 					.POST(HttpRequest.BodyPublishers.ofString(httpBody)).header("Content-Type", "application/json")
 					.build();
@@ -69,6 +79,7 @@ public class ShurjoPlugin {
 	}
 
 	public List<VerifiedOrder> verifyOrder(String orderId, String token, String tokenType) {
+		// check for existence of token. if not found authenticate first.
 
 		var basePath = getPath(getProperty("env"));
 		var client = getClient();
@@ -78,18 +89,17 @@ public class ShurjoPlugin {
 			orderMap.put("order_id", orderId);
 			var mapper = new ObjectMapper();
 			var httpBody = mapper.writeValueAsString(orderMap);
-			
+
 			var authToken = getFormattedToken(token, tokenType);
 
 			var request = HttpRequest.newBuilder(URI.create(basePath.concat(EndPoints.VERIFICATION.getValue())))
-					.header("Authorization", authToken)
-					.POST(HttpRequest.BodyPublishers.ofString(httpBody)).header("Content-Type", "application/json")
-					.build();
+					.header("Authorization", authToken).POST(HttpRequest.BodyPublishers.ofString(httpBody))
+					.header("Content-Type", "application/json").build();
 
 			var response = client.send(request, new JsonBodyHandler<>(VerifiedOrder[].class));
-			
+
 			return Arrays.asList(response.body().get());
-			
+
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
 			return null;
@@ -97,6 +107,7 @@ public class ShurjoPlugin {
 	}
 
 	public List<VerifiedOrder> getPaymentStatus(String orderId, String token, String tokenType) {
+		// check for existence of token. if not found authenticate first.
 
 		var basePath = getPath(getProperty("env"));
 
@@ -110,9 +121,8 @@ public class ShurjoPlugin {
 			var authToken = getFormattedToken(token, tokenType);
 
 			var request = HttpRequest.newBuilder(URI.create(basePath.concat(EndPoints.PMNT_STAT.getValue())))
-					.header("Authorization", authToken)
-					.POST(HttpRequest.BodyPublishers.ofString(httpBody)).header("Content-Type", "application/json")
-					.build();
+					.header("Authorization", authToken).POST(HttpRequest.BodyPublishers.ofString(httpBody))
+					.header("Content-Type", "application/json").build();
 
 			var response = client.send(request, new JsonBodyHandler<>(VerifiedOrder[].class));
 			return Arrays.asList(response.body().get());
@@ -133,12 +143,11 @@ public class ShurjoPlugin {
 	}
 
 	private String getProperty(String key) {
-
-		return PropertiesReader.instance().getProperties().getProperty(key);
+		return spProps.getProperty(key);
+//		return PropertiesReader.instance().getProperties().getProperty(key);
 	}
-	
+
 	private String getFormattedToken(String token, String tokenType) {
-		
 		return tokenType.concat(" ").concat(token);
 	}
 }
