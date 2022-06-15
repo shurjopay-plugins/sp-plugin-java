@@ -1,0 +1,15 @@
+{
+	"checkout_url": "https:\/\/sandbox.securepay.shurjopayment.com\/spaycheckout\/?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvc2FuZGJveC5zaHVyam9wYXltZW50LmNvbVwvYXBpXC9sb2dpbiIsImlhdCI6MTY1NTI3NTMxNiwiZXhwIjoxNjU1Mjc4OTE2LCJuYmYiOjE2NTUyNzUzMTYsImp0aSI6IjRnaFRhMmpVNUxaVnIxNmMiLCJzdWIiOjEsInBydiI6IjgwNWYzOWVlZmNjNjhhZmQ5ODI1YjQxMjI3ZGFkMGEwNzZjNDk3OTMifQ.lHbhIygab0yemLoYb0APno92-J-AlTeEp8t0CDK6hNk&order_id=sp62a97f6581ce9",
+	"amount": "10",
+	"currency": "BDT",
+	"sp_order_id": "sp62a97f6581ce9",
+	"customer_order_id": "sp315689",
+	"customer_name": "Maharab kibria",
+	"customer_address": "Dhaka",
+	"customer_city": "Dhaka",
+	"customer_phone": "01766666666",
+	"customer_email": null,
+	"client_ip": "102.101.1.1",
+	"intent": "sale",
+	"transactionStatus": "Initiated"
+}

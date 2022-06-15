@@ -10,10 +10,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 
-import com.shurjopay.plugin.dto.CheckoutReq;
-import com.shurjopay.plugin.dto.CheckoutRes;
-import com.shurjopay.plugin.dto.ShurjoPayToken;
-import com.shurjopay.plugin.dto.VerifiedOrder;
+import com.shurjopay.plugin.model.CheckoutReq;
+import com.shurjopay.plugin.model.CheckoutRes;
+import com.shurjopay.plugin.model.ShurjoPayToken;
+import com.shurjopay.plugin.model.VerifiedOrder;
 
 /**
  * @author Al - Amin

@@ -1,4 +1,4 @@
-package com.shurjopay.plugin.dto;
+package com.shurjopay.plugin.model;
 
 import java.io.Serializable;
 
