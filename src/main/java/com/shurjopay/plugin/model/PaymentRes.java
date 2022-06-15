@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class CheckoutRes implements Serializable{
+public class PaymentRes implements Serializable{
 	private static final long serialVersionUID = -4989310354723281491L;
 	
 	@JsonProperty("checkout_url")

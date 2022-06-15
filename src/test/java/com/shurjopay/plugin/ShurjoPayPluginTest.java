@@ -1,19 +1,19 @@
 package com.shurjopay.plugin;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.List;
 
 import org.junit.jupiter.api.BeforeAll;
+
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
+import org.junit.jupiter.api.TestMethodOrder;
 
-import com.shurjopay.plugin.model.CheckoutReq;
-import com.shurjopay.plugin.model.CheckoutRes;
-import com.shurjopay.plugin.model.ShurjoPayToken;
+import com.shurjopay.plugin.model.PaymentReq;
+import com.shurjopay.plugin.model.PaymentRes;
 import com.shurjopay.plugin.model.VerifiedOrder;
 
 /**
@@ -22,57 +22,46 @@ import com.shurjopay.plugin.model.VerifiedOrder;
  */
 @DisplayName("Testing plugin =>")
 @TestInstance(Lifecycle.PER_CLASS)
+@TestMethodOrder(OrderAnnotation.class)
 class ShurjoPayPluginTest {
 
 	private ShurjoPayPlugin shurjopay;
-	private ShurjoPayToken token;
+	private PaymentRes paymentRes;
 
 	@BeforeAll
 	void setup() {
 		shurjopay = new ShurjoPayPlugin();
-		token = shurjopay.authenticate();
 	}
 
 	@Test
-	@DisplayName("Result for getToken(): ")
-	void testGetToken() {
-		assertNotNull(token.getToken(), () -> "Token couldn't generated");
-	}
-
-	@Test
-	@DisplayName("Result for checkoutPayment(): ")
+	@Order(1)
+	@DisplayName("For making shurjoPay payment: ")
 	void testCheckoutPayment() {
-		CheckoutReq req = getCheckoutReq();
-		CheckoutRes res = shurjopay.makePayment(req);
-
-		assertNotNull(res.getCheckoutUrl(), () -> "Checkout Payment returns null");
+		PaymentReq req = getPaymentReq();
+		paymentRes = shurjopay.makePayment(req);
+		assertNotNull(paymentRes.getCheckoutUrl(), () -> "Making Payment returns null");
 	}
 
 	@Test
-	@DisplayName("Result for verifyOrder(): ")
+	@Order(2)
+	@DisplayName("For verifying order: ")
 	void testVerifyOrder() {
-		List<VerifiedOrder> orders = shurjopay.getPaymentStatus("sp62a5dff32855a", token.getToken(), token.getTokenType());
-		
-		assertTrue(orders.size() > 0,
-				() -> "Order is not found.");
+		VerifiedOrder order = shurjopay.getPaymentStatus(paymentRes.getSpOrderId());
+		assertNotNull(order.getOrderId(), () -> "Order is not found.");
 	}
 
 	@Test
-	@DisplayName("Result for getPaymentStatus(): ")
+	@Order(3)
+	@DisplayName("For checking order status: ")
 	void testGetPaymentStatus() {
-		List<VerifiedOrder> orders = shurjopay.getPaymentStatus("sp62a5dff32855a", token.getToken(), token.getTokenType());
-
-		assertTrue(orders.size()> 0, 
-				() -> "Place valid params");
+		VerifiedOrder order = shurjopay.getPaymentStatus(paymentRes.getSpOrderId());
+		assertNotNull(order.getOrderId(), () -> "Order is not found.");
 	}
 
-	private CheckoutReq getCheckoutReq() {
-		CheckoutReq req = new CheckoutReq();
+	private PaymentReq getPaymentReq() {
+		PaymentReq req = new PaymentReq();
 
 		req.setPrefix("sp");
-		req.setAuthToken(token.getToken());
-		req.setReturnUrl("https://www.sandbox.shurjopayment.com/response");
-		req.setCancelUrl(req.getReturnUrl());
 		req.setStoreId("1");
 		req.setAmount("10");
 		req.setOrderId("sp315689");
@@ -85,5 +74,4 @@ class ShurjoPayPluginTest {
 		req.setClintIp("102.101.1.1");
 		return req;
 	}
-
 }

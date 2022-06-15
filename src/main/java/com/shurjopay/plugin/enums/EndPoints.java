@@ -2,9 +2,9 @@ package com.shurjopay.plugin.enums;
 
 public enum EndPoints {
 
-	GET_TOKEN("get_token"),
-	SECRET_PAY("secret-pay"),
-	VERIFICATION("verification"),
+	TOKEN("get_token"),
+	MAKE_PMNT("secret-pay"),
+	VERIFIED_ORDER("verification"),
 	PMNT_STAT("payment-status");
 	
 	private String value;
