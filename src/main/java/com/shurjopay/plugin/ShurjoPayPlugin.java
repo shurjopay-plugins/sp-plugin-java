@@ -20,7 +20,6 @@ import java.util.logging.Logger;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.shurjopay.plugin.enums.EndPoints;
 import com.shurjopay.plugin.model.PaymentReq;
 import com.shurjopay.plugin.model.PaymentRes;
 import com.shurjopay.plugin.model.ShurjoPayToken;

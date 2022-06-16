@@ -1,4 +1,4 @@
-package com.shurjopay.plugin.enums;
+package com.shurjopay.plugin;
 
 public enum EndPoints {
 
