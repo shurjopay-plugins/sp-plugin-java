@@ -13,7 +13,7 @@ public class PaymentRes implements Serializable{
 	private static final long serialVersionUID = -4989310354723281491L;
 	
 	@JsonProperty("checkout_url")
-	private String checkoutUrl;
+	private String paymentUrl;
 	
 	private String amount;
 	
@@ -52,12 +52,12 @@ public class PaymentRes implements Serializable{
 	
 	private String message;
 
-	public String getCheckoutUrl() {
-		return checkoutUrl;
+	public String getPaymentUrl() {
+		return paymentUrl;
 	}
 
-	public void setCheckoutUrl(String checkoutUrl) {
-		this.checkoutUrl = checkoutUrl;
+	public void setPaymentUrl(String checkoutUrl) {
+		this.paymentUrl = checkoutUrl;
 	}
 
 	public String getAmount() {
@@ -174,7 +174,7 @@ public class PaymentRes implements Serializable{
 
 	@Override
 	public String toString() {
-		return "CheckoutRes [checkoutUrl=" + checkoutUrl + ", amount=" + amount + ", currency=" + currency
+		return "PaymentRes [paymentUrl=" + paymentUrl + ", amount=" + amount + ", currency=" + currency
 				+ ", spOrderId=" + spOrderId + ", customerOrderId=" + customerOrderId + ", customerName=" + customerName
 				+ ", customerAddr=" + customerAddr + ", customerPhn=" + customerPhn + ", customerCity=" + customerCity
 				+ ", customerEmail=" + customerEmail + ", clintIp=" + clintIp + ", intent=" + intent

@@ -36,17 +36,19 @@ class ShurjoPayPluginTest {
 	@Test
 	@Order(1)
 	@DisplayName("For making shurjoPay payment: ")
-	void testCheckoutPayment() {
+	void testMakePayment() {
 		PaymentReq req = getPaymentReq();
 		paymentRes = shurjopay.makePayment(req);
-		assertNotNull(paymentRes.getCheckoutUrl(), () -> "Making Payment returns null");
+		System.out.println(paymentRes);
+		assertNotNull(paymentRes.getPaymentUrl(), () -> "Making Payment returns null");
 	}
 
 	@Test
 	@Order(2)
 	@DisplayName("For verifying order: ")
 	void testVerifyOrder() {
-		VerifiedOrder order = shurjopay.getPaymentStatus(paymentRes.getSpOrderId());
+		VerifiedOrder order = shurjopay.verifyOrder(paymentRes.getSpOrderId());
+		System.out.println(order);
 		assertNotNull(order.getOrderId(), () -> "Order is not found.");
 	}
 
@@ -54,24 +56,25 @@ class ShurjoPayPluginTest {
 	@Order(3)
 	@DisplayName("For checking order status: ")
 	void testGetPaymentStatus() {
-		VerifiedOrder order = shurjopay.getPaymentStatus(paymentRes.getSpOrderId());
+		VerifiedOrder order = shurjopay.checkPaymentStatus(paymentRes.getSpOrderId());
+		System.out.println(order);
 		assertNotNull(order.getOrderId(), () -> "Order is not found.");
 	}
 
 	private PaymentReq getPaymentReq() {
-		PaymentReq req = new PaymentReq();
+		PaymentReq request = new PaymentReq();
 
-		req.setPrefix("sp");
-		req.setStoreId("1");
-		req.setAmount("10");
-		req.setOrderId("sp315689");
-		req.setCurrency("BDT");
-		req.setCustomerName("Maharab kibria");
-		req.setCustomerAddr("Dhaka");
-		req.setCustomerPhn("01766666666");
-		req.setCustomerCity("Dhaka");
-		req.setCustomerPostCode("1212");
-		req.setClintIp("102.101.1.1");
-		return req;
+		request.setPrefix("sp");
+		request.setStoreId("1");
+		request.setAmount("10");
+		request.setOrderId("sp315689");
+		request.setCurrency("BDT");
+		request.setCustomerName("Maharab kibria");
+		request.setCustomerAddr("Dhaka");
+		request.setCustomerPhn("01766666666");
+		request.setCustomerCity("Dhaka");
+		request.setCustomerPostCode("1212");
+		request.setClintIp("102.101.1.1");
+		return request;
 	}
 }

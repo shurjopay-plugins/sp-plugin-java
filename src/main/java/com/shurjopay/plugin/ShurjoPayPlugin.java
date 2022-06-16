@@ -103,7 +103,7 @@ public class ShurjoPayPlugin {
 	 * @param orderId
 	 * @return order object if order verified successfully
 	 */
-	public VerifiedOrder getPaymentStatus(String orderId) {
+	public VerifiedOrder checkPaymentStatus(String orderId) {
 		if (Objects.isNull(authToken) || isTokenExpired(authToken))
 			authToken = authenticate();
 
