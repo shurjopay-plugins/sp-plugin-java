@@ -4,6 +4,14 @@ import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+ * This model is used for making payment.
+ * Model is not required to set returnUrl and cancelUrl. For this purpose,
+ * set callback-url value in shurjopay.properties. It will be used for mentioned fields.
+ * 
+ * @author Al - Amin
+ * @since 2022-06-16
+ */
 public class PaymentReq implements Serializable {
 	private static final long serialVersionUID = 4191752321718444127L;
 

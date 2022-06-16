@@ -5,6 +5,7 @@ import java.io.Serializable;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
+ * This model is used internally to authenticate merchant for accessing services.
  * 
  * @author Al - Amin
  * @since 2022-06-13

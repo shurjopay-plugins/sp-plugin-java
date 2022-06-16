@@ -4,6 +4,13 @@ import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+ * This model is used for response when user want to verify order using order id.
+ * It will represent response of verify order.
+ * 
+ * @author Al - Amin
+ * @since 2022-06-16
+ */
 public class VerifiedOrder implements Serializable{
 	private static final long serialVersionUID = 1970085707716491151L;
 	
