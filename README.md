@@ -6,7 +6,7 @@ This document has been prepared by shurjoMukhi Limited to enable the online merc
 This document is intended for the technical personnel of merchants and service providers that want to integrate a new online payment gateway using java plugin provided by **_shurjoPay_**.
 ### Prerequisite
 	◼️ shurjoPay Version 2.0
-## Intigration
+## Integration
 **_shurjoPay_** Online payment gateway has several APIs which need to be integrated by merchants for accessing different services.
 The available services are:
 - Authenticate users
