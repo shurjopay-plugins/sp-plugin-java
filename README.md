@@ -22,7 +22,8 @@ _ShurjoMukhi Limited_ developed plugin for integration with java based. _shurjoP
 ### Before All:
 First of all developer have to configure shurjopay.properties. Properties file contains four fields ``` username, password, shurjopay-api, callback-url ```
 - **Example**
-``` username = sp_sandbox
+``` 
+username = sp_sandbox
 password = pyyk97hu&6u6
 shurjopay-api = https://sandbox.shurjopayment.com/api/
 callback-url = https://sandbox.shurjopayment.com/response 
