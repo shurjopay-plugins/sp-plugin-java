@@ -7,6 +7,7 @@
 	<artifactId>sp-plugin-java</artifactId>
 	<version>0.1.0-SNAPSHOT</version>
 	<name>sp-plugin-java</name>
+	<packaging>jar</packaging>
 	<description>shurjoPay plugin module for Java application</description>
 	<url>${github.url}/sp-plugin-java</url>
 
