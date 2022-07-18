@@ -54,12 +54,13 @@ public class ShurjoPayPlugin {
 			req.setReturnUrl(callBackUrl);
 			req.setCancelUrl(callBackUrl);
 			req.setAuthToken(authToken.getToken());
+			req.setStoreId(authToken.getStoreId());
 
 			String requestBody = prepareReqBody(req);
 
 			HttpRequest request = postRequest(requestBody, EndPoints.MAKE_PMNT.getValue());
-
 			HttpResponse<Supplier<PaymentRes>> response = client.send(request, new JsonBodyHandler<>(PaymentRes.class));
+			
 			return response.body().get();
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();

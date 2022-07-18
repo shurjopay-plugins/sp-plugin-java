@@ -20,22 +20,25 @@ public class VerifiedOrder implements Serializable{
 	private String orderId;
 	
 	private String currency;
-	private Integer amount;
+	private Double amount;
 	
 	@JsonProperty("payable_amount")
-	private Integer payableAmount;
+	private Double payableAmount;
 	
 	@JsonProperty("discsount_amount")
-	private Integer discountAmount;
+	private Double discountAmount;
 	
 	@JsonProperty("disc_percent")
-	private Integer discpercent;
+	private Double discpercent;
 	
 	@JsonProperty("usd_amt")
-	private Integer usdAmt;
+	private Double usdAmt;
 	
 	@JsonProperty("usd_rate")
-	private Integer usdRate;
+	private Double usdRate;
+	
+	@JsonProperty("recived_amount")
+	private Double receivedAmt;
 	
 	@JsonProperty("card_holder_name")
 	private String cardHolder;
@@ -105,51 +108,51 @@ public class VerifiedOrder implements Serializable{
 		this.currency = currency;
 	}
 
-	public Integer getAmount() {
+	public Double getAmount() {
 		return amount;
 	}
 
-	public void setAmount(Integer amount) {
+	public void setAmount(Double amount) {
 		this.amount = amount;
 	}
 
-	public Integer getPayableAmount() {
+	public Double getPayableAmount() {
 		return payableAmount;
 	}
 
-	public void setPayableAmount(Integer payableAmount) {
+	public void setPayableAmount(Double payableAmount) {
 		this.payableAmount = payableAmount;
 	}
 
-	public Integer getDiscountAmount() {
+	public Double getDiscountAmount() {
 		return discountAmount;
 	}
 
-	public void setDiscountAmount(Integer discountAmount) {
+	public void setDiscountAmount(Double discountAmount) {
 		this.discountAmount = discountAmount;
 	}
 
-	public Integer getDiscpercent() {
+	public Double getDiscpercent() {
 		return discpercent;
 	}
 
-	public void setDiscpercent(Integer discpercent) {
+	public void setDiscpercent(Double discpercent) {
 		this.discpercent = discpercent;
 	}
 
-	public Integer getUsdAmt() {
+	public Double getUsdAmt() {
 		return usdAmt;
 	}
 
-	public void setUsdAmt(Integer usdAmt) {
+	public void setUsdAmt(Double usdAmt) {
 		this.usdAmt = usdAmt;
 	}
 
-	public Integer getUsdRate() {
+	public Double getUsdRate() {
 		return usdRate;
 	}
 
-	public void setUsdRate(Integer usdRate) {
+	public void setUsdRate(Double usdRate) {
 		this.usdRate = usdRate;
 	}
 

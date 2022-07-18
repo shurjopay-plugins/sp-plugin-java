@@ -39,7 +39,6 @@ class ShurjoPayPluginTest {
 	void testMakePayment() {
 		PaymentReq req = getPaymentReq();
 		paymentRes = shurjopay.makePayment(req);
-		System.out.println(paymentRes);
 		assertNotNull(paymentRes.getPaymentUrl(), () -> "Making Payment returns null");
 	}
 
@@ -48,7 +47,6 @@ class ShurjoPayPluginTest {
 	@DisplayName("For verifying order: ")
 	void testVerifyOrder() {
 		VerifiedOrder order = shurjopay.verifyOrder(paymentRes.getSpOrderId());
-		System.out.println(order);
 		assertNotNull(order.getOrderId(), () -> "Order is not found.");
 	}
 
@@ -57,7 +55,6 @@ class ShurjoPayPluginTest {
 	@DisplayName("For checking order status: ")
 	void testGetPaymentStatus() {
 		VerifiedOrder order = shurjopay.checkPaymentStatus(paymentRes.getSpOrderId());
-		System.out.println(order);
 		assertNotNull(order.getOrderId(), () -> "Order is not found.");
 	}
 
@@ -65,8 +62,7 @@ class ShurjoPayPluginTest {
 		PaymentReq request = new PaymentReq();
 
 		request.setPrefix("sp");
-		request.setStoreId("1");
-		request.setAmount("10");
+		request.setAmount(10.00);
 		request.setOrderId("sp315689");
 		request.setCurrency("BDT");
 		request.setCustomerName("Maharab kibria");
