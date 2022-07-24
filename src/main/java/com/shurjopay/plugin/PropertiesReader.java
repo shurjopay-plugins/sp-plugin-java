@@ -1,8 +1,6 @@
 package com.shurjopay.plugin;
 
-import java.io.IOException;
 import java.util.Properties;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -17,14 +15,13 @@ public class PropertiesReader {
 	private PropertiesReader() {
 	}
 
-	public Properties getProperties() {
+	public Properties getProperties(){
 		try {
 			Properties prop = new Properties();
 			prop.load(PropertiesReader.class.getClassLoader().getResourceAsStream("shurjopay.properties"));
 			return prop;
-		} catch (IOException e) {
-			logger.log(Level.FINE, "shurjopay.properties is missing in resource path");
-			return null;
+		} catch (Exception e) {
+			throw new RuntimeException("shurjopay.properties is missing in resource path or Resources path is not exist");
 		}
 	}
 

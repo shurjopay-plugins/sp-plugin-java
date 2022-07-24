@@ -33,10 +33,45 @@ import com.shurjopay.plugin.model.VerifiedOrder;
  */
 public class ShurjoPayPlugin {
 	private Logger logger = Logger.getLogger(ShurjoPayPlugin.class.getName());
-	private Properties spProps = PropertiesReader.instance().getProperties();
-	private String basePath = getProperty("shurjopay-api");
+	
 	private ShurjoPayToken authToken;
+	
+	/**
+	 * Return authorization token for shurjoPay payment gateway system. Setup
+	 * shurjopay.properties file .
+	 * 
+	 * @return authentication details with valid token
+	 */
+	private ShurjoPayToken authenticate() {
 
+		Map<String, String> tokenReq = new HashMap<>();
+		
+		tokenReq.put("username", getProperty("username"));
+		tokenReq.put("password", getProperty("password"));
+		
+		HttpClient client = getClient();
+
+		try {
+			String requestBody = prepareReqBody(tokenReq);
+			
+			HttpRequest request = postRequest(requestBody, EndPoints.TOKEN.getValue());
+
+			HttpResponse<Supplier<ShurjoPayToken>> response = client.send(request,
+					new JsonBodyHandler<>(ShurjoPayToken.class));
+			authToken = response.body().get();
+
+		} catch (IOException | InterruptedException e) {
+			throw new RuntimeException("Invalid User name or Password due to shurjoPay authentication.", e.getCause());
+		}
+
+		if (authToken.getMessage().equals("Ok")) {
+			logger.log(Level.INFO, "Authentication token has been generated successfully.");
+		} else {
+			throw new RuntimeException("Invalid User name or Password due to shurjoPay authentication.");
+		}
+		return authToken;
+	}
+	
 	/**
 	 * 
 	 * This method is used for making payment.
@@ -63,8 +98,7 @@ public class ShurjoPayPlugin {
 			
 			return response.body().get();
 		} catch (IOException | InterruptedException e) {
-			e.printStackTrace();
-			return null;
+			throw new RuntimeException("Payment request failed", e.getCause());
 		}
 	}
 
@@ -92,8 +126,7 @@ public class ShurjoPayPlugin {
 
 			return response.body().get()[0];
 		} catch (IOException | InterruptedException e) {
-			e.printStackTrace();
-			return null;
+			throw new RuntimeException("Payment verification failed", e.getCause());
 		}
 	}
 
@@ -121,43 +154,7 @@ public class ShurjoPayPlugin {
 			
 			return response.body().get()[0];
 		} catch (IOException | InterruptedException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
-	/**
-	 * Return authorization token for shurjoPay payment gateway system. Setup
-	 * shurjopay.properties file .
-	 * 
-	 * @return authentication details with valid token
-	 */
-	private ShurjoPayToken authenticate() {
-
-		Map<String, String> tokenReq = new HashMap<>();
-		tokenReq.put("username", getProperty("username"));
-		tokenReq.put("password", getProperty("password"));
-		HttpClient client = getClient();
-
-		try {
-			String requestBody = prepareReqBody(tokenReq);
-			
-			HttpRequest request = postRequest(requestBody, EndPoints.TOKEN.getValue());
-
-			HttpResponse<Supplier<ShurjoPayToken>> response = client.send(request,
-					new JsonBodyHandler<>(ShurjoPayToken.class));
-			authToken = response.body().get();
-
-		} catch (IOException | InterruptedException e) {
-			e.printStackTrace();
-		}
-
-		if (authToken.getMessage().equals("Ok")) {
-			logger.log(Level.INFO, "Authentication token has been generated successfully");
-			return authToken;
-		} else {
-			logger.log(Level.FINE, "Username or password is invalid or not existed");
-			return null;
+			throw new RuntimeException("A successful Payment verification got the payment status", e.getCause());
 		}
 	}
 
@@ -165,20 +162,14 @@ public class ShurjoPayPlugin {
 		return HttpClient.newHttpClient();
 	}
 
-	private String getProperty(String key) {
-		return spProps.getProperty(key);
-	}
-
 	private String prepareReqBody(Object object) {
-		String requestBody = null;
 
-		try {
+		try {	
 			ObjectMapper mapper = new ObjectMapper();
-			requestBody = mapper.writeValueAsString(object);
+			return mapper.writeValueAsString(object);
 		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
-		return requestBody;
+			throw new RuntimeException("Object mapping failed due to mapping PaymentReq. Please check!", e.getCause());
+		}	
 	}
 
 	/**
@@ -202,7 +193,7 @@ public class ShurjoPayPlugin {
 
 	private HttpRequest postRequest(String httpBody, String endPoint) {
 
-		return HttpRequest.newBuilder(URI.create(basePath.concat(endPoint)))
+		return HttpRequest.newBuilder(URI.create(getProperty("shurjopay-api").concat(endPoint)))
 				.POST(HttpRequest.BodyPublishers.ofString(httpBody))
 				.header("Content-Type", "application/json")
 				.build();
@@ -211,7 +202,7 @@ public class ShurjoPayPlugin {
 	private HttpRequest postRequest(String httpBody, String endPoint, boolean isAuthHead) {
 
 		return HttpRequest
-				.newBuilder(URI.create(basePath.concat(endPoint)))
+				.newBuilder(URI.create(getProperty("shurjopay-api").concat(endPoint)))
 				.header("Authorization", getFormattedToken(authToken.getToken(), authToken.getTokenType()))
 				.POST(HttpRequest.BodyPublishers.ofString(httpBody))
 				.header("Content-Type", "application/json")
@@ -220,5 +211,15 @@ public class ShurjoPayPlugin {
 
 	private String getFormattedToken(String token, String tokenType) {
 		return tokenType.concat(" ").concat(token);
+	}
+	
+	private String getProperty(String key) {
+
+			Properties spProps = PropertiesReader.instance().getProperties();
+			String propertyValue = spProps.getProperty(key);
+			if(Objects.isNull(propertyValue))
+				throw new RuntimeException(key+" value shouldn't be empty");
+			
+			return propertyValue;	
 	}
 }
