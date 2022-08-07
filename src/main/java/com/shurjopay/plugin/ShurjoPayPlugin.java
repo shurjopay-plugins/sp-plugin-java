@@ -28,63 +28,63 @@ import com.shurjopay.plugin.model.VerifiedOrder;
 /**
  * 
  * Plug-in service to provide shurjoPay get way services.
+ * 
  * @author Al - Amin
  * @since 2022-06-13
  */
 public class ShurjoPayPlugin {
 	private Logger logger = Logger.getLogger(ShurjoPayPlugin.class.getName());
-	
+
 	private ShurjoPayToken authToken;
-	
+	private PropertiesReader reader = PropertiesReader.instance();
+
 	/**
 	 * Return authorization token for shurjoPay payment gateway system. Setup
 	 * shurjopay.properties file .
 	 * 
 	 * @return authentication details with valid token
+	 * @throws IllegalAccessException
+	 * @throws @{@link                IllegalAccessException}
 	 */
-	private ShurjoPayToken authenticate() {
-
+	private ShurjoPayToken authenticate() throws IllegalAccessException {
 		Map<String, String> tokenReq = new HashMap<>();
-		
 		tokenReq.put("username", getProperty("username"));
 		tokenReq.put("password", getProperty("password"));
-		
-		HttpClient client = getClient();
 
 		try {
+			HttpClient client = getClient();
 			String requestBody = prepareReqBody(tokenReq);
-			
 			HttpRequest request = postRequest(requestBody, EndPoints.TOKEN.getValue());
-
 			HttpResponse<Supplier<ShurjoPayToken>> response = client.send(request,
 					new JsonBodyHandler<>(ShurjoPayToken.class));
 			authToken = response.body().get();
 
 		} catch (IOException | InterruptedException e) {
-			throw new RuntimeException("Invalid User name or Password due to shurjoPay authentication.", e.getCause());
+			logger.log(Level.SEVERE, "Invalid User name or Password due to shurjoPay authentication.");
 		}
 
 		if (authToken.getMessage().equals("Ok")) {
 			logger.log(Level.INFO, "Authentication token has been generated successfully.");
 		} else {
-			throw new RuntimeException("Invalid User name or Password due to shurjoPay authentication.");
+			throw new IllegalAccessException("Invalid User name or Password due to shurjoPay authentication.");
 		}
 		return authToken;
 	}
-	
+
 	/**
 	 * 
 	 * This method is used for making payment.
-	 * @param Payment request object. See the shurjoPay version-2 integration documentation(beta).docx for details.
-	 * @return Payment response object contains redirect URL to reach payment page, order id to verify order in shurjoPay.
+	 * 
+	 * @param Payment request object. See the shurjoPay version-2 integration
+	 *                documentation(beta).docx for details.
+	 * @return Payment response object contains redirect URL to reach payment page,
+	 *         order id to verify order in shurjoPay.
 	 */
 	public PaymentRes makePayment(PaymentReq req) {
-		if (Objects.isNull(authToken) || isTokenExpired(authToken))
-			authToken = authenticate();
-
-		HttpClient client = getClient();
-
 		try {
+			if (Objects.isNull(authToken) || isTokenExpired(authToken))
+				authToken = authenticate();
+			HttpClient client = getClient();
 			String callBackUrl = getProperty("callback-url");
 			req.setReturnUrl(callBackUrl);
 			req.setCancelUrl(callBackUrl);
@@ -92,57 +92,55 @@ public class ShurjoPayPlugin {
 			req.setStoreId(authToken.getStoreId());
 
 			String requestBody = prepareReqBody(req);
-
 			HttpRequest request = postRequest(requestBody, EndPoints.MAKE_PMNT.getValue());
 			HttpResponse<Supplier<PaymentRes>> response = client.send(request, new JsonBodyHandler<>(PaymentRes.class));
-			
 			return response.body().get();
-		} catch (IOException | InterruptedException e) {
-			throw new RuntimeException("Payment request failed", e.getCause());
+		} catch (IOException | InterruptedException | IllegalAccessException e) {
+			logger.log(Level.SEVERE, "Payment request failed", e.getCause());
+			return null;
 		}
 	}
 
 	/**
 	 * 
-	 * This method is used for verifying order by order id which could be get by Payment response object
+	 * This method is used for verifying order by order id which could be get by
+	 * Payment response object
+	 * 
 	 * @param orderId
 	 * @return order object if order verified successfully
 	 */
 	public VerifiedOrder verifyOrder(String orderId) {
-		if (Objects.isNull(authToken) || isTokenExpired(authToken))
-			authToken = authenticate();
-
-		HttpClient client = getClient();
-
 		try {
+			if (Objects.isNull(authToken) || isTokenExpired(authToken))
+				authToken = authenticate();
+			HttpClient client = getClient();
 			Map<String, String> orderMap = new HashMap<>();
 			orderMap.put("order_id", orderId);
 
 			String requestBody = prepareReqBody(orderMap);
 			HttpRequest request = postRequest(requestBody, EndPoints.VERIFIED_ORDER.getValue(), true);
-
 			HttpResponse<Supplier<VerifiedOrder[]>> response = client.send(request,
 					new JsonBodyHandler<>(VerifiedOrder[].class));
-
 			return response.body().get()[0];
-		} catch (IOException | InterruptedException e) {
-			throw new RuntimeException("Payment verification failed", e.getCause());
+		} catch (IOException | InterruptedException | IllegalAccessException e) {
+			logger.log(Level.SEVERE, "Payment verification failed", e.getCause());
+			return null;
 		}
 	}
 
 	/**
 	 * 
-	 * This method is used for checking successfully paid order status by order id which could be get after verifying order
+	 * This method is used for checking successfully paid order status by order id
+	 * which could be get after verifying order
+	 * 
 	 * @param orderId
 	 * @return order object if order verified successfully
 	 */
 	public VerifiedOrder checkPaymentStatus(String orderId) {
-		if (Objects.isNull(authToken) || isTokenExpired(authToken))
-			authToken = authenticate();
-
-		HttpClient client = getClient();
-
 		try {
+			if (Objects.isNull(authToken) || isTokenExpired(authToken))
+				authToken = authenticate();
+			HttpClient client = getClient();
 			Map<String, String> orderMap = new HashMap<String, String>();
 			orderMap.put("order_id", orderId);
 
@@ -151,10 +149,11 @@ public class ShurjoPayPlugin {
 
 			HttpResponse<Supplier<VerifiedOrder[]>> response = client.send(request,
 					new JsonBodyHandler<>(VerifiedOrder[].class));
-			
+
 			return response.body().get()[0];
-		} catch (IOException | InterruptedException e) {
-			throw new RuntimeException("A successful Payment verification got the payment status", e.getCause());
+		} catch (IOException | InterruptedException | IllegalAccessException e) {
+			logger.log(Level.SEVERE, "A successful Payment verification got the payment status", e.getCause());
+			return null;
 		}
 	}
 
@@ -163,13 +162,12 @@ public class ShurjoPayPlugin {
 	}
 
 	private String prepareReqBody(Object object) {
-
-		try {	
+		try {
 			ObjectMapper mapper = new ObjectMapper();
 			return mapper.writeValueAsString(object);
 		} catch (JsonProcessingException e) {
 			throw new RuntimeException("Object mapping failed due to mapping PaymentReq. Please check!", e.getCause());
-		}	
+		}
 	}
 
 	/**
@@ -184,42 +182,33 @@ public class ShurjoPayPlugin {
 
 		LocalDateTime createdAt = LocalDateTime.parse(authOb.getTokenCreateTime(), format);
 		int diff = (int) ChronoUnit.MILLIS.between(createdAt, LocalDateTime.now());
-
 		if (authOb.getExpiresIn() < diff)
 			return true;
-
 		return false;
 	}
 
 	private HttpRequest postRequest(String httpBody, String endPoint) {
-
 		return HttpRequest.newBuilder(URI.create(getProperty("shurjopay-api").concat(endPoint)))
-				.POST(HttpRequest.BodyPublishers.ofString(httpBody))
-				.header("Content-Type", "application/json")
-				.build();
+				.POST(HttpRequest.BodyPublishers.ofString(httpBody)).header("Content-Type", "application/json").build();
 	}
-	
-	private HttpRequest postRequest(String httpBody, String endPoint, boolean isAuthHead) {
 
-		return HttpRequest
-				.newBuilder(URI.create(getProperty("shurjopay-api").concat(endPoint)))
+	private HttpRequest postRequest(String httpBody, String endPoint, boolean isAuthHead) {
+		return HttpRequest.newBuilder(URI.create(getProperty("shurjopay-api").concat(endPoint)))
 				.header("Authorization", getFormattedToken(authToken.getToken(), authToken.getTokenType()))
-				.POST(HttpRequest.BodyPublishers.ofString(httpBody))
-				.header("Content-Type", "application/json")
-				.build();
+				.POST(HttpRequest.BodyPublishers.ofString(httpBody)).header("Content-Type", "application/json").build();
 	}
 
 	private String getFormattedToken(String token, String tokenType) {
 		return tokenType.concat(" ").concat(token);
 	}
-	
-	private String getProperty(String key) {
 
-			Properties spProps = PropertiesReader.instance().getProperties();
-			String propertyValue = spProps.getProperty(key);
-			if(Objects.isNull(propertyValue))
-				throw new RuntimeException(key+" value shouldn't be empty");
-			
-			return propertyValue;	
+	private String getProperty(String key) {
+		Properties spProps = reader.getProperties();
+		String propertyValue = spProps.getProperty(key);
+		if (Objects.isNull(propertyValue)) {
+			logger.log(Level.SEVERE, key + " value shouldn't be empty");
+			return null;
+		}
+		return propertyValue;
 	}
 }

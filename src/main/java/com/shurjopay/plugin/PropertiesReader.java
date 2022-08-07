@@ -1,7 +1,6 @@
 package com.shurjopay.plugin;
 
 import java.util.Properties;
-import java.util.logging.Logger;
 
 /**
  * 
@@ -9,7 +8,7 @@ import java.util.logging.Logger;
  * @since 2022-06-13
  */
 public class PropertiesReader {
-	Logger logger = Logger.getLogger(PropertiesReader.class.getName());
+	
 	private static PropertiesReader instance = null;
 
 	private PropertiesReader() {

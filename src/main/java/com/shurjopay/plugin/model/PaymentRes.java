@@ -16,7 +16,6 @@ public class PaymentRes implements Serializable{
 	private String paymentUrl;
 	
 	private String amount;
-	
 	private String currency;
 	
 	@JsonProperty("sp_order_id")
@@ -42,14 +41,11 @@ public class PaymentRes implements Serializable{
 	
 	@JsonProperty("client_ip")
 	private String clintIp;
-	
 	private String intent;
-	
 	private String transactionStatus;
 	
 	@JsonProperty("sp_code")
 	private Integer spCode;
-	
 	private String message;
 
 	public String getPaymentUrl() {

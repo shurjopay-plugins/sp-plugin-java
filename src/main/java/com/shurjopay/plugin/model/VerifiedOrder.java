@@ -18,7 +18,6 @@ public class VerifiedOrder implements Serializable{
 	
 	@JsonProperty("order_id")
 	private String orderId;
-	
 	private String currency;
 	private Double amount;
 	
@@ -66,7 +65,6 @@ public class VerifiedOrder implements Serializable{
 	
 	@JsonProperty("sp_massage")
 	private String statusMsg;
-	
 	private String name;	
 	private String email;	
 	private String address;	
@@ -78,7 +76,6 @@ public class VerifiedOrder implements Serializable{
 	
 	@JsonProperty("transaction_status")
 	private String txnStatus;
-	
 	private String method;
 	
 	@JsonProperty("date_time")
