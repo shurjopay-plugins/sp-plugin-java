@@ -50,9 +50,12 @@ public class PaymentReq implements Serializable {
 
 	@JsonProperty("customer_post_code")
 	private String customerPostCode;
+	
+	@JsonProperty("customer_email")
+	private String customerEmail;
 
 	@JsonProperty("client_ip")
-	private String clintIp;
+	private String clientIp;
 
 	public String getPrefix() {
 		return prefix;
@@ -158,21 +161,28 @@ public class PaymentReq implements Serializable {
 		this.customerPostCode = customerPostCode;
 	}
 
-	public String getClintIp() {
-		return clintIp;
+	public String getClientIp() {
+		return clientIp;
 	}
 
-	public void setClintIp(String clintIp) {
-		this.clintIp = clintIp;
+	public void setClientIp(String clientIp) {
+		this.clientIp = clientIp;
+	}
+
+	public String getCustomerEmail() {
+		return customerEmail;
+	}
+
+	public void setCustomerEmail(String customerEmail) {
+		this.customerEmail = customerEmail;
 	}
 
 	@Override
 	public String toString() {
-		return "CheckoutReq [prefix=" + prefix + ", authToken=" + authToken + ", returnUrl=" + returnUrl
-				+ ", cancelUrl=" + cancelUrl + ", storeId=" + storeId + ", amount=" + amount + ", orderId=" + orderId
-				+ ", currency=" + currency + ", customerName=" + customerName + ", customerAddr=" + customerAddr
-				+ ", customerPhn=" + customerPhn + ", customerCity=" + customerCity + ", customerPostCode="
-				+ customerPostCode + ", clintIp=" + clintIp + "]";
+		return "PaymentReq [prefix=" + prefix + ", authToken=" + authToken + ", returnUrl=" + returnUrl + ", cancelUrl="
+				+ cancelUrl + ", storeId=" + storeId + ", amount=" + amount + ", orderId=" + orderId + ", currency="
+				+ currency + ", customerName=" + customerName + ", customerAddr=" + customerAddr + ", customerPhn="
+				+ customerPhn + ", customerCity=" + customerCity + ", customerPostCode=" + customerPostCode
+				+ ", customerEmail=" + customerEmail + ", clientIp=" + clientIp + "]";
 	}
-
 }

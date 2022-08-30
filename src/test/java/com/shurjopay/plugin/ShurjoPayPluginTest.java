@@ -70,7 +70,8 @@ class ShurjoPayPluginTest {
 		request.setCustomerPhn("01766666666");
 		request.setCustomerCity("Dhaka");
 		request.setCustomerPostCode("1212");
-		request.setClintIp("102.101.1.1");
+		request.setCustomerEmail("al@gmail.com");
+		request.setClientIp("102.101.1.1");
 		return request;
 	}
 }

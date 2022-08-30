@@ -82,8 +82,12 @@ public class ShurjoPayPlugin {
 	 */
 	public PaymentRes makePayment(PaymentReq req) {
 		try {
-			if (Objects.isNull(authToken) || isTokenExpired(authToken))
+			if (Objects.isNull(authToken))
 				authToken = authenticate();
+			
+			if (isTokenExpired(authToken))
+				authToken = authenticate();
+			
 			HttpClient client = getClient();
 			String callBackUrl = getProperty("callback-url");
 			req.setReturnUrl(callBackUrl);
@@ -111,8 +115,12 @@ public class ShurjoPayPlugin {
 	 */
 	public VerifiedOrder verifyOrder(String orderId) {
 		try {
-			if (Objects.isNull(authToken) || isTokenExpired(authToken))
+			if (Objects.isNull(authToken))
 				authToken = authenticate();
+			
+			if (isTokenExpired(authToken))
+				authToken = authenticate();
+			
 			HttpClient client = getClient();
 			Map<String, String> orderMap = new HashMap<>();
 			orderMap.put("order_id", orderId);
@@ -138,12 +146,15 @@ public class ShurjoPayPlugin {
 	 */
 	public VerifiedOrder checkPaymentStatus(String orderId) {
 		try {
-			if (Objects.isNull(authToken) || isTokenExpired(authToken))
+			if (Objects.isNull(authToken))
 				authToken = authenticate();
+			
+			if (isTokenExpired(authToken))
+				authToken = authenticate();
+			
 			HttpClient client = getClient();
 			Map<String, String> orderMap = new HashMap<String, String>();
 			orderMap.put("order_id", orderId);
-
 			String requestBody = prepareReqBody(orderMap);
 			HttpRequest request = postRequest(requestBody, EndPoints.PMNT_STAT.getValue(), true);
 
@@ -181,7 +192,8 @@ public class ShurjoPayPlugin {
 				.appendPattern("yyyy-MM-dd hh:mm:ssa").toFormatter(Locale.US);
 
 		LocalDateTime createdAt = LocalDateTime.parse(authOb.getTokenCreateTime(), format);
-		int diff = (int) ChronoUnit.MILLIS.between(createdAt, LocalDateTime.now());
+		int diff = (int) ChronoUnit.SECONDS.between(createdAt, LocalDateTime.now());
+		System.out.println(diff);
 		if (authOb.getExpiresIn() < diff)
 			return true;
 		return false;
