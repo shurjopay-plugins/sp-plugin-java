@@ -44,7 +44,7 @@ public class ShurjoPayPlugin {
 	 * 
 	 * @return authentication details with valid token
 	 * @throws IllegalAccessException
-	 * @throws @{@link                IllegalAccessException}
+	 * @throws @{@link IllegalAccessException}
 	 */
 	private ShurjoPayToken authenticate() throws IllegalAccessException {
 		Map<String, String> tokenReq = new HashMap<>();
@@ -193,8 +193,7 @@ public class ShurjoPayPlugin {
 
 		LocalDateTime createdAt = LocalDateTime.parse(authOb.getTokenCreateTime(), format);
 		int diff = (int) ChronoUnit.SECONDS.between(createdAt, LocalDateTime.now());
-		System.out.println(diff);
-		if (authOb.getExpiresIn() < diff)
+		if (authOb.getExpiresIn() <= diff)
 			return true;
 		return false;
 	}
