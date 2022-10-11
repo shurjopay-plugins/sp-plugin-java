@@ -11,13 +11,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author Al - Amin
  * @since 2022-06-16
  */
-public class VerifiedOrder implements Serializable{
+public class VerifiedPaymentRes implements Serializable{
 	private static final long serialVersionUID = 1970085707716491151L;
 	
 	private Long id;
 	
 	@JsonProperty("order_id")
 	private String orderId;
+	
 	private String currency;
 	private Double amount;
 	
@@ -61,14 +62,25 @@ public class VerifiedOrder implements Serializable{
 	private String customerOrderId;
 	
 	@JsonProperty("sp_code")
-	private String statusCode;
+	private String spStatusCode;
 	
 	@JsonProperty("sp_massage")
-	private String statusMsg;
-	private String name;	
-	private String email;	
-	private String address;	
-	private String city;
+	private String spStatusMsg;
+	
+	@JsonProperty("name")
+	private String customerName;
+	
+	@JsonProperty("email")
+	private String customerEmail;
+	
+	@JsonProperty("address")
+	private String customerAddress;	
+	
+	@JsonProperty("city")
+	private String customerCity;
+	
+	/** Sometime customer have to send additional data like studentId or any other information which have not any field given by shurjoPay.
+	 * value1, value2, value3, value4 is used for customer's additional info if needed*/
 	private String value1;	
 	private String value2;	
 	private String value3;	
@@ -76,7 +88,10 @@ public class VerifiedOrder implements Serializable{
 	
 	@JsonProperty("transaction_status")
 	private String txnStatus;
-	private String method;
+	
+	/** e.g. EBL Visa, Bkash, EBL Master etc. */
+	@JsonProperty("method")
+	private String paymentMethod;
 	
 	@JsonProperty("date_time")
 	private String txnTime;
@@ -153,6 +168,14 @@ public class VerifiedOrder implements Serializable{
 		this.usdRate = usdRate;
 	}
 
+	public Double getReceivedAmt() {
+		return receivedAmt;
+	}
+
+	public void setReceivedAmt(Double receivedAmt) {
+		this.receivedAmt = receivedAmt;
+	}
+
 	public String getCardHolder() {
 		return cardHolder;
 	}
@@ -209,52 +232,52 @@ public class VerifiedOrder implements Serializable{
 		this.customerOrderId = customerOrderId;
 	}
 
-	public String getStatusCode() {
-		return statusCode;
+	public String getSpStatusCode() {
+		return spStatusCode;
 	}
 
-	public void setStatusCode(String statusCode) {
-		this.statusCode = statusCode;
+	public void setSpStatusCode(String spStatusCode) {
+		this.spStatusCode = spStatusCode;
 	}
 
-	public String getStatusMsg() {
-		return statusMsg;
+	public String getSpStatusMsg() {
+		return spStatusMsg;
 	}
 
-	public void setStatusMsg(String statusMsg) {
-		this.statusMsg = statusMsg;
+	public void setSpStatusMsg(String spStatusMsg) {
+		this.spStatusMsg = spStatusMsg;
 	}
 
-	public String getName() {
-		return name;
+	public String getCustomerName() {
+		return customerName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getCustomerEmail() {
+		return customerEmail;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setCustomerEmail(String customerEmail) {
+		this.customerEmail = customerEmail;
 	}
 
-	public String getAddress() {
-		return address;
+	public String getCustomerAddress() {
+		return customerAddress;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
+	public void setCustomerAddress(String customerAddress) {
+		this.customerAddress = customerAddress;
 	}
 
-	public String getCity() {
-		return city;
+	public String getCustomerCity() {
+		return customerCity;
 	}
 
-	public void setCity(String city) {
-		this.city = city;
+	public void setCustomerCity(String customerCity) {
+		this.customerCity = customerCity;
 	}
 
 	public String getValue1() {
@@ -297,12 +320,12 @@ public class VerifiedOrder implements Serializable{
 		this.txnStatus = txnStatus;
 	}
 
-	public String getMethod() {
-		return method;
+	public String getPaymentMethod() {
+		return paymentMethod;
 	}
 
-	public void setMethod(String method) {
-		this.method = method;
+	public void setPaymentMethod(String paymentMethod) {
+		this.paymentMethod = paymentMethod;
 	}
 
 	public String getTxnTime() {
@@ -315,15 +338,15 @@ public class VerifiedOrder implements Serializable{
 
 	@Override
 	public String toString() {
-		return "VerifiedOrder [id=" + id + ", orderId=" + orderId + ", currency=" + currency + ", amount=" + amount
+		return "VerifiedPaymentRes [id=" + id + ", orderId=" + orderId + ", currency=" + currency + ", amount=" + amount
 				+ ", payableAmount=" + payableAmount + ", discountAmount=" + discountAmount + ", discpercent="
-				+ discpercent + ", usdAmt=" + usdAmt + ", usdRate=" + usdRate + ", cardHolder=" + cardHolder
-				+ ", cardNumber=" + cardNumber + ", phoneNo=" + phoneNo + ", bankTxnId=" + bankTxnId + ", invoiceNo="
-				+ invoiceNo + ", bankStatus=" + bankStatus + ", customerOrderId=" + customerOrderId + ", statusCode="
-				+ statusCode + ", statusMsg=" + statusMsg + ", name=" + name + ", email=" + email + ", address="
-				+ address + ", city=" + city + ", value1=" + value1 + ", value2=" + value2 + ", value3=" + value3
-				+ ", value4=" + value4 + ", txnStatus=" + txnStatus + ", method=" + method + ", txnTime=" + txnTime
-				+ "]";
+				+ discpercent + ", usdAmt=" + usdAmt + ", usdRate=" + usdRate + ", receivedAmt=" + receivedAmt
+				+ ", cardHolder=" + cardHolder + ", cardNumber=" + cardNumber + ", phoneNo=" + phoneNo + ", bankTxnId="
+				+ bankTxnId + ", invoiceNo=" + invoiceNo + ", bankStatus=" + bankStatus + ", customerOrderId="
+				+ customerOrderId + ", spStatusCode=" + spStatusCode + ", spStatusMsg=" + spStatusMsg
+				+ ", customerName=" + customerName + ", customerEmail=" + customerEmail + ", customerAddress="
+				+ customerAddress + ", customerCity=" + customerCity + ", value1=" + value1 + ", value2=" + value2
+				+ ", value3=" + value3 + ", value4=" + value4 + ", txnStatus=" + txnStatus + ", paymentMethod="
+				+ paymentMethod + ", txnTime=" + txnTime + "]";
 	}
-	
 }

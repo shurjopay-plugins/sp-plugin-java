@@ -28,10 +28,10 @@ public class PaymentRes implements Serializable{
 	private String customerName;
 	
 	@JsonProperty("customer_address")
-	private String customerAddr;
+	private String customerAddress;
 	
 	@JsonProperty("customer_phone")
-	private String customerPhn;
+	private String customerPhone;
 	
 	@JsonProperty("customer_city")
 	private String customerCity;
@@ -39,21 +39,43 @@ public class PaymentRes implements Serializable{
 	@JsonProperty("customer_email")
 	private String customerEmail;
 	
+	/** Shipping related fields are used to get information of Ecommerce's transactions */
+	@JsonProperty("shipping_address")
+	private String shippingAddress;
+	
+	@JsonProperty("shipping_city")
+	private String shippingCity;
+	
+	@JsonProperty("shipping_country")
+	private String shippingCountry;
+	
+	@JsonProperty("received_person_name")
+	private String shippingReceiverName;
+	
+	@JsonProperty("shipping_phone_number")
+	private String shippingPhone;
+	
 	@JsonProperty("client_ip")
-	private String clintIp;
-	private String intent;
+	private String clientIp;
+	
+	/** This field is used for presenting payment category. e.g. sale */
+	@JsonProperty("intent")
+	private String paymentCategory;
+	
+	/** Transaction status of shurjoPay. e.g. Initiated, Failed, Canceled */
 	private String transactionStatus;
 	
 	@JsonProperty("sp_code")
 	private Integer spCode;
+	
 	private String message;
 
 	public String getPaymentUrl() {
 		return paymentUrl;
 	}
 
-	public void setPaymentUrl(String checkoutUrl) {
-		this.paymentUrl = checkoutUrl;
+	public void setPaymentUrl(String paymentUrl) {
+		this.paymentUrl = paymentUrl;
 	}
 
 	public String getAmount() {
@@ -96,20 +118,20 @@ public class PaymentRes implements Serializable{
 		this.customerName = customerName;
 	}
 
-	public String getCustomerAddr() {
-		return customerAddr;
+	public String getCustomerAddress() {
+		return customerAddress;
 	}
 
-	public void setCustomerAddr(String customerAddr) {
-		this.customerAddr = customerAddr;
+	public void setCustomerAddress(String customerAddress) {
+		this.customerAddress = customerAddress;
 	}
 
-	public String getCustomerPhn() {
-		return customerPhn;
+	public String getCustomerPhone() {
+		return customerPhone;
 	}
 
-	public void setCustomerPhn(String customerPhn) {
-		this.customerPhn = customerPhn;
+	public void setCustomerPhone(String customerPhone) {
+		this.customerPhone = customerPhone;
 	}
 
 	public String getCustomerCity() {
@@ -128,20 +150,20 @@ public class PaymentRes implements Serializable{
 		this.customerEmail = customerEmail;
 	}
 
-	public String getClintIp() {
-		return clintIp;
+	public String getClientIp() {
+		return clientIp;
 	}
 
-	public void setClintIp(String clintIp) {
-		this.clintIp = clintIp;
+	public void setClientIp(String clientIp) {
+		this.clientIp = clientIp;
 	}
 
-	public String getIntent() {
-		return intent;
+	public String getPaymentCategory() {
+		return paymentCategory;
 	}
 
-	public void setIntent(String intent) {
-		this.intent = intent;
+	public void setPaymentCategory(String paymentCategory) {
+		this.paymentCategory = paymentCategory;
 	}
 
 	public String getTransactionStatus() {
@@ -151,7 +173,7 @@ public class PaymentRes implements Serializable{
 	public void setTransactionStatus(String transactionStatus) {
 		this.transactionStatus = transactionStatus;
 	}
-	
+
 	public Integer getSpCode() {
 		return spCode;
 	}
@@ -167,14 +189,4 @@ public class PaymentRes implements Serializable{
 	public void setMessage(String message) {
 		this.message = message;
 	}
-
-	@Override
-	public String toString() {
-		return "PaymentRes [paymentUrl=" + paymentUrl + ", amount=" + amount + ", currency=" + currency
-				+ ", spOrderId=" + spOrderId + ", customerOrderId=" + customerOrderId + ", customerName=" + customerName
-				+ ", customerAddr=" + customerAddr + ", customerPhn=" + customerPhn + ", customerCity=" + customerCity
-				+ ", customerEmail=" + customerEmail + ", clintIp=" + clintIp + ", intent=" + intent
-				+ ", transactionStatus=" + transactionStatus + ", spCode=" + spCode + ", message=" + message + "]";
-	}
-
 }
