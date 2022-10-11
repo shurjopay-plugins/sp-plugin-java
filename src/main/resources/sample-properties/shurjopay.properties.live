@@ -1,6 +1,12 @@
-username = sp_sandbox
-password = pyyk97hu&6u6
-shurjopay-api = https://engine.shurjopayment.com/api/
+#merchant username and password
+SP_USER = sp_sandbox
+SP_PASS = pyyk97hu&6u6
+
+#shurjoPay API's base path for sandbox
+SHURJOPAY_API = https://engine.shurjopayment.com/api/
 
 #callback URL is used for cancel payment or success payment
-callback-url = https://engine.shurjopayment.com/response
+SP_CALLBACK = https://engine.shurjopayment.com/response
+
+#shurjoPay plug-in log file location
+SP_LOG = shurjopay-plugin.log

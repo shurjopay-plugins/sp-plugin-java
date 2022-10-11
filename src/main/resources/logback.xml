@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<configuration>
+	<property name="LOCATION" value="D:/Office/plugin_log" />
+	<property name="SP_LOG" value="shurjopay-plugin.log" />
+	<appender name="FILE" class="ch.qos.logback.core.FileAppender">
+		<file>${LOCATION}/${SP_LOG}</file>
+		<append>true</append>
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<root level="all">
+		<appender-ref ref="STDOUT" />
+	</root>
+</configuration>
+
+
+
