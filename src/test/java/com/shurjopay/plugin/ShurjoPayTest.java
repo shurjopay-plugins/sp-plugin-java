@@ -10,12 +10,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.api.TestMethodOrder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.shurjopay.plugin.model.PaymentReq;
 import com.shurjopay.plugin.model.PaymentRes;
-import com.shurjopay.plugin.model.VerifiedPaymentRes;
+import com.shurjopay.plugin.model.VerifiedPayment;
 
 /**
  * @author Al - Amin
@@ -28,8 +26,7 @@ class ShurjoPayTest {
 
 	private ShurjoPay shurjopay;
 	private PaymentRes paymentRes;
-	private static final Logger log = LoggerFactory.getLogger(ShurjoPayTest.class);
-
+	
 	@BeforeAll
 	void setup() {
 		shurjopay = new ShurjoPay();
@@ -39,7 +36,6 @@ class ShurjoPayTest {
 	@Order(1)
 	@DisplayName("For making shurjoPay payment: ")
 	void testMakePayment() {
-		log.info("Testing make payment");
 		PaymentReq req = getPaymentReq();
 		paymentRes = shurjopay.makePayment(req);
 		assertNotNull(paymentRes.getPaymentUrl(), () -> "Making Payment returns null");
@@ -49,7 +45,7 @@ class ShurjoPayTest {
 	@Order(2)
 	@DisplayName("For verifying order: ")
 	void testVerifyOrder() {
-		VerifiedPaymentRes order = shurjopay.verifyPayment(paymentRes.getSpOrderId());
+		VerifiedPayment order = shurjopay.verifyPayment(paymentRes.getSpOrderId());
 		assertNotNull(order.getOrderId(), () -> "Order is not found.");
 	}
 
@@ -57,7 +53,7 @@ class ShurjoPayTest {
 	@Order(3)
 	@DisplayName("For checking order status: ")
 	void testGetPaymentStatus() {
-		VerifiedPaymentRes order = shurjopay.checkPaymentStatus(paymentRes.getSpOrderId());
+		VerifiedPayment order = shurjopay.checkPaymentStatus(paymentRes.getSpOrderId());
 		assertNotNull(order.getOrderId(), () -> "Order is not found.");
 	}
 
