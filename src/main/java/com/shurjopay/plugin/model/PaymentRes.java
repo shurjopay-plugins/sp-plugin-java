@@ -4,11 +4,14 @@ import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import lombok.Data;
+
 /**
  * After making a payment with shurjoPay this model will be the response object
  * @author Al - Amin
  * @since 2022-06-16
  */
+@Data
 public class PaymentRes implements Serializable{
 	private static final long serialVersionUID = -4989310354723281491L;
 	
@@ -69,124 +72,4 @@ public class PaymentRes implements Serializable{
 	private Integer spCode;
 	
 	private String message;
-
-	public String getPaymentUrl() {
-		return paymentUrl;
-	}
-
-	public void setPaymentUrl(String paymentUrl) {
-		this.paymentUrl = paymentUrl;
-	}
-
-	public String getAmount() {
-		return amount;
-	}
-
-	public void setAmount(String amount) {
-		this.amount = amount;
-	}
-
-	public String getCurrency() {
-		return currency;
-	}
-
-	public void setCurrency(String currency) {
-		this.currency = currency;
-	}
-
-	public String getSpOrderId() {
-		return spOrderId;
-	}
-
-	public void setSpOrderId(String spOrderId) {
-		this.spOrderId = spOrderId;
-	}
-
-	public String getCustomerOrderId() {
-		return customerOrderId;
-	}
-
-	public void setCustomerOrderId(String customerOrderId) {
-		this.customerOrderId = customerOrderId;
-	}
-
-	public String getCustomerName() {
-		return customerName;
-	}
-
-	public void setCustomerName(String customerName) {
-		this.customerName = customerName;
-	}
-
-	public String getCustomerAddress() {
-		return customerAddress;
-	}
-
-	public void setCustomerAddress(String customerAddress) {
-		this.customerAddress = customerAddress;
-	}
-
-	public String getCustomerPhone() {
-		return customerPhone;
-	}
-
-	public void setCustomerPhone(String customerPhone) {
-		this.customerPhone = customerPhone;
-	}
-
-	public String getCustomerCity() {
-		return customerCity;
-	}
-
-	public void setCustomerCity(String customerCity) {
-		this.customerCity = customerCity;
-	}
-
-	public String getCustomerEmail() {
-		return customerEmail;
-	}
-
-	public void setCustomerEmail(String customerEmail) {
-		this.customerEmail = customerEmail;
-	}
-
-	public String getClientIp() {
-		return clientIp;
-	}
-
-	public void setClientIp(String clientIp) {
-		this.clientIp = clientIp;
-	}
-
-	public String getPaymentCategory() {
-		return paymentCategory;
-	}
-
-	public void setPaymentCategory(String paymentCategory) {
-		this.paymentCategory = paymentCategory;
-	}
-
-	public String getTransactionStatus() {
-		return transactionStatus;
-	}
-
-	public void setTransactionStatus(String transactionStatus) {
-		this.transactionStatus = transactionStatus;
-	}
-
-	public Integer getSpCode() {
-		return spCode;
-	}
-
-	public void setSpCode(Integer spCode) {
-		this.spCode = spCode;
-	}
-
-	public String getMessage() {
-		return message;
-	}
-
-	public void setMessage(String message) {
-		this.message = message;
-	}
 }
