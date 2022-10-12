@@ -187,13 +187,13 @@ public class ShurjoPay {
 
 	private HttpRequest postRequest(String httpBody, String endPoint) {
 		return HttpRequest.newBuilder(URI.create(getProperty("SHURJOPAY_API").concat(endPoint)))
-				.POST(HttpRequest.BodyPublishers.ofString(httpBody)).header("Content-Type", "application/json").build();
+						  .POST(HttpRequest.BodyPublishers.ofString(httpBody)).header("Content-Type", "application/json").build();
 	}
 
 	private HttpRequest postRequest(String httpBody, String endPoint, boolean isAuthHead) {
 		return HttpRequest.newBuilder(URI.create(getProperty("SHURJOPAY_API").concat(endPoint)))
-				.header("Authorization", getFormattedToken(authToken.getToken(), authToken.getTokenType()))
-				.POST(HttpRequest.BodyPublishers.ofString(httpBody)).header("Content-Type", "application/json").build();
+						  .header("Authorization", getFormattedToken(authToken.getToken(), authToken.getTokenType()))
+						  .POST(HttpRequest.BodyPublishers.ofString(httpBody)).header("Content-Type", "application/json").build();
 	}
 
 	private String getFormattedToken(String token, String tokenType) {
@@ -203,10 +203,12 @@ public class ShurjoPay {
 	private String getProperty(String key) {
 		Properties spProps = reader.getProperties();
 		String propertyValue = spProps.getProperty(key);
+		
 		if (Objects.isNull(propertyValue)) {
 			log.error("{}\'s value shouldn't be empty", key);
 			return null;
 		}
+		
 		return propertyValue;
 	}
 }
