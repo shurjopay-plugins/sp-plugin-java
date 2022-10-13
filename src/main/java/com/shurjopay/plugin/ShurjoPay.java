@@ -20,6 +20,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shurjopay.plugin.model.PaymentReq;
 import com.shurjopay.plugin.model.PaymentRes;
+import com.shurjopay.plugin.model.ShurjoPayConfig;
 import com.shurjopay.plugin.model.ShurjoPayToken;
 import com.shurjopay.plugin.model.VerifiedPayment;
 
@@ -36,7 +37,7 @@ import lombok.extern.slf4j.Slf4j;
 public class ShurjoPay {
 
 	private ShurjoPayToken authToken;
-	private PropertiesReader reader = PropertiesReader.instance();
+	private ShurjoPayConfig spConfig = getShurjoPayConfig(PropertiesReader.instance());
 
 	/**
 	 * Return authorization token for shurjoPay payment gateway system. Setup
@@ -44,14 +45,14 @@ public class ShurjoPay {
 	 * 
 	 * @return authentication details with valid token
 	 * @throws IllegalAccessException
-	 * @throws InterruptedException 
-	 * @throws IOException 
-	 * @throws @{@link IllegalAccessException}
+	 * @throws InterruptedException
+	 * @throws IOException
+	 * @throws IllegalAccessException
 	 */
 	private ShurjoPayToken authenticate() throws IllegalAccessException, IOException, InterruptedException {
 		Map<String, String> shurjoPayTokenReq = new HashMap<>();
-		shurjoPayTokenReq.put("username", getProperty("SP_USER"));
-		shurjoPayTokenReq.put("password", getProperty("SP_PASS"));
+		shurjoPayTokenReq.put("username", spConfig.getUsername());
+		shurjoPayTokenReq.put("password", spConfig.getPassword());
 
 			HttpClient client = getClient();
 			String requestBody = prepareReqBody(shurjoPayTokenReq);
@@ -80,7 +81,7 @@ public class ShurjoPay {
 			if (isTokenExpired(authToken)) authToken = authenticate();
 			
 			HttpClient client = getClient();
-			String callBackUrl = getProperty("SP_CALLBACK");
+			String callBackUrl = spConfig.getCallbackApi();
 			req.setReturnUrl(callBackUrl);
 			req.setCancelUrl(callBackUrl);
 			req.setAuthToken(authToken.getToken());
@@ -186,12 +187,12 @@ public class ShurjoPay {
 	}
 
 	private HttpRequest postRequest(String httpBody, String endPoint) {
-		return HttpRequest.newBuilder(URI.create(getProperty("SHURJOPAY_API").concat(endPoint)))
+		return HttpRequest.newBuilder(URI.create(spConfig.getApiBaseUrl().concat(endPoint)))
 						  .POST(HttpRequest.BodyPublishers.ofString(httpBody)).header("Content-Type", "application/json").build();
 	}
 
 	private HttpRequest postRequest(String httpBody, String endPoint, boolean isAuthHead) {
-		return HttpRequest.newBuilder(URI.create(getProperty("SHURJOPAY_API").concat(endPoint)))
+		return HttpRequest.newBuilder(URI.create(spConfig.getApiBaseUrl().concat(endPoint)))
 						  .header("Authorization", getFormattedToken(authToken.getToken(), authToken.getTokenType()))
 						  .POST(HttpRequest.BodyPublishers.ofString(httpBody)).header("Content-Type", "application/json").build();
 	}
@@ -199,16 +200,16 @@ public class ShurjoPay {
 	private String getFormattedToken(String token, String tokenType) {
 		return tokenType.concat(" ").concat(token);
 	}
-
-	private String getProperty(String key) {
+	
+	protected ShurjoPayConfig getShurjoPayConfig(PropertiesReader reader) {
 		Properties spProps = reader.getProperties();
-		String propertyValue = spProps.getProperty(key);
+		ShurjoPayConfig spConfig = new ShurjoPayConfig();
 		
-		if (Objects.isNull(propertyValue)) {
-			log.error("{}\'s value shouldn't be empty", key);
-			return null;
-		}
+		spConfig.setUsername(spProps.getProperty(ShurjoPayConfigKeys.SP_USER.name()));
+		spConfig.setPassword(spProps.getProperty(ShurjoPayConfigKeys.SP_PASS.name()));
+		spConfig.setApiBaseUrl(spProps.getProperty(ShurjoPayConfigKeys.SHURJOPAY_API.name()));
+		spConfig.setCallbackApi(spProps.getProperty(ShurjoPayConfigKeys.SP_CALLBACK.name()));
 		
-		return propertyValue;
+		return spConfig;
 	}
 }
