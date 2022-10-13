@@ -37,7 +37,7 @@ import lombok.extern.slf4j.Slf4j;
 public class ShurjoPay {
 
 	private ShurjoPayToken authToken;
-	private ShurjoPayConfig spConfig = getShurjoPayConfig(PropertiesReader.instance());
+	private ShurjoPayConfig spConfig = getShurjoPayConfig();
 
 	/**
 	 * Return authorization token for shurjoPay payment gateway system. Setup
@@ -201,8 +201,8 @@ public class ShurjoPay {
 		return tokenType.concat(" ").concat(token);
 	}
 	
-	protected ShurjoPayConfig getShurjoPayConfig(PropertiesReader reader) {
-		Properties spProps = reader.getProperties();
+	protected ShurjoPayConfig getShurjoPayConfig() {
+		Properties spProps = PropertiesReader.instance().getProperties();
 		ShurjoPayConfig spConfig = new ShurjoPayConfig();
 		
 		spConfig.setUsername(spProps.getProperty(ShurjoPayConfigKeys.SP_USER.name()));
