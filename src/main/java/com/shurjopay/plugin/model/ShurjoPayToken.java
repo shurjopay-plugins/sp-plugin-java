@@ -5,6 +5,7 @@ import java.io.Serializable;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * This model is used internally to authenticate merchant for accessing shurjoPay's APIs.
@@ -13,6 +14,7 @@ import lombok.Data;
  * @since 2022-06-13
  */
 @Data
+@Accessors(chain = true)
 public class ShurjoPayToken implements Serializable {
 	private static final long serialVersionUID = 1960827183789531739L;
 

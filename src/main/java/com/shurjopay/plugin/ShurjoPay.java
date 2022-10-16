@@ -81,7 +81,7 @@ public class ShurjoPay {
 			if (isTokenExpired(authToken)) authToken = authenticate();
 			
 			HttpClient client = getClient();
-			String callBackUrl = spConfig.getCallbackApi();
+			String callBackUrl = spConfig.getCallbackUrl();
 			req.setReturnUrl(callBackUrl);
 			req.setCancelUrl(callBackUrl);
 			req.setAuthToken(authToken.getToken());
@@ -208,7 +208,7 @@ public class ShurjoPay {
 		spConfig.setUsername(spProps.getProperty(ShurjoPayConfigKeys.SP_USER.name()));
 		spConfig.setPassword(spProps.getProperty(ShurjoPayConfigKeys.SP_PASS.name()));
 		spConfig.setApiBaseUrl(spProps.getProperty(ShurjoPayConfigKeys.SHURJOPAY_API.name()));
-		spConfig.setCallbackApi(spProps.getProperty(ShurjoPayConfigKeys.SP_CALLBACK.name()));
+		spConfig.setCallbackUrl(spProps.getProperty(ShurjoPayConfigKeys.SP_CALLBACK.name()));
 		
 		return spConfig;
 	}
