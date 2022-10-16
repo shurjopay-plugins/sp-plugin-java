@@ -5,6 +5,7 @@ import java.io.Serializable;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * This model is used for making payment.
@@ -15,6 +16,7 @@ import lombok.Data;
  * @since 2022-06-16
  */
 @Data
+@Accessors(chain = true)
 public class PaymentReq implements Serializable {
 	private static final long serialVersionUID = 4191752321718444127L;
 

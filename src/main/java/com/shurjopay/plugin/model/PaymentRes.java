@@ -5,6 +5,7 @@ import java.io.Serializable;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * After making a payment with shurjoPay this model will be the response object
@@ -12,6 +13,7 @@ import lombok.Data;
  * @since 2022-06-16
  */
 @Data
+@Accessors(chain = true)
 public class PaymentRes implements Serializable{
 	private static final long serialVersionUID = -4989310354723281491L;
 	
