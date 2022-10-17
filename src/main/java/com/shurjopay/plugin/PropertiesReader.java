@@ -23,7 +23,7 @@ public class PropertiesReader {
 			Properties prop = new Properties();
 			prop.load(PropertiesReader.class.getClassLoader().getResourceAsStream("shurjopay.properties"));
 			return prop;
-		} catch (IOException e) {
+		} catch (NullPointerException | IOException e) {
 			log.error("shurjopay.properties is missing in resource path or resources path is not exist", e);
 			return null;
 		}

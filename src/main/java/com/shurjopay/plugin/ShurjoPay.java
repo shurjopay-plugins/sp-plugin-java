@@ -20,7 +20,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shurjopay.plugin.model.PaymentReq;
 import com.shurjopay.plugin.model.PaymentRes;
-import com.shurjopay.plugin.model.ShurjoPayConfig;
+import com.shurjopay.plugin.model.ShurjopayConfig;
 import com.shurjopay.plugin.model.ShurjoPayToken;
 import com.shurjopay.plugin.model.VerifiedPayment;
 
@@ -37,7 +37,18 @@ import lombok.extern.slf4j.Slf4j;
 public class ShurjoPay {
 
 	private ShurjoPayToken authToken;
-	private ShurjoPayConfig spConfig = getShurjoPayConfig();
+	private ShurjopayConfig spConfig;
+
+	
+	public ShurjoPay() {
+		super();
+		this.spConfig = getShurjoPayConfig();
+	}
+
+	public ShurjoPay(ShurjopayConfig config) {
+		super();
+		this.spConfig = config;
+	}
 
 	/**
 	 * Return authorization token for shurjoPay payment gateway system. Setup
@@ -201,10 +212,10 @@ public class ShurjoPay {
 		return tokenType.concat(" ").concat(token);
 	}
 	
-	protected ShurjoPayConfig getShurjoPayConfig() {
+	private ShurjopayConfig getShurjoPayConfig() {
 		Properties spProps = PropertiesReader.instance().getProperties();
-		ShurjoPayConfig spConfig = new ShurjoPayConfig();
 		
+		ShurjopayConfig spConfig = new ShurjopayConfig();
 		spConfig.setUsername(spProps.getProperty(ShurjoPayConfigKeys.SP_USER.name()));
 		spConfig.setPassword(spProps.getProperty(ShurjoPayConfigKeys.SP_PASS.name()));
 		spConfig.setApiBaseUrl(spProps.getProperty(ShurjoPayConfigKeys.SHURJOPAY_API.name()));
