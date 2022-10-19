@@ -20,6 +20,8 @@ import java.util.function.Supplier;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.shurjopay.plugin.constants.Endpoints;
+import com.shurjopay.plugin.constants.ShurjopayConfigKeys;
 import com.shurjopay.plugin.exception.ShurjopayAuthenticationException;
 import com.shurjopay.plugin.exception.ShurjopayPaymentException;
 import com.shurjopay.plugin.exception.ShurjopayPaymentStatusException;

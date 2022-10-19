@@ -1,8 +1,7 @@
-package com.shurjopay.plugin;
+package com.shurjopay.plugin.constants;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NonNull;
 
 /**
  * This ENUM contains all of the end-points of shurjoPay
@@ -17,6 +16,6 @@ public enum Endpoints {
 	VERIFIED_ORDER("verification"),
 	PMNT_STAT("payment-status");
 	
-	@NonNull @Getter
+	@Getter
 	private String endpointValue;
 }
