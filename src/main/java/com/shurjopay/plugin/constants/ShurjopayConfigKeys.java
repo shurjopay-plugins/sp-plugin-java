@@ -1,4 +1,4 @@
-package com.shurjopay.plugin;
+package com.shurjopay.plugin.constants;
 
 public enum ShurjopayConfigKeys {
 	SP_USER,
