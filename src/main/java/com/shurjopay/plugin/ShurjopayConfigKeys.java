@@ -1,6 +1,6 @@
 package com.shurjopay.plugin;
 
-public enum ShurjoPayConfigKeys {
+public enum ShurjopayConfigKeys {
 	SP_USER,
 	SP_PASS,
 	SHURJOPAY_API,

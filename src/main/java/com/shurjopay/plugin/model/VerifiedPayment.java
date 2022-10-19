@@ -69,7 +69,7 @@ public class VerifiedPayment implements Serializable{
 	@JsonProperty("sp_code")
 	private String spStatusCode;
 	
-	@JsonProperty("sp_massage")
+	@JsonProperty("sp_message")
 	private String spStatusMsg;
 	
 	@JsonProperty("name")
