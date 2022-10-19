@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
  */
 @Data
 @Accessors(chain = true)
-public class ShurjoPayToken implements Serializable {
+public class ShurjopayToken implements Serializable {
 	private static final long serialVersionUID = 1960827183789531739L;
 
 	private String token;

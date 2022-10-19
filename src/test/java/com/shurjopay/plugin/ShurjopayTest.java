@@ -22,14 +22,14 @@ import com.shurjopay.plugin.model.VerifiedPayment;
 @DisplayName("Testing plugin =>")
 @TestInstance(Lifecycle.PER_CLASS)
 @TestMethodOrder(OrderAnnotation.class)
-class ShurjoPayTest {
+class ShurjopayTest {
 
-	private ShurjoPay shurjopay;
+	private Shurjopay shurjopay;
 	private PaymentRes paymentRes;
 	
 	@BeforeAll
 	void setup() {
-		shurjopay = new ShurjoPay();
+		shurjopay = new Shurjopay();
 	}
 
 	@Test
@@ -38,6 +38,7 @@ class ShurjoPayTest {
 	void testMakePayment() {
 		PaymentReq req = getPaymentReq();
 		paymentRes = shurjopay.makePayment(req);
+		System.out.println(req.getClientIp());
 		assertNotNull(paymentRes.getPaymentUrl(), () -> "Making Payment returns null");
 	}
 
@@ -70,7 +71,6 @@ class ShurjoPayTest {
 		request.setCustomerCity("Dhaka");
 		request.setCustomerPostCode("1212");
 		request.setCustomerEmail("al@gmail.com");
-		request.setClientIp("102.101.1.1");
 		return request;
 	}
 }
