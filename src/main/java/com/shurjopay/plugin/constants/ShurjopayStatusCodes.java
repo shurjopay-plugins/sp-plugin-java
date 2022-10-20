@@ -31,17 +31,13 @@ public enum ShurjopayStatusCodes {
 	REFUND_ACCEPT("2001", "Shurjopay payment refund is accepted."),
 	REFUND_CANCEL("2006", "Shurjopay payment refund is canceled."),
 	REFUND_COMPLETED("2002", "Shurjopay payment refund is successfully done."),
-	
-	//TODO What is this status? @fahim explanation
-	BANK_REVIEW("2005", "Bank holds the transaction for review"),
-	
-	//TODO What is this status? @fahim explanation
-	BANK_ERROR("2006", "Bank error"),
+	BANK_REVIEW("2005", "Bank holds the transaction for review"),	
+	BANK_ERROR("2006", "Error occured while bank processing the transaction."),
 	TIME_OUT("2007", "Shurjopay timeout occured."),
 	INACTIVE_MERCHANT("2008", "Merchant is inactive. Contact with your respective KAM."),
 	
-	//TODO What is this status? @fahim explanation
-	BKASH_DEBIT_PARTY("2009", "Payment has failed Debit party identity tag prohibits execution");
+	//TODO Need to define properly
+	BKASH_DEBIT_PARTY("2009", "Payment has failed debit party identity tag prohibits execution");
 	
 	@Getter
 	private String code;
