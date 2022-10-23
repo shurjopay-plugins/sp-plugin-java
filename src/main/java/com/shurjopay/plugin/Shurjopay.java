@@ -22,6 +22,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shurjopay.plugin.constants.Endpoints;
 import com.shurjopay.plugin.constants.ShurjopayConfigKeys;
+import com.shurjopay.plugin.constants.ShurjopayStatus;
 import com.shurjopay.plugin.exception.ShurjopayAuthenticationException;
 import com.shurjopay.plugin.exception.ShurjopayPaymentException;
 import com.shurjopay.plugin.exception.ShurjopayPaymentStatusException;
@@ -47,8 +48,9 @@ public class Shurjopay {
 	private ShurjopayToken authToken;
 	private ShurjopayConfig spConfig;
 	private static final String AUTH_SUCCESS_CODE = "200";
-	private static final String SP_SUCCESS_CODE = "1000";
 	private static final String DEFAULT_IP = "127.0.0.1";
+	private static final String WHITE_SPACE = " ";
+	private static final String AUTH_KEYWORD = "Authorization";
 
 	
 	public Shurjopay() {
@@ -78,8 +80,9 @@ public class Shurjopay {
 			HttpRequest request = postRequest(requestBody, Endpoints.TOKEN.getEndpointValue());
 			HttpResponse<Supplier<ShurjopayToken>> response = getClient().send(request, new JsonBodyHandler<>(ShurjopayToken.class));
 			authToken = response.body().get();
+			String authCode = authToken.getSpStatusCode();
 
-		if (!authToken.getSpStatusCode().equals(AUTH_SUCCESS_CODE)) throw new ShurjopayAuthenticationException("Invalid User name or Password due to shurjoPay authentication.");
+		if (!authCode.equals(AUTH_SUCCESS_CODE)) throw new ShurjopayAuthenticationException(ShurjopayStatus.getStatusByCode(authCode));
 		log.info("Merchant authentication successful!");
 		
 		return authToken;
@@ -107,7 +110,7 @@ public class Shurjopay {
 		try {
 			if (isAuthenticationRequired()) authToken = authenticate();
 			
-			String requestBody = prepareReqBody(setDefaultInfo(req));
+			String requestBody = prepareReqBody(getDefaultInfo(req));
 			HttpRequest request = postRequest(requestBody, Endpoints.MAKE_PMNT.getEndpointValue());
 			HttpResponse<Supplier<PaymentRes>> response = getClient().send(request, new JsonBodyHandler<>(PaymentRes.class));
 			
@@ -118,7 +121,7 @@ public class Shurjopay {
 	
 			return paymentRes;
 		} catch (ShurjopayAuthenticationException e) {
-			log.error("Payment request failed due to authentication.", e);
+			log.error("Code: {}, Status: {}",ShurjopayStatus.AUTHENTICATION_FAILED.getCode(), ShurjopayStatus.AUTHENTICATION_FAILED.getStatus(), e);
 			throw e;
 		} catch (IOException e) {
 			log.error("Error occrued when sending make payment request.", e);
@@ -152,14 +155,14 @@ public class Shurjopay {
 			HttpResponse<Supplier<VerifiedPayment[]>> response = getClient().send(request, new JsonBodyHandler<>(VerifiedPayment[].class));
 			VerifiedPayment verifiedPaymentRes = response.body().get()[0];
 			
-			if (!verifiedPaymentRes.getSpStatusCode().equals(SP_SUCCESS_CODE))
-				throw new ShurjopayVerificationException("");
+			String verifyStatus = verifiedPaymentRes.getSpStatusCode();
+			if (!verifyStatus.equals(ShurjopayStatus.SHURJOPAY_SUCCESS.getCode())) throw new ShurjopayVerificationException(ShurjopayStatus.getStatusByCode(requestBody));
 			
 			log.info("shurjopay status for Verify Payment: {}", verifiedPaymentRes.getSpStatusMsg());
 			
 			return verifiedPaymentRes;
 		} catch (ShurjopayAuthenticationException e) {
-			log.error("Payment verification failed due to authentication", e);
+			log.error(ShurjopayStatus.AUTHENTICATION_FAILED.getStatus(), e);
 			throw e;
 		} catch (IOException e) {
 			log.error("Error occrued when sending verify payment request.", e);
@@ -192,7 +195,7 @@ public class Shurjopay {
 
 			return response.body().get()[0];
 		}  catch (ShurjopayAuthenticationException e) {
-			log.error("Fetching payment status failed due to authentication", e);
+			log.error(ShurjopayStatus.AUTHENTICATION_FAILED.getStatus(), e);
 			throw e;
 		} catch (IOException e) {
 			log.error("Error occrued when fetching payment status request.", e);
@@ -243,34 +246,39 @@ public class Shurjopay {
 	 * @param {@link PaymentReq}
 	 * @return {@link PaymentReq} with shurjoPay's default values
 	 */
-	private PaymentReq setDefaultInfo(PaymentReq paymentReq) {
+	private PaymentReq getDefaultInfo(PaymentReq paymentReq) {
 		String callBackUrl = spConfig.getCallbackUrl();
 		paymentReq.setReturnUrl(callBackUrl);
 		paymentReq.setCancelUrl(callBackUrl);
 		paymentReq.setAuthToken(authToken.getToken());
 		paymentReq.setStoreId(authToken.getStoreId());
+		
 		try {
 			paymentReq.setClientIp(InetAddress.getLocalHost().getHostAddress());
 		} catch (UnknownHostException e) {
 			log.warn("Client ip address is not found. Setting default ip address..", e);
 			paymentReq.setClientIp(DEFAULT_IP);
 		}
+		
 		return paymentReq;
 	}
 
 	private HttpRequest postRequest(String httpBody, String endPoint) {
+		
 		return HttpRequest.newBuilder(URI.create(spConfig.getApiBaseUrl().concat(endPoint)))
 						  .POST(HttpRequest.BodyPublishers.ofString(httpBody)).header("Content-Type", "application/json").build();
 	}
 
 	private HttpRequest postRequest(String httpBody, String endPoint, boolean isAuthHead) {
+		
 		return HttpRequest.newBuilder(URI.create(spConfig.getApiBaseUrl().concat(endPoint)))
-						  .header("Authorization", getFormattedToken(authToken.getToken(), authToken.getTokenType()))
+						  .header(AUTH_KEYWORD, getFormattedToken(authToken.getToken(), authToken.getTokenType()))
 						  .POST(HttpRequest.BodyPublishers.ofString(httpBody)).header("Content-Type", "application/json").build();
 	}
 
 	private String getFormattedToken(String token, String tokenType) {
-		return tokenType.concat(" ").concat(token);
+		
+		return tokenType.concat(WHITE_SPACE).concat(token);
 	}
 	
 	private ShurjopayConfig getShurjoPayConfig() {

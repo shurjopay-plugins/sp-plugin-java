@@ -9,9 +9,9 @@ import lombok.Getter;
  * @since 2022-10-19
  */
 @AllArgsConstructor
-public enum ShurjopayStatusCodes {
+public enum ShurjopayStatus {
 
-	PAYMENT_SUCCESS("1000", "Shurjopay transaction successful."),
+	SHURJOPAY_SUCCESS("1000", "Shurjopay transaction successful."),
 	PAYMENT_FAILED("1001", "Shurjopay transaction failed."),
 	PAYMENT_CANCEL("1002", "Shurjopay transaction canceled."),
 	BANK_RESPONSE_FAILED("1005", "Bank transaction failed."),
@@ -22,7 +22,7 @@ public enum ShurjopayStatusCodes {
 	CURRENCY_MISSMATCH("1010", "Shurjopay accepts BDT and USD currency."),
 	INVALID_ORDER_ID("1011", "Invalid order id. Provide shurjopay valid order id."),
 	BKASH_DUPLICATE_PAYMENT("1061", "Bkash does not allow same payment transaction within 10 minutes."),
-	AUTHENTICATION_FAILED("1064", "Shurjopay merchant's authentication failed."),
+	AUTHENTICATION_FAILED("1064", "Shurjopay merchant's authentication failed. Check username and password!"),
 	DBBL_TIMEOUT("1065", "Payment is initiated but not completed."),
 	PAYMENT_NOT_INITIATED("1066", "Shurjopay payment is not initiated."),
 	PAYMENT_DECLINED("1067", "Shurjopay payment is declined."),
@@ -35,12 +35,19 @@ public enum ShurjopayStatusCodes {
 	BANK_ERROR("2006", "Error occured while bank processing the transaction."),
 	TIME_OUT("2007", "Shurjopay timeout occured."),
 	INACTIVE_MERCHANT("2008", "Merchant is inactive. Contact with your respective KAM."),
-	
-	//TODO Need to define properly
 	BKASH_DEBIT_PARTY("2009", "Payment has failed debit party identity tag prohibits execution");
 	
 	@Getter
 	private String code;
 	@Getter
-	private String title;
+	private String status;
+	
+	public static String getStatusByCode(String code) {
+        for (ShurjopayStatus b : ShurjopayStatus.values()) {
+            if (b.code.equalsIgnoreCase(code)) {
+                return b.status;
+            }
+        }
+        return null;
+    }
 }
