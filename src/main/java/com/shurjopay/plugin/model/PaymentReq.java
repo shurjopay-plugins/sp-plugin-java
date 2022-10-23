@@ -4,14 +4,19 @@ import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import lombok.Data;
+import lombok.experimental.Accessors;
+
 /**
  * This model is used for making payment.
- * Model is not required to set returnUrl and cancelUrl. For this purpose,
- * set callback-url value in shurjopay.properties. It will be used for concerned fields.
+ * Model is not required to set returnUrl and cancelUrl.
+ * For this purpose, set callback-URL in shurjopay.properties. It will be used for concerned fields.
  * 
  * @author Al - Amin
  * @since 2022-06-16
  */
+@Data
+@Accessors(chain = true)
 public class PaymentReq implements Serializable {
 	private static final long serialVersionUID = 4191752321718444127L;
 
@@ -40,10 +45,10 @@ public class PaymentReq implements Serializable {
 	private String customerName;
 
 	@JsonProperty("customer_address")
-	private String customerAddr;
+	private String customerAddress;
 
 	@JsonProperty("customer_phone")
-	private String customerPhn;
+	private String customerPhone;
 
 	@JsonProperty("customer_city")
 	private String customerCity;
@@ -53,136 +58,23 @@ public class PaymentReq implements Serializable {
 	
 	@JsonProperty("customer_email")
 	private String customerEmail;
+	
+	/** Shipping related fields are used to get information of Ecommerce's transactions */
+	@JsonProperty("shipping_address")
+	private String shippingAddress;
+	
+	@JsonProperty("shipping_city")
+	private String shippingCity;
+	
+	@JsonProperty("shipping_country")
+	private String shippingCountry;
+	
+	@JsonProperty("received_person_name")
+	private String shippingReceiverName;
+	
+	@JsonProperty("shipping_phone_number")
+	private String shippingPhone;
 
 	@JsonProperty("client_ip")
 	private String clientIp;
-
-	public String getPrefix() {
-		return prefix;
-	}
-
-	public void setPrefix(String prefix) {
-		this.prefix = prefix;
-	}
-
-	public String getAuthToken() {
-		return authToken;
-	}
-
-	public void setAuthToken(String authToken) {
-		this.authToken = authToken;
-	}
-
-	public String getReturnUrl() {
-		return returnUrl;
-	}
-
-	public void setReturnUrl(String returnUrl) {
-		this.returnUrl = returnUrl;
-	}
-
-	public String getCancelUrl() {
-		return cancelUrl;
-	}
-
-	public void setCancelUrl(String cancelUrl) {
-		this.cancelUrl = cancelUrl;
-	}
-
-	public Integer getStoreId() {
-		return storeId;
-	}
-
-	public void setStoreId(Integer storeId) {
-		this.storeId = storeId;
-	}
-
-	public Double getAmount() {
-		return amount;
-	}
-
-	public void setAmount(Double amount) {
-		this.amount = amount;
-	}
-
-	public String getOrderId() {
-		return orderId;
-	}
-
-	public void setOrderId(String orderId) {
-		this.orderId = orderId;
-	}
-
-	public String getCurrency() {
-		return currency;
-	}
-
-	public void setCurrency(String currency) {
-		this.currency = currency;
-	}
-
-	public String getCustomerName() {
-		return customerName;
-	}
-
-	public void setCustomerName(String customerName) {
-		this.customerName = customerName;
-	}
-
-	public String getCustomerAddr() {
-		return customerAddr;
-	}
-
-	public void setCustomerAddr(String customerAddr) {
-		this.customerAddr = customerAddr;
-	}
-
-	public String getCustomerPhn() {
-		return customerPhn;
-	}
-
-	public void setCustomerPhn(String customerPhn) {
-		this.customerPhn = customerPhn;
-	}
-
-	public String getCustomerCity() {
-		return customerCity;
-	}
-
-	public void setCustomerCity(String customerCity) {
-		this.customerCity = customerCity;
-	}
-
-	public String getCustomerPostCode() {
-		return customerPostCode;
-	}
-
-	public void setCustomerPostCode(String customerPostCode) {
-		this.customerPostCode = customerPostCode;
-	}
-
-	public String getClientIp() {
-		return clientIp;
-	}
-
-	public void setClientIp(String clientIp) {
-		this.clientIp = clientIp;
-	}
-
-	public String getCustomerEmail() {
-		return customerEmail;
-	}
-
-	public void setCustomerEmail(String customerEmail) {
-		this.customerEmail = customerEmail;
-	}
-
-	@Override
-	public String toString() {
-		return "PaymentReq [prefix=" + prefix + ", authToken=" + authToken + ", returnUrl=" + returnUrl + ", cancelUrl="
-				+ cancelUrl + ", storeId=" + storeId + ", amount=" + amount + ", orderId=" + orderId + ", currency="
-				+ currency + ", customerName=" + customerName + ", customerAddr=" + customerAddr + ", customerPhn="
-				+ customerPhn + ", customerCity=" + customerCity + ", customerPostCode=" + customerPostCode
-				+ ", customerEmail=" + customerEmail + ", clientIp=" + clientIp + "]";
-	}
 }

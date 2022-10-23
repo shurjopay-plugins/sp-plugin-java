@@ -3,7 +3,6 @@ package com.shurjopay.plugin;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.BeforeAll;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
@@ -12,9 +11,10 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.api.TestMethodOrder;
 
+import com.shurjopay.plugin.constants.ShurjopayStatus;
 import com.shurjopay.plugin.model.PaymentReq;
 import com.shurjopay.plugin.model.PaymentRes;
-import com.shurjopay.plugin.model.VerifiedOrder;
+import com.shurjopay.plugin.model.VerifiedPayment;
 
 /**
  * @author Al - Amin
@@ -23,14 +23,19 @@ import com.shurjopay.plugin.model.VerifiedOrder;
 @DisplayName("Testing plugin =>")
 @TestInstance(Lifecycle.PER_CLASS)
 @TestMethodOrder(OrderAnnotation.class)
-class ShurjoPayPluginTest {
+class ShurjopayTest {
 
-	private ShurjoPayPlugin shurjopay;
+	private Shurjopay shurjopay;
 	private PaymentRes paymentRes;
-
+	
 	@BeforeAll
 	void setup() {
-		shurjopay = new ShurjoPayPlugin();
+		shurjopay = new Shurjopay();
+	}
+	
+	@Test
+	void testMaterial() {
+		System.out.println(ShurjopayStatus.getStatusByCode("1000"));
 	}
 
 	@Test
@@ -39,6 +44,7 @@ class ShurjoPayPluginTest {
 	void testMakePayment() {
 		PaymentReq req = getPaymentReq();
 		paymentRes = shurjopay.makePayment(req);
+		System.out.println(req.getClientIp());
 		assertNotNull(paymentRes.getPaymentUrl(), () -> "Making Payment returns null");
 	}
 
@@ -46,7 +52,7 @@ class ShurjoPayPluginTest {
 	@Order(2)
 	@DisplayName("For verifying order: ")
 	void testVerifyOrder() {
-		VerifiedOrder order = shurjopay.verifyOrder(paymentRes.getSpOrderId());
+		VerifiedPayment order = shurjopay.verifyPayment(paymentRes.getSpOrderId());
 		assertNotNull(order.getOrderId(), () -> "Order is not found.");
 	}
 
@@ -54,7 +60,7 @@ class ShurjoPayPluginTest {
 	@Order(3)
 	@DisplayName("For checking order status: ")
 	void testGetPaymentStatus() {
-		VerifiedOrder order = shurjopay.checkPaymentStatus(paymentRes.getSpOrderId());
+		VerifiedPayment order = shurjopay.checkPaymentStatus(paymentRes.getSpOrderId());
 		assertNotNull(order.getOrderId(), () -> "Order is not found.");
 	}
 
@@ -66,12 +72,11 @@ class ShurjoPayPluginTest {
 		request.setOrderId("sp315689");
 		request.setCurrency("BDT");
 		request.setCustomerName("Maharab kibria");
-		request.setCustomerAddr("Dhaka");
-		request.setCustomerPhn("01766666666");
+		request.setCustomerAddress("Dhaka");
+		request.setCustomerPhone("01766666666");
 		request.setCustomerCity("Dhaka");
 		request.setCustomerPostCode("1212");
 		request.setCustomerEmail("al@gmail.com");
-		request.setClientIp("102.101.1.1");
 		return request;
 	}
 }
