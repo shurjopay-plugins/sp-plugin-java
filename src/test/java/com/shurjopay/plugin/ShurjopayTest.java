@@ -11,7 +11,6 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.api.TestMethodOrder;
 
-import com.shurjopay.plugin.constants.ShurjopayStatus;
 import com.shurjopay.plugin.model.PaymentReq;
 import com.shurjopay.plugin.model.PaymentRes;
 import com.shurjopay.plugin.model.VerifiedPayment;
@@ -32,11 +31,6 @@ class ShurjopayTest {
 	void setup() {
 		shurjopay = new Shurjopay();
 	}
-	
-	@Test
-	void testMaterial() {
-		System.out.println(ShurjopayStatus.getStatusByCode("1000"));
-	}
 
 	@Test
 	@Order(1)
@@ -52,6 +46,7 @@ class ShurjopayTest {
 	@Order(2)
 	@DisplayName("For verifying order: ")
 	void testVerifyOrder() {
+		System.out.println(paymentRes.getSpOrderId());
 		VerifiedPayment order = shurjopay.verifyPayment(paymentRes.getSpOrderId());
 		assertNotNull(order.getOrderId(), () -> "Order is not found.");
 	}
