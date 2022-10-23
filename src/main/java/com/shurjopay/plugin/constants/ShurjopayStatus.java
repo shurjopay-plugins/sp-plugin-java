@@ -1,14 +1,10 @@
 package com.shurjopay.plugin.constants;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
 /**
  * This ENUM represents all shurjoPay's codes and their definition
  * @author Al-Amin
  * @since 2022-10-19
  */
-@AllArgsConstructor
 public enum ShurjopayStatus {
 
 	SHURJOPAY_SUCCESS("1000", "Shurjopay transaction successful."),
@@ -37,12 +33,23 @@ public enum ShurjopayStatus {
 	INACTIVE_MERCHANT("2008", "Merchant is inactive. Contact with your respective KAM."),
 	BKASH_DEBIT_PARTY("2009", "Payment has failed debit party identity tag prohibits execution");
 	
-	@Getter
 	private String code;
-	@Getter
 	private String status;
 	
-	public static String getStatusByCode(String code) {
+	private ShurjopayStatus(String code, String status) {
+		this.code = code;
+		this.status = status;
+	}
+	
+	public String code() {
+		return this.code;
+	}
+	
+	public String status() {
+		return this.status;
+	}
+	
+	public static String statusByCode(String code) {
         for (ShurjopayStatus b : ShurjopayStatus.values()) {
             if (b.code.equalsIgnoreCase(code)) {
                 return b.status;
