@@ -77,12 +77,12 @@ public class Shurjopay {
 		shurjoPayTokenReq.put("password", spConfig.getPassword());
 
 			String requestBody = prepareReqBody(shurjoPayTokenReq);
-			HttpRequest request = postRequest(requestBody, Endpoints.TOKEN.getEndpointValue());
+			HttpRequest request = postRequest(requestBody, Endpoints.TOKEN.title());
 			HttpResponse<Supplier<ShurjopayToken>> response = getClient().send(request, new JsonBodyHandler<>(ShurjopayToken.class));
 			authToken = response.body().get();
 			String authCode = authToken.getSpStatusCode();
 
-		if (!authCode.equals(AUTH_SUCCESS_CODE)) throw new ShurjopayAuthenticationException(ShurjopayStatus.getStatusByCode(authCode));
+		if (!authCode.equals(AUTH_SUCCESS_CODE)) throw new ShurjopayAuthenticationException(ShurjopayStatus.statusByCode(authCode));
 		log.info("Merchant authentication successful!");
 		
 		return authToken;
@@ -111,7 +111,7 @@ public class Shurjopay {
 			if (isAuthenticationRequired()) authToken = authenticate();
 			
 			String requestBody = prepareReqBody(getDefaultInfo(req));
-			HttpRequest request = postRequest(requestBody, Endpoints.MAKE_PMNT.getEndpointValue());
+			HttpRequest request = postRequest(requestBody, Endpoints.MAKE_PMNT.title());
 			HttpResponse<Supplier<PaymentRes>> response = getClient().send(request, new JsonBodyHandler<>(PaymentRes.class));
 			
 			paymentRes = response.body().get();
@@ -121,7 +121,7 @@ public class Shurjopay {
 	
 			return paymentRes;
 		} catch (ShurjopayAuthenticationException e) {
-			log.error("Code: {}, Status: {}",ShurjopayStatus.AUTHENTICATION_FAILED.getCode(), ShurjopayStatus.AUTHENTICATION_FAILED.getStatus(), e);
+			log.error("Code: {}, Status: {}",ShurjopayStatus.AUTHENTICATION_FAILED.code(), ShurjopayStatus.AUTHENTICATION_FAILED.status(), e);
 			throw e;
 		} catch (IOException e) {
 			log.error("Error occrued when sending make payment request.", e);
@@ -150,19 +150,19 @@ public class Shurjopay {
 			verifiedPaymentReq.put("order_id", orderId);
 
 			String requestBody = prepareReqBody(verifiedPaymentReq);
-			HttpRequest request = postRequest(requestBody, Endpoints.VERIFIED_ORDER.getEndpointValue(), true);
+			HttpRequest request = postRequest(requestBody, Endpoints.VERIFIED_ORDER.title(), true);
 			
 			HttpResponse<Supplier<VerifiedPayment[]>> response = getClient().send(request, new JsonBodyHandler<>(VerifiedPayment[].class));
 			VerifiedPayment verifiedPaymentRes = response.body().get()[0];
 			
 			String verifyStatus = verifiedPaymentRes.getSpStatusCode();
-			if (!verifyStatus.equals(ShurjopayStatus.SHURJOPAY_SUCCESS.getCode())) throw new ShurjopayVerificationException(ShurjopayStatus.getStatusByCode(requestBody));
+			if (!verifyStatus.equals(ShurjopayStatus.SHURJOPAY_SUCCESS.code())) throw new ShurjopayVerificationException(ShurjopayStatus.statusByCode(requestBody));
 			
 			log.info("shurjopay status for Verify Payment: {}", verifiedPaymentRes.getSpStatusMsg());
 			
 			return verifiedPaymentRes;
 		} catch (ShurjopayAuthenticationException e) {
-			log.error(ShurjopayStatus.AUTHENTICATION_FAILED.getStatus(), e);
+			log.error(ShurjopayStatus.AUTHENTICATION_FAILED.status(), e);
 			throw e;
 		} catch (IOException e) {
 			log.error("Error occrued when sending verify payment request.", e);
@@ -189,13 +189,13 @@ public class Shurjopay {
 			orderMap.put("order_id", orderId);
 			
 			String requestBody = prepareReqBody(orderMap);
-			HttpRequest request = postRequest(requestBody, Endpoints.PMNT_STAT.getEndpointValue(), true);
+			HttpRequest request = postRequest(requestBody, Endpoints.PMNT_STAT.title(), true);
 			HttpResponse<Supplier<VerifiedPayment[]>> response = getClient().send(request, new JsonBodyHandler<>(VerifiedPayment[].class));
 			log.info("Checking payment status...");
 
 			return response.body().get()[0];
 		}  catch (ShurjopayAuthenticationException e) {
-			log.error(ShurjopayStatus.AUTHENTICATION_FAILED.getStatus(), e);
+			log.error(ShurjopayStatus.AUTHENTICATION_FAILED.status(), e);
 			throw e;
 		} catch (IOException e) {
 			log.error("Error occrued when fetching payment status request.", e);
