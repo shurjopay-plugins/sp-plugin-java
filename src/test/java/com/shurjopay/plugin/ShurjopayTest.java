@@ -46,7 +46,6 @@ class ShurjopayTest {
 	@Order(2)
 	@DisplayName("For verifying order: ")
 	void testVerifyOrder() {
-		System.out.println(paymentRes.getSpOrderId());
 		VerifiedPayment order = shurjopay.verifyPayment(paymentRes.getSpOrderId());
 		assertNotNull(order.getOrderId(), () -> "Order is not found.");
 	}
