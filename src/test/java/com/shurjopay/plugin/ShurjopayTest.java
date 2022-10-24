@@ -10,6 +10,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 import com.shurjopay.plugin.model.PaymentReq;
 import com.shurjopay.plugin.model.PaymentRes;
@@ -35,10 +38,13 @@ class ShurjopayTest {
 	@Test
 	@Order(1)
 	@DisplayName("For making shurjoPay payment: ")
-	void testMakePayment() {
+	void testMakePayment() throws InterruptedException {
 		PaymentReq req = getPaymentReq();
 		paymentRes = shurjopay.makePayment(req);
-		System.out.println(req.getClientIp());
+		WebDriver driver = getChrome();
+		driver.get(paymentRes.getPaymentUrl());
+		
+		Thread.sleep(30 * 1000);
 		assertNotNull(paymentRes.getPaymentUrl(), () -> "Making Payment returns null");
 	}
 
@@ -53,19 +59,28 @@ class ShurjopayTest {
 	@Test
 	@Order(3)
 	@DisplayName("For checking order status: ")
-	void testGetPaymentStatus() {
+	void testCheckPaymentStatus() {
 		VerifiedPayment order = shurjopay.checkPaymentStatus(paymentRes.getSpOrderId());
 		assertNotNull(order.getOrderId(), () -> "Order is not found.");
 	}
 
+	private WebDriver getChrome() {
+		System.setProperty("webdriver.chrome.driver", "D:/Office/git/sp-plugin-java/src/test/resources/drivers/chromedriver.exe");
+		ChromeOptions options = new ChromeOptions();
+		options.setHeadless(false);
+		
+		WebDriver driver = new ChromeDriver(options);
+		return driver;
+	}
+	
 	private PaymentReq getPaymentReq() {
 		PaymentReq request = new PaymentReq();
 
-		request.setPrefix("sp");
+		request.setPrefix("dummy");
 		request.setAmount(10.00);
 		request.setOrderId("sp315689");
 		request.setCurrency("BDT");
-		request.setCustomerName("Maharab kibria");
+		request.setCustomerName("Dummy");
 		request.setCustomerAddress("Dhaka");
 		request.setCustomerPhone("01766666666");
 		request.setCustomerCity("Dhaka");
