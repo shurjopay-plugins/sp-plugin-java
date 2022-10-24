@@ -42,7 +42,7 @@ public class VerifiedPayment implements Serializable{
 	@JsonProperty("usd_rate")
 	private Double usdRate;
 	
-	@JsonProperty("recived_amount")
+	@JsonProperty("received_amount")
 	private Double receivedAmt;
 	
 	@JsonProperty("card_holder_name")
