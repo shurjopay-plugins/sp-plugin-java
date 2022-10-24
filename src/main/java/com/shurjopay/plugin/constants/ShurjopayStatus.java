@@ -12,7 +12,7 @@ public enum ShurjopayStatus {
 	PAYMENT_CANCEL("1002", "Shurjopay transaction canceled."),
 	BANK_RESPONSE_FAILED("1005", "Bank transaction failed."),
 	OTP_MISSMATCH("1006", "OTP is not matched during mobile wallet transaction."),
-	PIN_MISSMATCH("1007", "OTP is not matched during mobile wallet transaction."),
+	PIN_MISSMATCH("1007", "Verification PIN is not matched during mobile wallet transaction."),
 	INSUFFICIENT_BALANCE("1008", "Insufficient balance to pay the amount."),
 	DAILY_LIMIT("1009", "Shurjopay daily transaction's limit has been exceeded."),
 	CURRENCY_MISSMATCH("1010", "Shurjopay accepts BDT and USD currency."),
@@ -29,9 +29,9 @@ public enum ShurjopayStatus {
 	REFUND_COMPLETED("2002", "Shurjopay payment refund is successfully done."),
 	BANK_REVIEW("2005", "Bank holds the transaction for review"),	
 	BANK_ERROR("2006", "Error occured while bank processing the transaction."),
-	TIME_OUT("2007", "Shurjopay timeout occured."),
+	SHURJOPAY_TIME_OUT("2007", "Shurjopay request timeout."),
 	INACTIVE_MERCHANT("2008", "Merchant is inactive. Contact with your respective KAM."),
-	BKASH_DEBIT_PARTY("2009", "Payment has failed debit party identity tag prohibits execution");
+	BKASH_DEBIT_PARTY("2009", "Payment has failed debit party identity tag prohibits execution.");
 	
 	private String code;
 	private String status;
