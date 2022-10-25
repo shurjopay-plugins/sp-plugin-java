@@ -155,8 +155,8 @@ public class Shurjopay {
 			HttpResponse<Supplier<VerifiedPayment[]>> response = getClient().send(request, new JsonBodyHandler<>(VerifiedPayment[].class));
 			VerifiedPayment verifiedPaymentRes = response.body().get()[0];
 			
-			String verifyStatus = verifiedPaymentRes.getSpStatusCode();
-			if (!verifyStatus.equals(ShurjopayStatus.SHURJOPAY_SUCCESS.code())) throw new ShurjopayVerificationException(ShurjopayStatus.statusByCode(requestBody));
+			String verifyStatusCode = verifiedPaymentRes.getSpStatusCode();
+			if (!verifyStatusCode.equals(ShurjopayStatus.SHURJOPAY_SUCCESS.code())) throw new ShurjopayVerificationException(ShurjopayStatus.statusByCode(verifyStatusCode));
 			
 			log.info("shurjopay status for Verify Payment: {}", verifiedPaymentRes.getSpStatusMsg());
 			
