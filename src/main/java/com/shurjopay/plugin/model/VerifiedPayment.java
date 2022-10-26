@@ -72,6 +72,11 @@ public class VerifiedPayment implements Serializable{
 	@JsonProperty("sp_message")
 	private String spStatusMsg;
 	
+	/**
+	 * This field is duplicate of sp_message. This field is required for handling shurjopay error response
+	 */
+	private String message;
+	
 	@JsonProperty("name")
 	private String customerName;
 	
