@@ -10,7 +10,7 @@ public enum ShurjopayStatus {
 	SHURJOPAY_SUCCESS("1000", "Shurjopay transaction successful."),
 	PAYMENT_FAILED("1001", "Shurjopay transaction failed."),
 	PAYMENT_CANCEL("1002", "Shurjopay transaction canceled."),
-	BANK_RESPONSE_FAILED("1005", "Bank transaction failed."),
+	BANK_TXN_FAILED("1005", "Bank transaction failed."),
 	OTP_MISSMATCH("1006", "OTP is not matched during mobile wallet transaction."),
 	PIN_MISSMATCH("1007", "Verification PIN is not matched during mobile wallet transaction."),
 	INSUFFICIENT_BALANCE("1008", "Insufficient balance to pay the amount."),

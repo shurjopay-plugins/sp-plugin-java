@@ -23,10 +23,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shurjopay.plugin.constants.Endpoints;
 import com.shurjopay.plugin.constants.ShurjopayConfigKeys;
 import com.shurjopay.plugin.constants.ShurjopayStatus;
-import com.shurjopay.plugin.exception.ShurjopayAuthenticationException;
-import com.shurjopay.plugin.exception.ShurjopayPaymentException;
-import com.shurjopay.plugin.exception.ShurjopayPaymentStatusException;
-import com.shurjopay.plugin.exception.ShurjopayVerificationException;
 import com.shurjopay.plugin.model.PaymentReq;
 import com.shurjopay.plugin.model.PaymentRes;
 import com.shurjopay.plugin.model.ShurjopayConfig;
@@ -51,6 +47,7 @@ public class Shurjopay {
 	private static final String DEFAULT_IP = "127.0.0.1";
 	private static final String WHITE_SPACE = " ";
 	private static final String AUTH_KEYWORD = "Authorization";
+	private String spCode;
 
 	
 	public Shurjopay() {
@@ -68,9 +65,9 @@ public class Shurjopay {
 	 * Setup shurjopay.properties file.
 	 * 
 	 * @return authentication details with valid token
-	 * @throws ShurjopayAuthenticationException while merchant username and password is invalid.
+	 * @throws ShurjopayException while merchant username and password is invalid.
 	 */
-	private ShurjopayToken authenticate() {
+	private ShurjopayToken authenticate() throws ShurjopayException{
 		try {
 		Map<String, String> shurjoPayTokenReq = new HashMap<>();
 		shurjoPayTokenReq.put("username", spConfig.getUsername());
@@ -80,18 +77,18 @@ public class Shurjopay {
 			HttpRequest request = postRequest(requestBody, Endpoints.TOKEN.title());
 			HttpResponse<Supplier<ShurjopayToken>> response = getClient().send(request, new JsonBodyHandler<>(ShurjopayToken.class));
 			authToken = response.body().get();
-			String authCode = authToken.getSpStatusCode();
+			spCode = authToken.getSpStatusCode();
 
-		if (!authCode.equals(AUTH_SUCCESS_CODE)) throw new ShurjopayAuthenticationException(ShurjopayStatus.statusByCode(authCode));
+		if (!spCode.equals(AUTH_SUCCESS_CODE)) throw new ShurjopayException("Code: "+ spCode +" Message: " + ShurjopayStatus.statusByCode(spCode));
 		log.info("Merchant authentication successful!");
 		
 		return authToken;
 		}
 		catch (InterruptedException e) {
-			throw new ShurjopayAuthenticationException("Error occrued when sending authentication request.", e);
+			throw new ShurjopayException("Error occrued when sending authentication request.", e);
 		}
 		catch (IOException e) {
-			throw new ShurjopayAuthenticationException("Error occrued when sending authentication request.", e);
+			throw new ShurjopayException("Error occrued when sending authentication request.", e);
 		}
 		
 		
@@ -102,10 +99,10 @@ public class Shurjopay {
 	 * 
 	 * @param Payment request object. See the shurjoPay version-2 integration documentation(beta).docx for details.
 	 * @return Payment response object contains redirect URL to reach payment page, order id to verify order in shurjoPay.
-	 * @throws ShurjopayAuthenticationException while merchant username and password is invalid.
+	 * @throws ShurjopayException while merchant username and password is invalid.
 	 * @throws ShurjopayPaymentException while {@link PaymentReq} is not prepared properly or {@link HttpClient} exception
 	 */
-	public PaymentRes makePayment(PaymentReq req){
+	public PaymentRes makePayment(PaymentReq req) throws ShurjopayException {
 		PaymentRes paymentRes;
 		try {
 			if (isAuthenticationRequired()) authToken = authenticate();
@@ -115,20 +112,18 @@ public class Shurjopay {
 			HttpResponse<Supplier<PaymentRes>> response = getClient().send(request, new JsonBodyHandler<>(PaymentRes.class));
 			
 			paymentRes = response.body().get();
-			if(paymentRes.getPaymentUrl().isBlank()) throw new ShurjopayPaymentException("Payment URL has not been generated.");
+			int spCode = paymentRes.getSpCode();
+			if(paymentRes.getPaymentUrl().isBlank()) throw new ShurjopayException("Code: "+ spCode +" Message: " + ShurjopayStatus.statusByCode(String.valueOf(spCode)));
 			
 			log.info("Payment URL has been generated.");
 	
 			return paymentRes;
-		} catch (ShurjopayAuthenticationException e) {
-			log.error("Code: {}, Status: {}",ShurjopayStatus.AUTHENTICATION_FAILED.code(), ShurjopayStatus.AUTHENTICATION_FAILED.status(), e);
-			throw e;
 		} catch (IOException e) {
 			log.error("Error occrued when sending make payment request.", e);
-			throw new ShurjopayPaymentException("Error occrued when sending make payment request.", e);
+			throw new ShurjopayException("Error occrued when sending make payment request.", e);
 		} catch (InterruptedException e) {
 			log.error("Error occrued when sending make payment request.", e);
-			throw new ShurjopayPaymentException("Error occrued when sending make payment request.", e);
+			throw new ShurjopayException("Error occrued when sending make payment request.", e);
 		}
 	}
 
@@ -139,10 +134,10 @@ public class Shurjopay {
 	 * 
 	 * @param orderId
 	 * @return order object if order verified successfully
-	 * @throws ShurjopayAuthenticationException while merchant user name and password is invalid.
+	 * @throws ShurjopayException while merchant user name and password is invalid.
 	 * @throws ShurjopayVerificationException while order id is invalid or payment is not initiated properly or {@link HttpClient} exception
 	 */
-	public VerifiedPayment verifyPayment(String orderId) {
+	public VerifiedPayment verifyPayment(String orderId) throws ShurjopayException {
 		try {
 			if (isAuthenticationRequired()) authToken = authenticate();
 			
@@ -155,21 +150,21 @@ public class Shurjopay {
 			HttpResponse<Supplier<VerifiedPayment[]>> response = getClient().send(request, new JsonBodyHandler<>(VerifiedPayment[].class));
 			VerifiedPayment verifiedPaymentRes = response.body().get()[0];
 			
-			String verifyStatusCode = verifiedPaymentRes.getSpStatusCode();
-			if (!verifyStatusCode.equals(ShurjopayStatus.SHURJOPAY_SUCCESS.code())) throw new ShurjopayVerificationException(ShurjopayStatus.statusByCode(verifyStatusCode));
+			spCode = verifiedPaymentRes.getSpStatusCode();
+			if (!spCode.equals(ShurjopayStatus.SHURJOPAY_SUCCESS.code())) throw new ShurjopayException("Code: "+ spCode +" Message: " + ShurjopayStatus.statusByCode(String.valueOf(spCode)));
 			
 			log.info("shurjopay status for Verify Payment: {}", verifiedPaymentRes.getSpStatusMsg());
 			
 			return verifiedPaymentRes;
-		} catch (ShurjopayAuthenticationException e) {
+		} catch (ShurjopayException e) {
 			log.error(ShurjopayStatus.AUTHENTICATION_FAILED.status(), e);
 			throw e;
 		} catch (IOException e) {
 			log.error("Error occrued when sending verify payment request.", e);
-			throw new ShurjopayVerificationException("Error occrued when sending verify payment request.", e);
+			throw new ShurjopayException("Error occrued when sending verify payment request.", e);
 		} catch (InterruptedException e) {
 			log.error("Error occrued when sending verify payment request.", e);
-			throw new ShurjopayVerificationException("Error occrued when sending verify payment request.", e);
+			throw new ShurjopayException("Error occrued when sending verify payment request.", e);
 		}
 	}
 
@@ -178,10 +173,10 @@ public class Shurjopay {
 	 * 
 	 * @param orderId
 	 * @return order object if order verified successfully.
-	 * @throws ShurjopayAuthenticationException while merchant user name and password is invalid.
+	 * @throws ShurjopayException while merchant user name and password is invalid.
 	 * @throws ShurjopayPaymentStatusException while order id is invalid or payment is not initiated properly or {@link HttpClient} exception
 	 */
-	public VerifiedPayment checkPaymentStatus(String orderId) {
+	public VerifiedPayment checkPaymentStatus(String orderId) throws ShurjopayException {
 		try {
 			if (isAuthenticationRequired()) authToken = authenticate();
 			
@@ -194,15 +189,15 @@ public class Shurjopay {
 			log.info("Checking payment status...");
 
 			return response.body().get()[0];
-		}  catch (ShurjopayAuthenticationException e) {
+		}  catch (ShurjopayException e) {
 			log.error(ShurjopayStatus.AUTHENTICATION_FAILED.status(), e);
 			throw e;
 		} catch (IOException e) {
 			log.error("Error occrued when fetching payment status request.", e);
-			throw new ShurjopayPaymentStatusException("Error occrued when fetching payment status request.", e);
+			throw new ShurjopayException("Error occrued when fetching payment status request.", e);
 		} catch (InterruptedException e) {
 			log.error("Error occrued when fetching payment status request.", e);
-			throw new ShurjopayPaymentStatusException("Error occrued when fetching payment status request.", e);
+			throw new ShurjopayException("Error occrued when fetching payment status request.", e);
 		}
 	}
 	

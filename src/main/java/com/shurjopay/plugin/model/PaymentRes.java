@@ -71,7 +71,7 @@ public class PaymentRes implements Serializable{
 	private String transactionStatus;
 	
 	@JsonProperty("sp_code")
-	private Integer spCode;
+	private int spCode;
 	
 	private String message;
 }
