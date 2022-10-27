@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE xml>
 <configuration>
-	<property name="LOCATION" value="D:/Office/plugin_log" />
+	<property name="LOCATION" value="/home/alamin/var/log/plugin_log" />
 	<property name="SP_LOG" value="shurjopay-plugin.log" />
 	<appender name="FILE" class="ch.qos.logback.core.FileAppender">
 		<file>${LOCATION}/${SP_LOG}</file>
@@ -11,7 +11,6 @@
 			</pattern>
 		</encoder>
 	</appender>
-
 	<root level="info">
 		<appender-ref ref="STDOUT" />
 		<appender-ref ref="FILE" />
