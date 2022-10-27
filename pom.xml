@@ -2,7 +2,7 @@
 <project xmlns="https://maven.apache.org/POM/4.0.0" xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.shurjopay.plugin</groupId>
+	<groupId>bd.com.shurjopay.plugin</groupId>
 	<artifactId>sp-plugin-java</artifactId>
 	<version>0.1.0-SNAPSHOT</version>
 	<name>sp-plugin-java</name>
@@ -16,6 +16,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<github.url>https://github.com/shurjoPay-Plugins</github.url>
 		<git.scm.uri>scm:git:git@github.com:shurjoPay-Plugins</git.scm.uri>
+		<org.name>shurjoMukhi Ltd.</org.name>
 	</properties>
 
 	<dependencies>
@@ -28,6 +29,17 @@
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-core</artifactId>
 			<version>1.4.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.24</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>2.0.0</version>
 		</dependency>
 		<!-- Must be removed if not needed-->
 		<dependency>
@@ -43,40 +55,29 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<version>1.18.24</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>2.0.0</version>
-		</dependency>
-		<dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.8.2</version>
-            <scope>test</scope>
-        </dependency>
-		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-api</artifactId>
-			<version>5.8.2</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-params</artifactId>
 			<version>5.8.2</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
 	<organization>
-		<name>shurjoMukhi Ltd.</name>
+		<name>${org.name}</name>
 		<url>https://shurjomukhi.com.bd</url>
 	</organization>
+	<developers>
+		<developer>
+			<name>Imtiaz Rahi</name>
+			<email>imtiaz.rahi@shurjomukhi.com.bd</email>
+			<organization>${org.name}</organization>
+		</developer>
+		<developer>
+			<name>Al - Amin Bin Mannan</name>
+			<email>alamin.binmannan@shurjomukhi.com.bd</email>
+			<organization>${org.name}</organization>
+		</developer>
+	</developers>
 	<issueManagement>
 		<url>${github.url}/sp-plugin-java/issues</url>
 		<system>github-issues</system>
@@ -93,24 +94,43 @@
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
+
+	<distributionManagement>
+		<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+		<repository>
+			<id>ossrh</id>
+			<url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+	</distributionManagement>
+
 	<build>
 		<plugins>
-			<!-- any other plugins -->
 			<plugin>
-				<artifactId>maven-assembly-plugin</artifactId>
+				<groupId>org.sonatype.plugins</groupId>
+				<artifactId>nexus-staging-maven-plugin</artifactId>
+				<version>1.6.7</version>
+				<extensions>true</extensions>
+				<configuration>
+					<serverId>ossrh</serverId>
+					<nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+					<autoReleaseAfterClose>true</autoReleaseAfterClose>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.2.1</version>
 				<executions>
 					<execution>
-						<phase>package</phase>
+						<id>attach-sources</id>
 						<goals>
-							<goal>single</goal>
+							<goal>jar-no-fork</goal>
 						</goals>
 					</execution>
 				</executions>
-				<configuration>
-					<descriptorRefs>
-						<descriptorRef>jar-with-dependencies</descriptorRef>
-					</descriptorRefs>
-				</configuration>
 			</plugin>
 		</plugins>
 	</build>
