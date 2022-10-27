@@ -1,4 +1,4 @@
-package com.shurjopay.plugin.constants;
+package bd.com.shurjopay.plugin.constants;
 
 /**
  * This ENUM contains all of the end-points of shurjoPay
