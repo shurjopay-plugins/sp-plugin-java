@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE xml>
 <configuration>
-	<property name="LOCATION" value="/home/alamin/var/log/plugin_log" />
-	<property name="SP_LOG" value="shurjopay-plugin.log" />
+	<property resource="shurjopay.properties"/>
+	
 	<appender name="FILE" class="ch.qos.logback.core.FileAppender">
-		<file>${LOCATION}/${SP_LOG}</file>
+		<file>${SPLOG_PATH}/${SPLOG_FILE}</file>
 		<append>true</append>
 		<encoder>
-			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
-			</pattern>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
 		</encoder>
 	</appender>
-	<root level="info">
-		<appender-ref ref="STDOUT" />
+	
+	<logger name="bd.com.shurjopay.plugin" level="INFO" additivity="false">
+        <appender-ref ref="FILE"/>
+    </logger>
+    
+	<root level="INFO">
 		<appender-ref ref="FILE" />
 	</root>
 </configuration>
-
-
 

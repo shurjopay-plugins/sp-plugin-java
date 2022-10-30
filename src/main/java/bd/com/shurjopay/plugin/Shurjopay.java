@@ -156,9 +156,6 @@ public class Shurjopay {
 			log.info("shurjopay status for Verify Payment: {}", verifiedPaymentRes.getSpStatusMsg());
 			
 			return verifiedPaymentRes;
-		} catch (ShurjopayException e) {
-			log.error(ShurjopayStatus.AUTHENTICATION_FAILED.status(), e);
-			throw e;
 		} catch (IOException e) {
 			log.error("Error occrued when sending verify payment request.", e);
 			throw new ShurjopayException("Error occrued when sending verify payment request.", e);
@@ -189,9 +186,6 @@ public class Shurjopay {
 			log.info("Checking payment status...");
 
 			return response.body().get()[0];
-		}  catch (ShurjopayException e) {
-			log.error(ShurjopayStatus.AUTHENTICATION_FAILED.status(), e);
-			throw e;
 		} catch (IOException e) {
 			log.error("Error occrued when fetching payment status request.", e);
 			throw new ShurjopayException("Error occrued when fetching payment status request.", e);
