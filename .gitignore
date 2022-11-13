@@ -30,6 +30,7 @@ gradle-app.setting
 # Eclipse
 .classpath
 .project
+.factorypath
 .settings/
 .springBeans
 # IntelliJ IDEA [http://gary-rowe.com/agilestack/2012/10/12/a-gitignore-file-for-intellij-and-eclipse-with-maven]
