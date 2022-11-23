@@ -85,9 +85,11 @@ public class Shurjopay {
 		return authToken;
 		}
 		catch (InterruptedException e) {
+			
 			throw new ShurjopayException("Error occrued when sending authentication request.", e);
 		}
 		catch (IOException e) {
+			
 			throw new ShurjopayException("Error occrued when sending authentication request.", e);
 		}
 		
@@ -120,9 +122,11 @@ public class Shurjopay {
 			return paymentRes;
 		} catch (IOException e) {
 			log.error("Error occrued when sending make payment request.", e);
+			
 			throw new ShurjopayException("Error occrued when sending make payment request.", e);
 		} catch (InterruptedException e) {
 			log.error("Error occrued when sending make payment request.", e);
+			
 			throw new ShurjopayException("Error occrued when sending make payment request.", e);
 		}
 	}
@@ -158,9 +162,11 @@ public class Shurjopay {
 			return verifiedPaymentRes;
 		} catch (IOException e) {
 			log.error("Error occrued when sending verify payment request.", e);
+			
 			throw new ShurjopayException("Error occrued when sending verify payment request.", e);
 		} catch (InterruptedException e) {
 			log.error("Error occrued when sending verify payment request.", e);
+			
 			throw new ShurjopayException("Error occrued when sending verify payment request.", e);
 		}
 	}
@@ -188,9 +194,11 @@ public class Shurjopay {
 			return response.body().get()[0];
 		} catch (IOException e) {
 			log.error("Error occrued when fetching payment status request.", e);
+			
 			throw new ShurjopayException("Error occrued when fetching payment status request.", e);
 		} catch (InterruptedException e) {
 			log.error("Error occrued when fetching payment status request.", e);
+			
 			throw new ShurjopayException("Error occrued when fetching payment status request.", e);
 		}
 	}

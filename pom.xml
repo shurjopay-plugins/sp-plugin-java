@@ -4,7 +4,7 @@
 
 	<groupId>bd.com.shurjopay.plugin</groupId>
 	<artifactId>sp-plugin-java</artifactId>
-	<version>0.1.0-SNAPSHOT</version>
+	<version>0.2.0-SNAPSHOT</version>
 	<name>sp-plugin-java</name>
 	<packaging>jar</packaging>
 	<description>shurjoPay plugin module for Java application</description>
@@ -96,18 +96,18 @@
 	</licenses>
 
 	<distributionManagement>
-<!--		<snapshotRepository>
+		<snapshotRepository>
 			<id>ossrh</id>
 			<url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
-		</snapshotRepository> -->
-		<snapshotRepository>
+		</snapshotRepository>
+<!-- 		<snapshotRepository>
 			<id>sm-nexus</id>
 			<url>https://nexusrepo.shurjomukhi.com.bd/repository/maven-snapshots</url>
-		</snapshotRepository>
-<!--		<repository>
+		</snapshotRepository> -->
+		<repository>
 			<id>ossrh</id>
 			<url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-		</repository> -->
+		</repository>
 	</distributionManagement>
 
 	<build>
@@ -118,8 +118,8 @@
 				<version>1.6.7</version>
 				<extensions>true</extensions>
 				<configuration>
-					<serverId>sm-nexus</serverId>
-					<nexusUrl>https://nexusrepo.shurjomukhi.com.bd/</nexusUrl>
+					<serverId>ossrh</serverId>
+					<nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
 					<autoReleaseAfterClose>true</autoReleaseAfterClose>
 				</configuration>
 			</plugin>
