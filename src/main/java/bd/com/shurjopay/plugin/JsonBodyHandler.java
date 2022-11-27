@@ -8,6 +8,12 @@ import java.util.function.Supplier;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+/**
+ * @author Al-Amin
+ * @since 2022-09-15
+ *
+ * @param <W>
+ */
 public class JsonBodyHandler<W> implements HttpResponse.BodyHandler<Supplier<W>> {
 	private Class<W> wClass;
 	public JsonBodyHandler(Class<W> wClass) {

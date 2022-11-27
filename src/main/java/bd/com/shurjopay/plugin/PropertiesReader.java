@@ -6,7 +6,7 @@ import java.util.Properties;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * 
+ * This class is used to read shurjopay's properties.
  * @author Al - Amin
  * @since 2022-06-13
  */

@@ -41,20 +41,54 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class Shurjopay {
 
+	/**
+	 * shurjopay authentication object.
+	 * See more.. {@link ShurjopayToken}
+	 */
 	private ShurjopayToken authToken;
+	
+	/**
+	 * This instance contains shurjopay's configuration.
+	 */
 	private ShurjopayConfig spConfig;
+	
+	/**
+	 * shurjopay's authentication success status code.
+	 */
 	private static final String AUTH_SUCCESS_CODE = "200";
+	
+	/**
+	 * Default IP address to submit a payment if client not provided his/her IP
+	 */
 	private static final String DEFAULT_IP = "127.0.0.1";
+	
+	/**
+	 * Blank space constant for programmatically use
+	 */
 	private static final String WHITE_SPACE = " ";
+	
+	/**
+	 * Authentication header key name.
+	 */
 	private static final String AUTH_KEYWORD = "Authorization";
+	
+	/**
+	 * shurjopay's status code.
+	 */
 	private String spCode;
 
-	
+	/**
+	 * This is default constructor by which a pure java application can instantiate {@link Shurjopay}
+	 */
 	public Shurjopay() {
 		super();
 		this.spConfig = getShurjoPayConfig();
 	}
 
+	/**
+	 * This constructor is used to configure Spring auto wirable bean.
+	 * @param config
+	 */
 	public Shurjopay(ShurjopayConfig config) {
 		super();
 		this.spConfig = config;
