@@ -12,8 +12,23 @@ import lombok.experimental.Accessors;
 @Data @Accessors(chain = true)
 public class ShurjopayConfig {
 
+	/**
+	 * Merchant's user name provided by shurjoPay author.
+	 */
 	private String username;
+	
+	/**
+	 * Merchant's password provided by shurjoPay author.
+	 */
 	private String password;
+	
+	/**
+	 * Merchant's callback URL provided by shurjoPay author.
+	 */
 	private String callbackUrl;
+	
+	/**
+	 * shurjoPay's endpoint's base URL.
+	 */
 	private String apiBaseUrl;
 }

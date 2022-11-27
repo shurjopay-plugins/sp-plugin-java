@@ -1,7 +1,7 @@
 package bd.com.shurjopay.plugin.constants;
 
 /**
- * This ENUM represents all shurjoPay's codes and their definition
+ * This ENUM represents all shurjoPay's codes and definitions
  * @author Al-Amin
  * @since 2022-10-19
  */
