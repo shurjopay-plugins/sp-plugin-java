@@ -13,11 +13,21 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class PropertiesReader {
 	
+	/**
+	 * This class instance to fetch single instance.
+	 */
 	private static PropertiesReader instance = null;
 
+	/**
+	 * Private constructor to prohibit creating class instance from outside.
+	 */
 	private PropertiesReader() {
 	}
 
+	/**
+	 * This method is used to provide shurjopay properties.
+	 * @return properties in shurjopay.properties resource.
+	 */
 	public Properties getProperties(){
 		try {
 			Properties prop = new Properties();
@@ -29,6 +39,10 @@ public class PropertiesReader {
 		}
 	}
 
+	/**
+	 * This method is used to get class instance.
+	 * @return this.class instance.
+	 */
 	public static PropertiesReader instance() {
 		if (instance == null) instance = new PropertiesReader();
 		return instance;
