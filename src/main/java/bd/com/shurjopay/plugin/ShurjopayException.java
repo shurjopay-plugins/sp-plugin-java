@@ -9,19 +9,19 @@ public class ShurjopayException extends Exception{
 	private static final long serialVersionUID = 213095527584273895L;
 
 	/**
-	 * {@link ShurjopayException} with error message and error.
-	 * @param {@link String} errMsg
-	 * @param {@link Throwable} err
+	 * {@link ShurjopayException} constructor with error message and error.
+	 * @param exMsg
+	 * @param ex
 	 */
-	public ShurjopayException(String errMsg, Throwable err) {
-		super(errMsg, err);
+	public ShurjopayException(String exMsg, Throwable ex) {
+		super(exMsg, ex);
 	}
 	
 	/**
-	 * {@link ShurjopayException} with error message only.
-	 * @param  errMsg
+	 * {@link ShurjopayException} constructor with error message only.
+	 * @param exMsg
 	 */
-	public ShurjopayException(String errMsg) {
-		super(errMsg);
+	public ShurjopayException(String exMsg) {
+		super(exMsg);
 	}
 }

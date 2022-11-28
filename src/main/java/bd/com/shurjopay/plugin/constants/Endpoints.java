@@ -10,20 +10,45 @@ package bd.com.shurjopay.plugin.constants;
  * </ul>
  * @author Al-Amin
  * @since 2022-07-30
- * @modified 2022-10-12
  */
 public enum Endpoints {
+	/**
+	 * JWT token end-point.
+	 */
 	TOKEN("get_token"),
+	
+	/**
+	 * Making secret payment end-point.
+	 */
 	MAKE_PMNT("secret-pay"),
+	
+	/**
+	 * Payment verification end-point.
+	 */
 	VERIFIED_ORDER("verification"),
+	
+	/**
+	 * Checking payment status end-point
+	 */
 	PMNT_STAT("payment-status");
 	
+	/**
+	 * Representing endpoint's title
+	 */
 	private String title;
 	
+	/**
+	 * 
+	 * @param title
+	 */
 	private Endpoints(String title) {
 		this.title = title;
 	}
 	
+	/**
+	 * This method is used to get endpoint's title
+	 * @return endpoint's title.
+	 */
 	public String title() {
 		return this.title;
 	}

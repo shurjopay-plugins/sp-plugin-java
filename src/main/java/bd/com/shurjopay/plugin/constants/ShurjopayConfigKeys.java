@@ -7,8 +7,24 @@ package bd.com.shurjopay.plugin.constants;
  *
  */
 public enum ShurjopayConfigKeys {
+	
+	/**
+	 * Merchant's username for shurjopay
+	 */
 	SP_USER,
+	
+	/**
+	 * Merchant's password for shurjopay
+	 */
 	SP_PASS,
+	
+	/**
+	 * Base URL of shurjopay
+	 */
 	SHURJOPAY_API,
+	
+	/**
+	 * Callback URL of shurjopay
+	 */
 	SP_CALLBACK;
 }

@@ -97,9 +97,8 @@ public class Shurjopay {
 	/**
 	 * Return authentication token for shurjoPay payment gateway system. 
 	 * Setup shurjopay.properties file.
-	 * 
-	 * @return authentication details with valid token
-	 * @throws ShurjopayException while merchant username and password is invalid.
+	 * @return shurjopay authentication response
+	 * @throws ShurjopayException
 	 */
 	private ShurjopayToken authenticate() throws ShurjopayException{
 		try {
@@ -133,10 +132,9 @@ public class Shurjopay {
 	/**
 	 * This method is used for making payment.
 	 * 
-	 * @param Payment request object. See the shurjoPay version-2 integration documentation(beta).docx for details.
+	 * @param req
 	 * @return Payment response object contains redirect URL to reach payment page, order id to verify order in shurjoPay.
-	 * @throws ShurjopayException while merchant username and password is invalid.
-	 * @throws ShurjopayPaymentException while {@link PaymentReq} is not prepared properly or {@link HttpClient} exception
+	 * @throws ShurjopayException
 	 */
 	public PaymentRes makePayment(PaymentReq req) throws ShurjopayException {
 		PaymentRes paymentRes;
@@ -172,8 +170,7 @@ public class Shurjopay {
 	 * 
 	 * @param orderId
 	 * @return order object if order verified successfully
-	 * @throws ShurjopayException while merchant user name and password is invalid.
-	 * @throws ShurjopayVerificationException while order id is invalid or payment is not initiated properly or {@link HttpClient} exception
+	 * @throws ShurjopayException
 	 */
 	public VerifiedPayment verifyPayment(String orderId) throws ShurjopayException {
 		try {
@@ -210,8 +207,7 @@ public class Shurjopay {
 	 * 
 	 * @param orderId
 	 * @return order object if order verified successfully.
-	 * @throws ShurjopayException while merchant user name and password is invalid.
-	 * @throws ShurjopayPaymentStatusException while order id is invalid or payment is not initiated properly or {@link HttpClient} exception
+	 * @throws ShurjopayException
 	 */
 	public VerifiedPayment checkPaymentStatus(String orderId) throws ShurjopayException {
 		try {
@@ -257,7 +253,7 @@ public class Shurjopay {
 	/**
 	 * Checking expiration of token
 	 * 
-	 * @param {@link Shurjopay}
+	 * @param shurjoPayTokenRes
 	 * @return true if token is expired, otherwise return false
 	 */
 	private boolean isTokenExpired(ShurjopayToken shurjoPayTokenRes) {
@@ -274,7 +270,7 @@ public class Shurjopay {
 	 * <code>
 	 * Return URL, Cancel URL, JWT token, Client IP address, Merchant Store Id
 	 * </code>
-	 * @param {@link PaymentReq}
+	 * @param paymentReq
 	 * @return {@link PaymentReq} with shurjoPay's default values
 	 */
 	private PaymentReq getDefaultInfo(PaymentReq paymentReq) {

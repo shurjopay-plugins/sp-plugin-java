@@ -4,7 +4,7 @@
 
 	<groupId>bd.com.shurjopay.plugin</groupId>
 	<artifactId>sp-plugin-java</artifactId>
-	<version>0.2.0-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>sp-plugin-java</name>
 	<packaging>jar</packaging>
 	<description>shurjoPay plugin module for Java application</description>
@@ -136,6 +136,22 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+		      	<groupId>org.apache.maven.plugins</groupId>
+		      	<artifactId>maven-javadoc-plugin</artifactId>
+		      	<version>3.4.1</version>
+		      	<configuration>
+        <doclint>all,-missing</doclint>
+    </configuration>
+		      	<executions>
+		        	<execution>
+		          		<id>attach-javadocs</id>
+		          		<goals>
+		            		<goal>jar</goal>
+		          		</goals>
+		        	</execution>
+		      	</executions>
+    		</plugin>
 		</plugins>
 	</build>
 </project>

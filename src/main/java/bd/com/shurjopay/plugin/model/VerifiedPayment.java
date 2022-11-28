@@ -162,13 +162,31 @@ public class VerifiedPayment implements Serializable{
 	
 	/** Sometime customer have to send additional data like studentId 
 	 * or any other information which have not any field given by shurjoPay.
-	 * value1, value2, value3, value4 is used for customer's additional info if needed
+	 * value1 is used for customer's additional info if needed
 	 */
-	private String value1;	
-	private String value2;	
-	private String value3;	
+	private String value1;
+	
+	/** Sometime customer have to send additional data like studentId 
+	 * or any other information which have not any field given by shurjoPay.
+	 * value2 is used for customer's additional info if needed
+	 */
+	private String value2;
+	
+	/** Sometime customer have to send additional data like studentId 
+	 * or any other information which have not any field given by shurjoPay.
+	 * value3 is used for customer's additional info if needed
+	 */
+	private String value3;
+	
+	/** Sometime customer have to send additional data like studentId 
+	 * or any other information which have not any field given by shurjoPay.
+	 * value4 is used for customer's additional info if needed
+	 */
 	private String value4;
 	
+	/**
+	 * Bank transaction status. See detail {@link ShurjopayStatus}
+	 */
 	@JsonProperty("transaction_status")
 	private String txnStatus;
 	
