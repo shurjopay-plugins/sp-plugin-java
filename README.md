@@ -20,21 +20,59 @@ _ShurjoMukhi Limited_ developed plugin for integration with java based. _shurjoP
 - **Check verified order status**
 ## How to implement
 ### Before All:
-First of all developer have to configure shurjopay.properties. Properties file contains four fields ``` username, password, shurjopay-api, callback-url ```
-- **Example**
+First of all developer have to configure shurjopay.properties & logback.xml file which should be located on merchant app's class path. Properties file contains four fields ``` SP_USER, SP_PASS, SHURJOPAY_API, SP_CALLBACK, SPLOG_PATH, SPLOG_FILE ```
+- **shurjopay.properties example**
 ``` 
-username = sp_sandbox
-password = pyyk97hu&6u6
-shurjopay-api = https://sandbox.shurjopayment.com/api/
-callback-url = https://sandbox.shurjopayment.com/response 
+#merchant username and password
+SP_USER = sp_sandbox
+SP_PASS = pyyk97hu&6u6
+
+#shurjoPay API's base path for sandbox
+SHURJOPAY_API = https://sandbox.shurjopayment.com/api/
+
+#callback URL is used for cancel payment or success payment
+SP_CALLBACK = https://sandbox.shurjopayment.com/response
+
+#shurjoPay plug-in log file location
+SPLOG_PATH= /home/alamin/git/sp-plugin-java/tmp
+SPLOG_FILE = shurjopay-plugin.log 
+```
+- **logback.xml example**
+``` 
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<configuration>
+	<property resource="shurjopay.properties"/>
+	
+	<appender name="FILE" class="ch.qos.logback.core.FileAppender">
+		<file>${SPLOG_PATH}/${SPLOG_FILE}</file>
+		<append>true</append>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+		</encoder>
+	</appender>
+	
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    
+    <logger name="bd.com.shurjopay.plugin" level="INFO" additivity="false">
+        <appender-ref ref="FILE"/>
+    </logger>
+
+	<root level="INFO">
+		<appender-ref ref="FILE" />
+		<appender-ref ref="CONSOLE" />
+	</root>
+</configuration> 
 ```
 ### Make Payment: 
-Merchants and service providers can make payment by calling this service. Developer should call makePayment() method with payment request parameter. _shurjoPay_ needs some information to perform creating payment request. So that, this service requires request payment object. After performing with this, service returns response object contains payment URL and customer information.
+Merchants and service providers can make payment by calling this service. Developer should call makePayment() method with payment request parameter. _shurjoPay_ needs some information to perform creating payment request. So that, this service method requires request payment object param. After performing with this, service returns response object contains payment URL and customer information.
 - **Example**
 	- Request payment
 	 ``` 
-	 	request.setPrefix("sp");
-		request.setStoreId("1");
 		request.setAmount("10");
 		request.setOrderId("sp215689");
 		request.setCurrency("BDT");
@@ -43,7 +81,6 @@ Merchants and service providers can make payment by calling this service. Develo
 		request.setCustomerPhn("01766666666");
 		request.setCustomerCity("Dhaka");
 		request.setCustomerPostCode("1212");
-		request.setClintIp("123.456.1.1");
 	 ```
 	- Response payment
 	 ``` 
@@ -60,13 +97,11 @@ Merchants and service providers can make payment by calling this service. Develo
 		clintIp=102.101.1.1
 		intent=sale
 		transactionStatus=Initiated
-		spCode=null
-		message=null
 	 ```
-### Verify payment order: 
-After a succussful payment merchants or service providers have to verify payment order. Developer must call verifyOrder() method with shurjopay order id parameter. sp order id is provided by payment response named spOrderId. A successful verification returns order object.
+### Verify payment: 
+After a succussful payment merchants or service providers get verify payment order by redirecting callback url. Developer must call verifyPayment() method with shurjopay order id (shurjopay transaction id) parameter. sp order id (shurjopay transaction id) is provided by payment response named spOrderId. A successful successful payment returns payment verification object.
 - **Example**
-	- Request verification of a order
+	- Request payment verification of a order
 	 ``` 
 	 	Parameter: spOrderId
 		Parameter type: String
@@ -93,8 +128,8 @@ After a succussful payment merchants or service providers have to verify payment
 		value3=value3
 		value4=value4
 	 ```
-### Check verified order status: 
-After a succussful payment and verify order merchants or service providers can check payment order status. Developer must call checkPaymentStatus() method with shurjopay order id parameter. sp order id is provided by order response named orderId. A successfully verified orderId returns a order object.
+### Check payment status: 
+After a succussful payment (sp_code=1000) and verify payment merchants or service providers can check payment status. Developer should call checkPaymentStatus() method with order id (shurjopay transaction id) parameter. sp order id (shurjopay transaction id) is provided by order response named orderId. A successfully verified payment with orderId returns a payment object.
 - **Example**
 	- Request verification of a order
 	 ``` 
