@@ -69,7 +69,7 @@ SPLOG_FILE = shurjopay-plugin.log
 </configuration> 
 ```
 ### Make Payment: 
-Merchants and service providers can make payment by calling this service. Developer should call makePayment() method with payment request parameter. _shurjoPay_ needs some information to perform creating payment request. So that, this service method requires request payment object param. After performing with this, service returns response object contains payment URL and customer information.
+Merchants and service providers can make payment by calling this service. Developer should call _makePayment()_ method with payment request parameter. _shurjoPay_ needs some information to perform creating payment request. So that, this service method requires request payment object param. After performing with this, service returns response object contains payment URL and customer information.
 - **Example**
 	- Request payment
 	 ``` 
@@ -99,7 +99,7 @@ Merchants and service providers can make payment by calling this service. Develo
 		transactionStatus=Initiated
 	 ```
 ### Verify payment: 
-After a succussful payment merchants or service providers get verify payment order by redirecting callback url. Developer must call verifyPayment() method with shurjopay order id (shurjopay transaction id) parameter. sp order id (shurjopay transaction id) is provided by payment response named spOrderId. A successful successful payment returns payment verification object.
+After a succussful payment merchants or service providers get verify payment order by redirecting callback url. Developer must call _verifyPayment()_ method with shurjopay order id (shurjopay transaction id) parameter. sp order id (shurjopay transaction id) is provided by payment response named spOrderId. A successful successful payment returns payment verification object.
 - **Example**
 	- Request payment verification of a order
 	 ``` 
@@ -129,7 +129,7 @@ After a succussful payment merchants or service providers get verify payment ord
 		value4=value4
 	 ```
 ### Check payment status: 
-After a succussful payment (sp_code=1000) and verify payment merchants or service providers can check payment status. Developer should call checkPaymentStatus() method with order id (shurjopay transaction id) parameter. sp order id (shurjopay transaction id) is provided by order response named orderId. A successfully verified payment with orderId returns a payment object.
+After a succussful payment (sp_code=1000) and verify payment merchants or service providers can check payment status. Developer should call _checkPaymentStatus()_ method with order id (shurjopay transaction id) parameter. sp order id (shurjopay transaction id) is provided by order response named orderId. A successfully verified payment with orderId returns a payment object.
 - **Example**
 	- Request verification of a order
 	 ``` 
