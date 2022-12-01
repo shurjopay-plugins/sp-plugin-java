@@ -14,7 +14,7 @@ The available services are:
 - Verifying payment order
 - Checking verified payment order status
 ## shurjoPay plugin (JAVA)
-_ShurjoMukhi Limited_ developed plugin for integration with java based. _shurjoPay plugin_ helps merchants and service providers to integrate easity by using this plugin. Plugin provides 3 services mainly such as
+_ShurjoMukhi Limited_ developed plugin for integrating **_shurjoPay_** with java application. _shurjoPay plugin_ helps merchants and service providers to integrate easity by using this plugin. Plugin provides 3 services mainly such as
 - **Make Payment**
 - **Verify payment order**
 - **Check verified order status**
