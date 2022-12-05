@@ -46,6 +46,7 @@ class ShurjopayTest {
 	@DisplayName("For making shurjoPay payment (Success payment test): ")
 	void testMakePayment() throws InterruptedException, ShurjopayException {
 		PaymentReq req = getPaymentReq();
+
 		paymentRes = shurjopay.makePayment(req);
 		String paymentUrl = paymentRes.getPaymentUrl();
 
@@ -101,9 +102,9 @@ class ShurjopayTest {
 	private PaymentReq getPaymentReq() {
 		PaymentReq request = new PaymentReq();
 
-		request.setPrefix("dummy");
+		request.setPrefix("sp");
 		request.setAmount(10.00);
-		request.setOrderId("sp315689");
+		request.setCustomerOrderId("sp315689");
 		request.setCurrency("BDT");
 		request.setCustomerName("Dummy");
 		request.setCustomerAddress("Dhaka");
@@ -156,5 +157,4 @@ class ShurjopayTest {
 		WebDriver driver = new ChromeDriver(options);
 		return driver;
 	}
-
 }
