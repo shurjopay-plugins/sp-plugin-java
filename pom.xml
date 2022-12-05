@@ -23,7 +23,7 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
-			<version>2.5.2</version>
+			<version>2.14.1</version>
 		</dependency>
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
@@ -65,7 +65,7 @@
 		<name>${org.name}</name>
 		<url>https://shurjomukhi.com.bd</url>
 	</organization>
-	
+
 	<developers>
 		<developer>
 			<name>Imtiaz Rahi</name>
@@ -133,35 +133,35 @@
 				</executions>
 			</plugin>
 			<plugin>
-		      	<groupId>org.apache.maven.plugins</groupId>
-		      	<artifactId>maven-javadoc-plugin</artifactId>
-		      	<version>3.4.1</version>
-		      	<configuration>
-        			<doclint>all,-missing</doclint>
-    			</configuration>
-		      	<executions>
-		        	<execution>
-		          		<id>attach-javadocs</id>
-		          		<goals>
-		            		<goal>jar</goal>
-		          		</goals>
-		        	</execution>
-		      	</executions>
-    		</plugin>
-    		<plugin>
-		      <groupId>org.apache.maven.plugins</groupId>
-		      <artifactId>maven-gpg-plugin</artifactId>
-		      <version>3.0.1</version>
-		      <executions>
-		        <execution>
-		          <id>sign-artifacts</id>
-		          <phase>verify</phase>
-		          <goals>
-		            <goal>sign</goal>
-		          </goals>
-		        </execution>
-		      </executions>
-		    </plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>3.4.1</version>
+				<configuration>
+					<doclint>all,-missing</doclint>
+				</configuration>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<version>3.0.1</version>
+				<executions>
+					<execution>
+						<id>sign-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 </project>

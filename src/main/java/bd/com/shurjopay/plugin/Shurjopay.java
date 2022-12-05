@@ -142,6 +142,7 @@ public class Shurjopay {
 			if (isAuthenticationRequired()) authToken = authenticate();
 			
 			String requestBody = prepareReqBody(getDefaultInfo(req));
+			System.out.println(requestBody);
 			HttpRequest request = postRequest(requestBody, Endpoints.MAKE_PMNT.title());
 			HttpResponse<Supplier<PaymentRes>> response = getClient().send(request, new JsonBodyHandler<>(PaymentRes.class));
 			
@@ -273,17 +274,18 @@ public class Shurjopay {
 	 * @param paymentReq
 	 * @return {@link PaymentReq} with shurjoPay's default values
 	 */
-	private PaymentReq getDefaultInfo(PaymentReq paymentReq) {
+	public PaymentReq getDefaultInfo(PaymentReq paymentReq) {
 		String callBackUrl = spConfig.getCallbackUrl();
 		paymentReq.setReturnUrl(callBackUrl);
 		paymentReq.setCancelUrl(callBackUrl);
 		paymentReq.setAuthToken(authToken.getToken());
 		paymentReq.setStoreId(authToken.getStoreId());
+		System.out.println(paymentReq);
 		
 		try {
 			paymentReq.setClientIp(InetAddress.getLocalHost().getHostAddress());
 		} catch (UnknownHostException e) {
-			log.warn("Client ip address is not found. Setting default ip address..", e);
+			log.warn("Client IP does not found. Setting default ip address..", e);
 			paymentReq.setClientIp(DEFAULT_IP);
 		}
 		

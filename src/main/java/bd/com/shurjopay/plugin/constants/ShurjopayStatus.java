@@ -8,7 +8,7 @@ package bd.com.shurjopay.plugin.constants;
 public enum ShurjopayStatus {
 
 	/**
-	 *  Success status in every scenario of shurjopay.
+	 *  Success status for every scenario of shurjopay.
 	 */
 	SHURJOPAY_SUCCESS("1000", "Shurjopay transaction successful."),
 	
