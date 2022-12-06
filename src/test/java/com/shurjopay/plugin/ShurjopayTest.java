@@ -118,6 +118,7 @@ class ShurjopayTest {
 	
 	private void fillupAndSubmitPaymentForm(String url, boolean shouldFail) throws InterruptedException {
 		WebDriver driver = getChrome();
+		driver.manage().window().maximize();
 		driver.get(url);
 		Thread.sleep(3 * 1000);
 		
