@@ -14,8 +14,7 @@ import lombok.experimental.Accessors;
  * @author Al - Amin
  * @since 2022-06-13
  */
-@Data
-@Accessors(chain = true)
+@Data @Accessors(chain = true)
 public class ShurjopayToken implements Serializable {
 	private static final long serialVersionUID = 1960827183789531739L;
 

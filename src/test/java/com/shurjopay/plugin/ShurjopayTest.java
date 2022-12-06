@@ -59,16 +59,16 @@ class ShurjopayTest {
 	@Order(2)
 	@DisplayName("For verifying order (Success payment test): ")
 	void testVerifyOrder() throws ShurjopayException {
-		VerifiedPayment order = shurjopay.verifyPayment(paymentRes.getSpOrderId());
-		assertNotNull(order.getOrderId(), () -> "Order is not found.");
+		VerifiedPayment verifyPayment = shurjopay.verifyPayment(paymentRes.getSpTxnId());
+		assertNotNull(verifyPayment.getSpTxnId(), () -> "Order is not found.");
 	}
 
 	@Test
 	@Order(3)
 	@DisplayName("For checking order status (Success payment test): ")
 	void testCheckPaymentStatus() throws ShurjopayException {
-		VerifiedPayment order = shurjopay.checkPaymentStatus(paymentRes.getSpOrderId());
-		assertNotNull(order.getOrderId(), () -> "Order is not found.");
+		VerifiedPayment verifyPayment = shurjopay.checkPaymentStatus(paymentRes.getSpTxnId());
+		assertNotNull(verifyPayment.getSpTxnId(), () -> "Order is not found.");
 	}
 	
 	@Test
@@ -87,7 +87,7 @@ class ShurjopayTest {
 	@Order(5)
 	@DisplayName("For verifying order (Failed payment test): ")
 	void testVerifyOrderFailed() {
-		Throwable exception = assertThrows(ShurjopayException.class, () -> shurjopay.verifyPayment(paymentRes.getSpOrderId()));
+		Throwable exception = assertThrows(ShurjopayException.class, () -> shurjopay.verifyPayment(paymentRes.getSpTxnId()));
 		assertEquals("Code: 1005 Message: Bank transaction failed.", exception.getMessage());
 	}
 
@@ -95,8 +95,8 @@ class ShurjopayTest {
 	@Order(6)
 	@DisplayName("For checking order status (Failed payment test): ")
 	void testCheckPaymentStatusFailed() throws ShurjopayException {
-		VerifiedPayment order = shurjopay.checkPaymentStatus(paymentRes.getSpOrderId());
-		assertNotNull(order.getOrderId(), () -> "Order is not found.");
+		VerifiedPayment order = shurjopay.checkPaymentStatus(paymentRes.getSpTxnId());
+		assertNotNull(order.getSpTxnId(), () -> "Order is not found.");
 	}
 	
 	private PaymentReq getPaymentReq() {

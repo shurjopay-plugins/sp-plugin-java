@@ -17,12 +17,10 @@ import lombok.experimental.SuperBuilder;
  * @author Al - Amin
  * @since 2022-06-16
  */
-@Data
-@Accessors(chain = true)
+@Data @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = false)
 @SuperBuilder
-@AllArgsConstructor
-@NoArgsConstructor
+@AllArgsConstructor @NoArgsConstructor
 public class PaymentReq extends Payment {
 
 	/**

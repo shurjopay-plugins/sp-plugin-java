@@ -1,12 +1,14 @@
 package bd.com.shurjopay.plugin.model;
 
-import java.io.Serializable;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import bd.com.shurjopay.plugin.constants.ShurjopayStatus;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import lombok.experimental.SuperBuilder;
 
 /**
  * This model is used for response when user want to verify order using order id.
@@ -15,10 +17,11 @@ import lombok.experimental.Accessors;
  * @author Al - Amin
  * @since 2022-06-16
  */
-@Data
-@Accessors(chain = true)
-public class VerifiedPayment implements Serializable{
-	private static final long serialVersionUID = 1970085707716491151L;
+@Data @Accessors(chain = true)
+@EqualsAndHashCode(callSuper = false)
+@SuperBuilder
+@AllArgsConstructor @NoArgsConstructor
+public class VerifiedPayment extends Payment{
 	
 	/**
 	 * shurjoPay system generated id.
@@ -29,12 +32,7 @@ public class VerifiedPayment implements Serializable{
 	 * shurjoPay generates a transaction id against a payment.
 	 */
 	@JsonProperty("order_id")
-	private String orderId;
-	
-	/**
-	 * Payment amount in currency. shurjoPay supports only BDT and USD.
-	 */
-	private String currency;
+	private String spTxnId;
 	
 	/**
 	 * Payment amount in BDT/USD currency.
@@ -114,12 +112,6 @@ public class VerifiedPayment implements Serializable{
 	private String bankStatus;
 	
 	/**
-	 * Customer order id.
-	 */
-	@JsonProperty("customer_order_id")
-	private String customerOrderId;
-	
-	/**
 	 * shurjoPay's won status code. see details {@link ShurjopayStatus}
 	 */
 	@JsonProperty("sp_code")
@@ -130,35 +122,6 @@ public class VerifiedPayment implements Serializable{
 	 */
 	@JsonProperty("sp_message")
 	private String spStatusMsg;
-	
-	/**
-	 * This field is duplicate of sp_message. This field is required for handling shurjopay error response
-	 */
-	private String message;
-	
-	/**
-	 * Customer's full name who want to pay by shurjoPay.
-	 */
-	@JsonProperty("name")
-	private String customerName;
-	
-	/**
-	 * Customer's valid email address.
-	 */
-	@JsonProperty("email")
-	private String customerEmail;
-	
-	/**
-	 * Customer's address.
-	 */
-	@JsonProperty("address")
-	private String customerAddress;	
-	
-	/**
-	 * Customer's city where he/she lives in.
-	 */
-	@JsonProperty("city")
-	private String customerCity;
 	
 	/** Sometime customer have to send additional data like studentId 
 	 * or any other information which have not any field given by shurjoPay.
