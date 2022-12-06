@@ -14,11 +14,9 @@ import lombok.experimental.SuperBuilder;
  * @author alamin
  * @since 2022-12-05
  */
-@Data
-@Accessors(chain = true)
+@Data @Accessors(chain = true)
 @SuperBuilder
-@AllArgsConstructor
-@NoArgsConstructor
+@AllArgsConstructor @NoArgsConstructor
 public class Payment{
 
 	/**
@@ -33,6 +31,11 @@ public class Payment{
 	protected String currency;
 	
 	/**
+	 * ShurjoPay's status message
+	 */
+	protected String message;
+	
+	/**
 	 * Customer defined order id.
 	 */
 	@JsonProperty("order_id")
@@ -43,12 +46,14 @@ public class Payment{
 	 * Customer's full name who want to pay by shurjoPay.
 	 */
 	@JsonProperty("customer_name")
+	@JsonAlias("name")
 	protected String customerName;
 
 	/**
 	 * Customer's address.
 	 */
 	@JsonProperty("customer_address")
+	@JsonAlias("address")
 	protected String customerAddress;
 
 	/**
@@ -61,12 +66,14 @@ public class Payment{
 	 * Customer's city where he/she lives in.
 	 */
 	@JsonProperty("customer_city")
+	@JsonAlias("city")
 	protected String customerCity;
 	
 	/**
 	 * Customer's valid email address.
 	 */
 	@JsonProperty("customer_email")
+	@JsonAlias("email")
 	protected String customerEmail;
 		
 	/**

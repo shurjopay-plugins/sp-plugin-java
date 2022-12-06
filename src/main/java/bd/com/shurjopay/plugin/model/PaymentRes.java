@@ -15,12 +15,10 @@ import lombok.experimental.SuperBuilder;
  * @author Al - Amin
  * @since 2022-06-16
  */
-@Data
-@Accessors(chain = true)
+@Data @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = false)
 @SuperBuilder
-@AllArgsConstructor
-@NoArgsConstructor
+@AllArgsConstructor @NoArgsConstructor
 public class PaymentRes extends Payment{
 	
 	/**
@@ -38,7 +36,7 @@ public class PaymentRes extends Payment{
 	 * shurjoPay generates a transaction id against a payment.
 	 */
 	@JsonProperty("sp_order_id")
-	private String spOrderId;
+	private String spTxnId;
 	
 	/** 
 	 * This field is used for presenting payment category. e.g. sale
@@ -56,9 +54,4 @@ public class PaymentRes extends Payment{
 	 */
 	@JsonProperty("sp_code")
 	private int spCode;
-	
-	/**
-	 * shurjoPay's status message. see details {@link ShurjopayStatus}
-	 */
-	private String message;
 }

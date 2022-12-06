@@ -102,11 +102,11 @@ public class Shurjopay {
 	 */
 	private ShurjopayToken authenticate() throws ShurjopayException{
 		try {
-		Map<String, String> shurjoPayTokenReq = new HashMap<>();
-		shurjoPayTokenReq.put("username", spConfig.getUsername());
-		shurjoPayTokenReq.put("password", spConfig.getPassword());
+		Map<String, String> shurjoPayTokenMap = new HashMap<>();
+		shurjoPayTokenMap.put("username", spConfig.getUsername());
+		shurjoPayTokenMap.put("password", spConfig.getPassword());
 
-			String requestBody = prepareReqBody(shurjoPayTokenReq);
+			String requestBody = prepareReqBody(shurjoPayTokenMap);
 			HttpRequest request = postRequest(requestBody, Endpoints.TOKEN.title());
 			HttpResponse<Supplier<ShurjopayToken>> response = getClient().send(request, new JsonBodyHandler<>(ShurjopayToken.class));
 			authToken = response.body().get();
@@ -142,7 +142,6 @@ public class Shurjopay {
 			if (isAuthenticationRequired()) authToken = authenticate();
 			
 			String requestBody = prepareReqBody(getDefaultInfo(req));
-			System.out.println(requestBody);
 			HttpRequest request = postRequest(requestBody, Endpoints.MAKE_PMNT.title());
 			HttpResponse<Supplier<PaymentRes>> response = getClient().send(request, new JsonBodyHandler<>(PaymentRes.class));
 			
@@ -169,16 +168,16 @@ public class Shurjopay {
 	/**
 	 * This method is used for verifying order by order id which could be get by payment response object
 	 * 
-	 * @param orderId
+	 * @param spTxnId
 	 * @return order object if order verified successfully
 	 * @throws ShurjopayException
 	 */
-	public VerifiedPayment verifyPayment(String orderId) throws ShurjopayException {
+	public VerifiedPayment verifyPayment(String spTxnId) throws ShurjopayException {
 		try {
 			if (isAuthenticationRequired()) authToken = authenticate();
 			
 			Map<String, String> verifiedPaymentReq = new HashMap<>();
-			verifiedPaymentReq.put("order_id", orderId);
+			verifiedPaymentReq.put("order_id", spTxnId);
 
 			String requestBody = prepareReqBody(verifiedPaymentReq);
 			HttpRequest request = postRequest(requestBody, Endpoints.VERIFIED_ORDER.title(), true);
@@ -206,16 +205,16 @@ public class Shurjopay {
 	/**
 	 * This method is used for checking successfully paid order status by order id which could be get after verifying order
 	 * 
-	 * @param orderId
+	 * @param spTxnId
 	 * @return order object if order verified successfully.
 	 * @throws ShurjopayException
 	 */
-	public VerifiedPayment checkPaymentStatus(String orderId) throws ShurjopayException {
+	public VerifiedPayment checkPaymentStatus(String spTxnId) throws ShurjopayException {
 		try {
 			if (isAuthenticationRequired()) authToken = authenticate();
 			
 			Map<String, String> orderMap = new HashMap<String, String>();
-			orderMap.put("order_id", orderId);
+			orderMap.put("order_id", spTxnId);
 			
 			String requestBody = prepareReqBody(orderMap);
 			HttpRequest request = postRequest(requestBody, Endpoints.PMNT_STAT.title(), true);
@@ -276,11 +275,11 @@ public class Shurjopay {
 	 */
 	public PaymentReq getDefaultInfo(PaymentReq paymentReq) {
 		String callBackUrl = spConfig.getCallbackUrl();
-		paymentReq.setReturnUrl(callBackUrl);
-		paymentReq.setCancelUrl(callBackUrl);
-		paymentReq.setAuthToken(authToken.getToken());
-		paymentReq.setStoreId(authToken.getStoreId());
-		System.out.println(paymentReq);
+		paymentReq
+			.setReturnUrl(callBackUrl)
+			.setCancelUrl(callBackUrl)
+			.setAuthToken(authToken.getToken())
+			.setStoreId(authToken.getStoreId());
 		
 		try {
 			paymentReq.setClientIp(InetAddress.getLocalHost().getHostAddress());
@@ -313,12 +312,10 @@ public class Shurjopay {
 	private ShurjopayConfig getShurjoPayConfig() {
 		Properties spProps = PropertiesReader.instance().getProperties();
 		
-		ShurjopayConfig spConfig = new ShurjopayConfig();
-		spConfig.setUsername(spProps.getProperty(ShurjopayConfigKeys.SP_USER.name()));
-		spConfig.setPassword(spProps.getProperty(ShurjopayConfigKeys.SP_PASS.name()));
-		spConfig.setApiBaseUrl(spProps.getProperty(ShurjopayConfigKeys.SHURJOPAY_API.name()));
-		spConfig.setCallbackUrl(spProps.getProperty(ShurjopayConfigKeys.SP_CALLBACK.name()));
-		
-		return spConfig;
+		return new ShurjopayConfig()
+				   .setUsername(spProps.getProperty(ShurjopayConfigKeys.SP_USER.name()))
+				   .setPassword(spProps.getProperty(ShurjopayConfigKeys.SP_PASS.name()))
+				   .setApiBaseUrl(spProps.getProperty(ShurjopayConfigKeys.SHURJOPAY_API.name()))
+				   .setCallbackUrl(spProps.getProperty(ShurjopayConfigKeys.SP_CALLBACK.name()));
 	}
 }
