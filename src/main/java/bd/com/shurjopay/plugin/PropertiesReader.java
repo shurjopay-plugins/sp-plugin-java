@@ -6,7 +6,7 @@ import java.util.Properties;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * This class is used to read shurjopay's properties.
+ * A reader to read shurjopay's properties.
  * @author Al - Amin
  * @since 2022-06-13
  */
@@ -14,19 +14,27 @@ import lombok.extern.slf4j.Slf4j;
 public class PropertiesReader {
 	
 	/**
-	 * This class instance to fetch single instance.
+	 * Static field to store PropertiesReader.
 	 */
 	private static PropertiesReader instance = null;
 
 	/**
-	 * Private constructor to prohibit creating class instance from outside.
-	 */
+     * Instantiates ShurjopayException with message and exception.
+     */
 	private PropertiesReader() {
 	}
 
 	/**
-	 * This method is used to provide shurjopay properties.
-	 * @return properties in shurjopay.properties resource.
+	 * Loads shurjopay's properties from {@code shurjopay.properties} file.
+	 * <hr>
+	 * <b>Shurjopay's properties:</b>
+	 * <ul>
+	 * 	<li>Merchant username provided by shurjopay.</li>
+	 * 	<li>Merchant password provided by shurjopay.</li>
+	 * 	<li>Shurjopay base URL to access end-points.</li>
+	 * 	<li>Shurjopay logging file information.</li>
+	 * </ul>
+	 * @return Shurjopay's properties.
 	 */
 	public Properties getProperties(){
 		try {
@@ -40,8 +48,8 @@ public class PropertiesReader {
 	}
 
 	/**
-	 * This method is used to get class instance.
-	 * @return this.class instance.
+	 * Creates singleton PropertiesReader instance.
+	 * @return the {@link PropertiesReader} instance.
 	 */
 	public static PropertiesReader instance() {
 		if (instance == null) instance = new PropertiesReader();

@@ -11,7 +11,7 @@ import lombok.experimental.Accessors;
 import lombok.experimental.SuperBuilder;
 
 /**
- * After making a payment with shurjoPay this model will be the response object
+ * Shurjopay initiated payment response.
  * @author Al - Amin
  * @since 2022-06-16
  */
@@ -39,18 +39,18 @@ public class PaymentRes extends Payment{
 	private String spTxnId;
 	
 	/** 
-	 * This field is used for presenting payment category. e.g. sale
+	 * Shurjopay payment category. e.g. sale, e-commerce
 	 */
 	@JsonProperty("intent")
 	private String paymentCategory;
 	
 	/**
-	 *  Transaction status of shurjoPay. e.g. Initiated, Failed, Canceled etc.
+	 *  Transaction status of shurjopay. e.g. Initiated, Failed, Canceled etc.
 	 */
 	private String transactionStatus;
 	
 	/**
-	 * shurjoPay's won status code. see details {@link ShurjopayStatus}
+	 * Shurjopay reserved status code. See more.. {@link ShurjopayStatus}
 	 */
 	@JsonProperty("sp_code")
 	private int spCode;

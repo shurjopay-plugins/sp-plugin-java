@@ -10,8 +10,8 @@ import lombok.experimental.Accessors;
 import lombok.experimental.SuperBuilder;
 
 /**
- * 
- * @author alamin
+ * Shurjopay payment information to make a payment.
+ * @author Al - Amin
  * @since 2022-12-05
  */
 @Data @Accessors(chain = true)
@@ -20,7 +20,7 @@ import lombok.experimental.SuperBuilder;
 public class Payment{
 
 	/**
-	 * Client IP from where shurjoPay payment is initiated
+	 * Client IP from where shurjoPay payment is initiated.
 	 */
 	@JsonProperty("client_ip")
 	protected String clientIp;
@@ -31,7 +31,7 @@ public class Payment{
 	protected String currency;
 	
 	/**
-	 * ShurjoPay's status message
+	 * ShurjoPay's status message.
 	 */
 	protected String message;
 	

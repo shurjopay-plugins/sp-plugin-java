@@ -1,14 +1,14 @@
 package bd.com.shurjopay.plugin.constants;
 
 /**
- * This ENUM contains all of the end-points of shurjoPay.
+ * All of the end-points of shurjopay.
  * <ul>
- * <li>Getting shurjoPay token: <b>get_token</b></li>
- * <li>Making shurjoPay payment: <b>secret-pay</b></li>
- * <li>Verifying shurjoPay payment: <b>verification</b></li>
- * <li>Checking shurjoPay payment status: <b>payment-status</b></li>
+ * <li><b>TOKEN:</b> Getting shurjoPay token.</li>
+ * <li><b>MAKE_PMNT:</b> Initiating a shurjoPay payment.</li>
+ * <li><b>VERIFIED_PMNT:</b> Verifying shurjoPay payment.</li>
+ * <li><b>PMNT_STAT:</b> Checking a successful shurjoPay payment status.</li>
  * </ul>
- * @author Al-Amin
+ * @author Al - Amin
  * @since 2022-07-30
  */
 public enum Endpoints {
@@ -18,35 +18,35 @@ public enum Endpoints {
 	TOKEN("get_token"),
 	
 	/**
-	 * Making secret payment end-point.
+	 * Initiating secret payment end-point.
 	 */
 	MAKE_PMNT("secret-pay"),
 	
 	/**
-	 * Payment verification end-point.
+	 * Verifying initiated payment end-point.
 	 */
-	VERIFIED_ORDER("verification"),
+	VERIFIED_PMNT("verification"),
 	
 	/**
-	 * Checking payment status end-point
+	 * Checking payment status end-point.
 	 */
 	PMNT_STAT("payment-status");
 	
 	/**
-	 * Representing endpoint's title
+	 * Representing endpoint's title.
 	 */
 	private String title;
 	
 	/**
-	 * 
-	 * @param title
+	 * Instantiation constructor.
+	 * @param title ENUM title of end-points
 	 */
 	private Endpoints(String title) {
 		this.title = title;
 	}
 	
 	/**
-	 * This method is used to get endpoint's title
+	 * Gets endpoint's ENUM title.
 	 * @return endpoint's title.
 	 */
 	public String title() {

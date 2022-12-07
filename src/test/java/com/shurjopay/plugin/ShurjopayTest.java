@@ -25,6 +25,7 @@ import bd.com.shurjopay.plugin.model.PaymentRes;
 import bd.com.shurjopay.plugin.model.VerifiedPayment;
 
 /**
+ * Tests a successful payment cycle and failed payment cycle.
  * @author Al - Amin
  * @since 2022-06-14
  */

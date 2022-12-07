@@ -32,8 +32,12 @@ import bd.com.shurjopay.plugin.model.VerifiedPayment;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * 
- * Plug-in service to provide shurjoPay get way services.
+ * shurjopay service with payment functionalities.
+ * <p>
+ * {@code authenticate()} method provides functionality to authenticate authorized merchant.</p><p>
+ * {@code makePayment()} method provides functionality to submit a payment.</p><p>
+ * {@code verifyPayment()} method provides functionality to verify a submitted payment.</p><p>
+ * {@code checkPaymentStatus()} method provides functionality to check a verified payment status.</p>
  * 
  * @author Al - Amin
  * @since 2022-06-13
@@ -42,43 +46,45 @@ import lombok.extern.slf4j.Slf4j;
 public class Shurjopay {
 
 	/**
-	 * shurjopay authentication object.
+	 * Merchant login response model instance.<br>
 	 * See more.. {@link ShurjopayToken}
 	 */
 	private ShurjopayToken authToken;
 	
 	/**
-	 * This instance contains shurjopay's configuration.
+	 * Shurjopay properties holder model instance.<br>
+	 * See more.. {@link ShurjopayConfig}
 	 */
 	private ShurjopayConfig spConfig;
 	
 	/**
-	 * shurjopay's authentication success status code.
+	 * Merchant authentication success status code.
 	 */
 	private static final String AUTH_SUCCESS_CODE = "200";
 	
 	/**
-	 * Default IP address to submit a payment if client not provided his/her IP
+	 * Default IP address.
 	 */
 	private static final String DEFAULT_IP = "127.0.0.1";
 	
 	/**
-	 * Blank space constant for programmatically use
+	 * Blank space constant for programmatic use.
 	 */
 	private static final String WHITE_SPACE = " ";
 	
 	/**
-	 * Authentication header key name.
+	 * JWT token header name.
 	 */
 	private static final String AUTH_KEYWORD = "Authorization";
 	
 	/**
-	 * shurjopay's status code.
+	 * Shurjopay status code.
 	 */
 	private String spCode;
 
 	/**
-	 * This is default constructor by which a pure java application can instantiate {@link Shurjopay}
+	 * Instantiates Shurjopay with shurjopay's configurations.
+	 * which are loaded from {@code shurjopay.properties}
 	 */
 	public Shurjopay() {
 		super();
@@ -86,8 +92,9 @@ public class Shurjopay {
 	}
 
 	/**
-	 * This constructor is used to configure Spring auto wirable bean.
-	 * @param config
+	 * Instantiates auto-warble bean for spring plugin with shurjopay's configurations.
+	 * which are loaded from default spring properties e.g. {@code application.properties} or {@code application.yml}
+	 * @param config Shurjopay properties provided by shurjopay author.
 	 */
 	public Shurjopay(ShurjopayConfig config) {
 		super();
@@ -95,10 +102,9 @@ public class Shurjopay {
 	}
 
 	/**
-	 * Return authentication token for shurjoPay payment gateway system. 
-	 * Setup shurjopay.properties file.
-	 * @return shurjopay authentication response
-	 * @throws ShurjopayException
+	 * Authenticates merchant to perform a payment process.
+	 * @return authToken Shurjopay login response. See more.. {@link ShurjopayToken}
+	 * @throws ShurjopayException Unauthorized exception if username/password is wrong or not provided.
 	 */
 	private ShurjopayToken authenticate() throws ShurjopayException{
 		try {
@@ -112,7 +118,7 @@ public class Shurjopay {
 			authToken = response.body().get();
 			spCode = authToken.getSpStatusCode();
 
-		if (!spCode.equals(AUTH_SUCCESS_CODE)) throw new ShurjopayException("Code: "+ spCode +" Message: " + ShurjopayStatus.statusByCode(spCode));
+		if (!spCode.equals(AUTH_SUCCESS_CODE)) throw new ShurjopayException("Code: "+ spCode +" Message: " + ShurjopayStatus.messageByCode(spCode));
 		log.info("Merchant authentication successful!");
 		
 		return authToken;
@@ -130,35 +136,33 @@ public class Shurjopay {
 	}
 
 	/**
-	 * This method is used for making payment.
-	 * 
-	 * @param req
+	 * Initiates payment to shurjopay payment gateway
+	 * @param payload Payment request {@link PaymentReq} to initiate a payment
 	 * @return Payment response object contains redirect URL to reach payment page, order id to verify order in shurjoPay.
-	 * @throws ShurjopayException
+	 * @throws ShurjopayException If any mandatory field is missed, exception occurred.
 	 */
-	public PaymentRes makePayment(PaymentReq req) throws ShurjopayException {
-		PaymentRes paymentRes;
+	public PaymentRes makePayment(PaymentReq payload) throws ShurjopayException {
 		try {
+			PaymentRes paymentRes;
 			if (isAuthenticationRequired()) authToken = authenticate();
 			
-			String requestBody = prepareReqBody(getDefaultInfo(req));
+			String requestBody = prepareReqBody(getDefaultInfo(payload));
 			HttpRequest request = postRequest(requestBody, Endpoints.MAKE_PMNT.title());
-			HttpResponse<Supplier<PaymentRes>> response = getClient().send(request, new JsonBodyHandler<>(PaymentRes.class));
-			
+			HttpClient client = getClient();
+			HttpResponse<Supplier<PaymentRes>> response = client.send(request, new JsonBodyHandler<>(PaymentRes.class));
 			paymentRes = response.body().get();
-			int spCode = paymentRes.getSpCode();
-			if(paymentRes.getPaymentUrl().isBlank()) throw new ShurjopayException("Code: "+ spCode +" Message: " + ShurjopayStatus.statusByCode(String.valueOf(spCode)));
+			if(Objects.isNull(paymentRes.getPaymentUrl()) || paymentRes.getPaymentUrl().isBlank()) throw new ShurjopayException("One or more mandatory field(s) not provided in request payload.");
 			
 			log.info("Payment URL has been generated.");
 	
 			return paymentRes;
 		} catch (IOException e) {
-			log.error("Error occrued when sending make payment request.", e);
 			
+			log.error("Error occrued when sending make payment request.", e);
 			throw new ShurjopayException("Error occrued when sending make payment request.", e);
 		} catch (InterruptedException e) {
-			log.error("Error occrued when sending make payment request.", e);
 			
+			log.error("Error occrued when sending make payment request.", e);
 			throw new ShurjopayException("Error occrued when sending make payment request.", e);
 		}
 	}
@@ -166,11 +170,11 @@ public class Shurjopay {
 	
 
 	/**
-	 * This method is used for verifying order by order id which could be get by payment response object
+	 * Verifies an initiated payment after back transaction.
 	 * 
-	 * @param spTxnId
+	 * @param spTxnId Shurjopay transaction id which is retrieved from call-back URL.
 	 * @return order object if order verified successfully
-	 * @throws ShurjopayException
+	 * @throws ShurjopayException Verifying payment related exception
 	 */
 	public VerifiedPayment verifyPayment(String spTxnId) throws ShurjopayException {
 		try {
@@ -180,30 +184,30 @@ public class Shurjopay {
 			verifiedPaymentReq.put("order_id", spTxnId);
 
 			String requestBody = prepareReqBody(verifiedPaymentReq);
-			HttpRequest request = postRequest(requestBody, Endpoints.VERIFIED_ORDER.title(), true);
+			HttpRequest request = postRequest(requestBody, Endpoints.VERIFIED_PMNT.title(), true);
 			
 			HttpResponse<Supplier<VerifiedPayment[]>> response = getClient().send(request, new JsonBodyHandler<>(VerifiedPayment[].class));
 			VerifiedPayment verifiedPaymentRes = response.body().get()[0];
 			
 			spCode = verifiedPaymentRes.getSpStatusCode();
-			if (!spCode.equals(ShurjopayStatus.SHURJOPAY_SUCCESS.code())) throw new ShurjopayException("Code: "+ spCode +" Message: " + ShurjopayStatus.statusByCode(String.valueOf(spCode)));
+			if (!spCode.equals(ShurjopayStatus.SHURJOPAY_SUCCESS.code())) throw new ShurjopayException("Code: "+ spCode +" Message: " + ShurjopayStatus.messageByCode(String.valueOf(spCode)));
 			
 			log.info("shurjopay status for Verify Payment: {}", verifiedPaymentRes.getSpStatusMsg());
 			
 			return verifiedPaymentRes;
 		} catch (IOException e) {
-			log.error("Error occrued when sending verify payment request.", e);
 			
+			log.error("Error occrued when sending verify payment request.", e);
 			throw new ShurjopayException("Error occrued when sending verify payment request.", e);
 		} catch (InterruptedException e) {
-			log.error("Error occrued when sending verify payment request.", e);
 			
+			log.error("Error occrued when sending verify payment request.", e);
 			throw new ShurjopayException("Error occrued when sending verify payment request.", e);
 		}
 	}
 
 	/**
-	 * This method is used for checking successfully paid order status by order id which could be get after verifying order
+	 * Checks status of a successfully verified or initiated payment.
 	 * 
 	 * @param spTxnId
 	 * @return order object if order verified successfully.
@@ -223,12 +227,12 @@ public class Shurjopay {
 
 			return response.body().get()[0];
 		} catch (IOException e) {
-			log.error("Error occrued when fetching payment status request.", e);
 			
+			log.error("Error occrued when fetching payment status request.", e);
 			throw new ShurjopayException("Error occrued when fetching payment status request.", e);
 		} catch (InterruptedException e) {
-			log.error("Error occrued when fetching payment status request.", e);
 			
+			log.error("Error occrued when fetching payment status request.", e);
 			throw new ShurjopayException("Error occrued when fetching payment status request.", e);
 		}
 	}
@@ -251,10 +255,10 @@ public class Shurjopay {
 	}
 
 	/**
-	 * Checking expiration of token
+	 * Checks expiration of shurjopay JWT token
 	 * 
-	 * @param shurjoPayTokenRes
-	 * @return true if token is expired, otherwise return false
+	 * @param shurjoPayTokenRes Shurjopay authentication response. See more.. {@link ShurjopayToken}
+	 * @return {@code true} if token is expired, otherwise {@code false}
 	 */
 	private boolean isTokenExpired(ShurjopayToken shurjoPayTokenRes) {
 		DateTimeFormatter format = new DateTimeFormatterBuilder().parseCaseInsensitive().appendPattern("yyyy-MM-dd hh:mm:ssa").toFormatter(Locale.US);
@@ -266,7 +270,7 @@ public class Shurjopay {
 	}
 	
 	/**
-	 * This method is used to prepare Payment request object with default values such as
+	 * Prepares Payment request object with default values such as
 	 * <code>
 	 * Return URL, Cancel URL, JWT token, Client IP address, Merchant Store Id
 	 * </code>
@@ -283,7 +287,9 @@ public class Shurjopay {
 		
 		try {
 			paymentReq.setClientIp(InetAddress.getLocalHost().getHostAddress());
+			
 		} catch (UnknownHostException e) {
+			
 			log.warn("Client IP does not found. Setting default ip address..", e);
 			paymentReq.setClientIp(DEFAULT_IP);
 		}

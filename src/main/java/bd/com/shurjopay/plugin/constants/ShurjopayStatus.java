@@ -1,7 +1,7 @@
 package bd.com.shurjopay.plugin.constants;
 
 /**
- * This ENUM represents all shurjoPay's codes and definitions.
+ * All shurjopay's reserved codes and messages.
  * @author Al-Amin
  * @since 2022-10-19
  */
@@ -140,43 +140,43 @@ public enum ShurjopayStatus {
 	/**
 	 * Shurjopay's status message.
 	 */
-	private String status;
+	private String message;
 	
 	/**
-	 * Default constructor of this class
-	 * @param code
-	 * @param status
+	 * Instantiation constructor.
+	 * @param code Shurjopay HTTP status code.
+	 * @param message Shurjopay HTTP status message.
 	 */
-	private ShurjopayStatus(String code, String status) {
+	private ShurjopayStatus(String code, String message) {
 		this.code = code;
-		this.status = status;
+		this.message = message;
 	}
 	
 	/**
-	 * This method is used to get shurjopay's status code.
-	 * @return status code
+	 * Gets shurjopay reserved status code.
+	 * @return Shurjopay HTTP status code.
 	 */
 	public String code() {
 		return this.code;
 	}
 	
 	/**
-	 * This method is used to get shurjopay's status message.
-	 * @return status message
+	 * Gets shurjopay's status message.
+	 * @return Shurjopay HTTP status message.
 	 */
-	public String status() {
-		return this.status;
+	public String message() {
+		return this.message;
 	}
 	
 	/**
-	 * This method is used to get status message by status code.
-	 * @param code
-	 * @return shurjopay's status message
+	 * Loads message by code.
+	 * @param code Shurjopay HTTP status code.
+	 * @return Shurjopay HTTP status message.
 	 */
-	public static String statusByCode(String code) {
+	public static String messageByCode(String code) {
         for (ShurjopayStatus b : ShurjopayStatus.values()) {
             if (b.code.equalsIgnoreCase(code)) {
-                return b.status;
+                return b.message;
             }
         }
         return null;

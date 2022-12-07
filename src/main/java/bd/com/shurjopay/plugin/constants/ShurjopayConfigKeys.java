@@ -1,30 +1,29 @@
 package bd.com.shurjopay.plugin.constants;
 
 /**
- * This enum represents the configurations of a shurjoPay's merchant
- * @author Al-Amin
+ * The configuration keys of shurjopay which are passed by properties file.
+ * @author Al - Amin
  * @since 2022-10-27
- *
  */
 public enum ShurjopayConfigKeys {
 	
 	/**
-	 * Merchant's username for shurjopay
+	 * Merchant username provided by shurjopay.
 	 */
 	SP_USER,
 	
 	/**
-	 * Merchant's password for shurjopay
+	 * Merchant password provided by shurjopay.
 	 */
 	SP_PASS,
 	
 	/**
-	 * Base URL of shurjopay
+	 * ShurjoPay base URL for performing a payment cycle.
 	 */
 	SHURJOPAY_API,
 	
 	/**
-	 * Callback URL of shurjopay
+	 * Callback URL to perform with shurjopay transaction id.
 	 */
 	SP_CALLBACK;
 }

@@ -10,9 +10,7 @@ import lombok.experimental.Accessors;
 import lombok.experimental.SuperBuilder;
 
 /**
- * This model is used for making payment.
- * Model is not required to set returnUrl and cancelUrl.
- * For this purpose, set callback-URL in shurjopay.properties. It will be used for concerned fields.
+ * Shurjopay initiating payment request payload.
  * 
  * @author Al - Amin
  * @since 2022-06-16
