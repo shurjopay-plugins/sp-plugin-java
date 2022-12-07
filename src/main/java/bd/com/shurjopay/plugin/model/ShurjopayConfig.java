@@ -4,9 +4,9 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 /**
- * This model represents the merchant's credentials and shurjoPay URLs
+ * Merchant's credentials provided by shurjopay and shurjoPay configurations.
  * 
- * @author Al-Amin
+ * @author Al - Amin
  * @since 2022-10-12
  */
 @Data @Accessors(chain = true)
@@ -28,7 +28,7 @@ public class ShurjopayConfig {
 	private String callbackUrl;
 	
 	/**
-	 * shurjoPay's endpoint's base URL.
+	 * ShurjoPay base URL for performing a payment cycle.
 	 */
 	private String apiBaseUrl;
 }

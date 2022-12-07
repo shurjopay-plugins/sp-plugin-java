@@ -9,14 +9,17 @@ import java.util.function.Supplier;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
- * This class is used to perform with HTTP request and response body handling.
+ * HTTP request, response body handler to handle JSON to POJO and vice versa
  * @author Al-Amin
  * @since 2022-09-15
- *
- * @param <W>
  */
 public class JsonBodyHandler<W> implements HttpResponse.BodyHandler<Supplier<W>> {
 	private Class<W> wClass;
+	
+	/**
+     * Instantiates JsonBodyHandler
+     * @param wClass
+     */
 	public JsonBodyHandler(Class<W> wClass) {
 		this.wClass = wClass;
 	}
@@ -27,8 +30,6 @@ public class JsonBodyHandler<W> implements HttpResponse.BodyHandler<Supplier<W>>
 	}
 
 	/**
-	 * This method is used to get JSON HTTP response.
-	 * @param <W>
 	 * @param targetType
 	 * @return mapped JSON object
 	 */
@@ -38,8 +39,6 @@ public class JsonBodyHandler<W> implements HttpResponse.BodyHandler<Supplier<W>>
     }
 
 	/**
-	 * 
-	 * @param <W>
 	 * @param inputStream
 	 * @param targetType
 	 * @return mapped JSON object

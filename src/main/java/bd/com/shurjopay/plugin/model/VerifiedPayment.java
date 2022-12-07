@@ -11,9 +11,7 @@ import lombok.experimental.Accessors;
 import lombok.experimental.SuperBuilder;
 
 /**
- * This model is used for response when user want to verify order using order id.
- * It will represent response of verify order.
- * 
+ * After verifying payment response.
  * @author Al - Amin
  * @since 2022-06-16
  */
@@ -24,12 +22,12 @@ import lombok.experimental.SuperBuilder;
 public class VerifiedPayment extends Payment{
 	
 	/**
-	 * shurjoPay system generated id.
+	 * Shurjopay system generated id.
 	 */
 	private Long id;
 	
 	/**
-	 * shurjoPay generates a transaction id against a payment.
+	 * ShurjoPay transaction id against a payment transaction.
 	 */
 	@JsonProperty("order_id")
 	private String spTxnId;
@@ -82,7 +80,7 @@ public class VerifiedPayment extends Payment{
 	private String cardHolder;
 	
 	/**
-	 * Card number in front of debit/credit or other card.
+	 * Card number of debit/credit or other card.
 	 */
 	@JsonProperty("card_number")
 	private String cardNumber;
@@ -100,55 +98,51 @@ public class VerifiedPayment extends Payment{
 	private String bankTxnId;
 	
 	/**
-	 * shurjoPay's generated invoice number.
+	 * Shurjopay invoice number against a payment.
 	 */
 	@JsonProperty("invoice_no")
 	private String invoiceNo;
 	
 	/**
-	 * Bank transaction status. see detail {@link ShurjopayStatus}
+	 * Bank transaction status.
 	 */
 	@JsonProperty("bank_status")
 	private String bankStatus;
 	
 	/**
-	 * shurjoPay's won status code. see details {@link ShurjopayStatus}
+	 * Shurjopay reserved status code. See more.. {@link ShurjopayStatus}
 	 */
 	@JsonProperty("sp_code")
 	private String spStatusCode;
 	
 	/**
-	 * shurjoPay's status message. see details {@link ShurjopayStatus}
+	 * Shurjopay status message. see more.. {@link ShurjopayStatus}
 	 */
 	@JsonProperty("sp_message")
 	private String spStatusMsg;
 	
-	/** Sometime customer have to send additional data like studentId 
-	 * or any other information which have not any field given by shurjoPay.
-	 * value1 is used for customer's additional info if needed
+	/** Sometime customer want to send additional information
+	 * value1 is used for customer's additional information if needed.
 	 */
 	private String value1;
 	
-	/** Sometime customer have to send additional data like studentId 
-	 * or any other information which have not any field given by shurjoPay.
-	 * value2 is used for customer's additional info if needed
+	/** Sometime customer have to send additional information.
+	 * value2 is used for customer's additional information if needed
 	 */
 	private String value2;
 	
-	/** Sometime customer have to send additional data like studentId 
-	 * or any other information which have not any field given by shurjoPay.
-	 * value3 is used for customer's additional info if needed
+	/** Sometime customer have to send additional information.
+	 * value3 is used for customer's additional information if needed
 	 */
 	private String value3;
 	
-	/** Sometime customer have to send additional data like studentId 
-	 * or any other information which have not any field given by shurjoPay.
-	 * value4 is used for customer's additional info if needed
+	/** Sometime customer have to send additional information.
+	 * value4 is used for customer's additional information if needed
 	 */
 	private String value4;
 	
 	/**
-	 * Bank transaction status. See detail {@link ShurjopayStatus}
+	 * Bank transaction status.
 	 */
 	@JsonProperty("transaction_status")
 	private String txnStatus;
@@ -158,7 +152,7 @@ public class VerifiedPayment extends Payment{
 	private String paymentMethod;
 	
 	/**
-	 * shurjoPay's transaction time.
+	 * Shurjopay transaction time.
 	 */
 	@JsonProperty("date_time")
 	private String txnTime;
