@@ -8,14 +8,22 @@ _shurjoPay plugin_ helps merchants and service providers to integrate easily. Pl
 - **Check verified payment status**
 ## Documentation
 You can download source from our [github source](https://github.com/shurjopay-plugins/sp-plugin-java).
-You can pull binary/jar from the central Maven repositories:
-
+You can pull binary/jar from central Maven repositories:
+- Maven
 ```xml
 <dependency>
     <groupId>bd.com.shurjopay.plugin</groupId>
     <artifactId>sp-plugin-java</artifactId>
     <version>1.0.0</version>
 </dependency>
+```
+- Gradle Groovy
+```gradle
+implementation 'bd.com.shurjopay.plugin:sp-plugin-java:1.0.0'
+```
+- Gradle Kotlin
+```gradle
+implementation("bd.com.shurjopay.plugin:sp-plugin-java:1.0.0")
 ```
 > **_NOTE:_ [_ShurjoMukhi Limited_](https://shurjomukhi.com.bd/) offers another plugin for integrating most popular [**_shurjoPay_**](https://shurjopay.com.bd/) payment gateway with <u>_Spring Application_. Visit our [Spring plugin](https://github.com/shurjopay-plugins/sp-plugin-spring)** 
 ## Implementation
@@ -63,9 +71,10 @@ SPLOG_FILE = shurjopay-plugin.log
 ```
 ### Initialize shurjoPay:
 Now time to initialize shurjoPay to perform with features. For that
-	```
-		Shurjopay shurjopay = new Shurjopay();
-	 ``` code will be initialezed _shurjoPay_.
+```java
+Shurjopay shurjopay = new Shurjopay();
+```
+Above code will be initialezed a _shurjoPay_ instance.
 ### Make Payment: 
 Merchants and service providers can make payment by calling this service. Developer should call _makePayment()_ feature with payment request parameter. _shurjoPay_ needs some information to perform creating payment request. So that, this service feature requires request payment object param. After performing with this, service returns response object contains payment URL and customer information.
 - **Example**
