@@ -1,10 +1,11 @@
 ![image](https://user-images.githubusercontent.com/57352037/155895117-523cfb9e-d895-47bf-a962-2bcdda49ad66.png)
 
 # shurjoPay plugin (JAVA)
-[_**ShurjoMukhi Limited**_](https://shurjomukhi.com.bd/) developed plugin for integrating most popular [**_shurjoPay_**](https://shurjopay.com.bd/) payment gateway with java application. The information contained in this document is proprietary and confidential to [_**ShurjoMukhi Limited**_](https://shurjomukhi.com.bd/), for the product [**_shurjoPay_**](https://shurjopay.com.bd/). _shurjoPay plugin_ helps merchants and service providers to integrate easily. Plugin provides 3 functions:
+[_**ShurjoMukhi Limited**_](https://shurjomukhi.com.bd/) developed plugin for integrating most popular [**_shurjoPay_**](https://shurjopay.com.bd/) payment gateway with java application. The information contained in this document is proprietary and confidential to [_**ShurjoMukhi Limited**_](https://shurjomukhi.com.bd/), for the product [**_shurjoPay_**](https://shurjopay.com.bd/). This document is intended for the technical personnel of merchants and service providers who wants to integrate our online payment gateway using java plugin provided by [_**ShurjoMukhi Limited**_](https://shurjomukhi.com.bd/). <br/>
+_shurjoPay plugin_ helps merchants and service providers to integrate easily. Plugin provides 3 features:
 - **Make Payment**
-- **Verify payment order**
-- **Check verified order status**
+- **Verify payment**
+- **Check verified payment status**
 ## Documentation
 You can download source from our [github source](https://github.com/shurjopay-plugins/sp-plugin-java).
 You can pull binary/jar from the central Maven repositories:
@@ -17,8 +18,9 @@ You can pull binary/jar from the central Maven repositories:
 </dependency>
 ```
 > **_NOTE:_ [_ShurjoMukhi Limited_](https://shurjomukhi.com.bd/) offers another plugin for integrating most popular [**_shurjoPay_**](https://shurjopay.com.bd/) payment gateway with <u>_Spring Application_. Visit our [Spring plugin](https://github.com/shurjopay-plugins/sp-plugin-spring)** 
-### Implementation
-First of all developer need to configure shurjopay.properties & logback.xml file which should be located on merchant app's class path. Properties file contains four fields ``` SP_USER, SP_PASS, SHURJOPAY_API, SP_CALLBACK, SPLOG_PATH, SPLOG_FILE ```
+## Implementation
+Our example projects with implementation of **java plugin** are available. Please visit [Example Java Project](https://github.com/shurjopay-plugins/sp-plugin-usage-examples/tree/dev/java-app-java-plugin), [Example Spring Project](https://github.com/shurjopay-plugins/sp-plugin-usage-examples/tree/dev/java-app-java-plugin). <br/>
+First of all developer needs to configure shurjopay.properties & logback.xml file which should be located on merchant app's class path. Properties file contains four fields ``` SP_USER, SP_PASS, SHURJOPAY_API, SP_CALLBACK, SPLOG_PATH, SPLOG_FILE ```
 - **shurjopay.properties example**
 ```properties
 #merchant username and password
@@ -59,13 +61,18 @@ SPLOG_FILE = shurjopay-plugin.log
 	</root>
 </configuration> 
 ```
+### Initialize shurjoPay:
+Now time to initialize shurjoPay to perform with features. For that
+	```
+		Shurjopay shurjopay = new Shurjopay();
+	 ``` code will be initialezed _shurjoPay_.
 ### Make Payment: 
-Merchants and service providers can make payment by calling this service. Developer should call _makePayment()_ method with payment request parameter. _shurjoPay_ needs some information to perform creating payment request. So that, this service method requires request payment object param. After performing with this, service returns response object contains payment URL and customer information.
+Merchants and service providers can make payment by calling this service. Developer should call _makePayment()_ feature with payment request parameter. _shurjoPay_ needs some information to perform creating payment request. So that, this service feature requires request payment object param. After performing with this, service returns response object contains payment URL and customer information.
 - **Example**
 	- Request payment
 	 ```java 
 		request.setAmount("10");
-		request.setOrderId("sp215689");
+		request.setCustomerOrderId("sp3156xx");
 		request.setCurrency("BDT");
 		request.setCustomerName("John");
 		request.setCustomerAddr("Holding no-N/A, Road-16, Gulshan-1, Dhaka");
@@ -78,8 +85,8 @@ Merchants and service providers can make payment by calling this service. Develo
 	 	paymentUrl= <generated payment url by shurjoPay gateway>
 		amount=10
 		currency=BDT
-		spOrderId=sp32aad7c6dad7a
-		customerOrderId=sp215689
+		spTxnId=sp32aad7c6dad00
+		customerOrderId=sp2156xx
 		customerName=John
 		customerAddr=Holding no-N/A, Road-16, Gulshan-1, Dhaka
 		customerPhn=01766666666
@@ -90,16 +97,16 @@ Merchants and service providers can make payment by calling this service. Develo
 		transactionStatus=Initiated
 	 ```
 ### Verify payment: 
-After a succussful payment merchants or service providers get verify payment order by redirecting callback url. Developer must call _verifyPayment()_ method with shurjopay order id (shurjopay transaction id) parameter. sp order id (shurjopay transaction id) is provided by payment response named spOrderId. A successful successful payment returns payment verification object.
+After a succussful payment merchants or service providers get shurjoPay transaction id by redirect callback url. Developer must call _verifyPayment()_ feature with shurjopay transaction id as a param. shurjopay transaction id is provided by payment response named spTxnId. A successful payment returns payment verification object.
 - **Example**
 	- Request payment verification of a order
 	 ```java
-	 	Parameter: spOrderId
+	 	Parameter: spTxnId
 		Parameter type: String
 	 ```
-	- Response order
+	- Response
 	 ```java
-	 	orderId=sp32aad7c6dad7a
+	 	spTxnId=sp32aad7c6dad00
 		currency=BDT
 		amount=10
 		payableAmount=10
@@ -120,16 +127,16 @@ After a succussful payment merchants or service providers get verify payment ord
 		value4=value4
 	 ```
 ### Check payment status: 
-After a succussful payment (sp_code=1000) and verify payment merchants or service providers can check payment status. Developer should call _checkPaymentStatus()_ method with order id (shurjopay transaction id) parameter. sp order id (shurjopay transaction id) is provided by order response named orderId. A successfully verified payment with orderId returns a payment object.
+After a succussfully verified payment (sp_code=1000), merchants or service providers can check payment status. Developer need to call _checkPaymentStatus()_ feature with shurjoPay transaction id param. shurjoPay transaction id is provided by verified payment response named spTxnId. A successfully verified payment with spTxnId returns a payment object.
 - **Example**
 	- Request verification of a order
 	 ```java
-	 	Parameter: spOrderId
+	 	Parameter: spTxnId
 		Parameter type: String
 	 ```
 	- Response order
 	 ```java
-	 	orderId=sp32aad7c6dad7a
+	 	spTxnId=sp32aad7c6dad00
 		currency=BDT
 		amount=10
 		payableAmount=10
@@ -140,9 +147,9 @@ After a succussful payment (sp_code=1000) and verify payment merchants or servic
 		method=null
 		spMsg=initiated
 		spCode=1068
-		name=John
-		email=john@example.com
-		address=Holding no-N/A, Road-16, Gulshan-1, Dhaka
+		customerName=John
+		customerEmail=john@example.com
+		customerAddress=Holding no-N/A, Road-16, Gulshan-1, Dhaka
 		city=Dhaka
 		value1=value1
 		value2=value2
@@ -151,6 +158,6 @@ After a succussful payment (sp_code=1000) and verify payment merchants or servic
 	 ```
 ## License
 This code is under the [MIT open source License](http://www.opensource.org/licenses/mit-license.php).
-#### Please [contact](https://shurjopay.com.bd/#contacts) for more detail!
+#### Please [contact](https://shurjopay.com.bd/#contacts) with shurjoPay team for more detail!
 <hr>
 Copyright ©️2022 Shurjomukhi Limited.
