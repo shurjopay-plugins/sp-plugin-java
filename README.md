@@ -17,17 +17,13 @@ You can pull binary/jar from central Maven repositories:
     <version>1.0.0</version>
 </dependency>
 ```
-- Gradle Groovy
+- Gradle
 ```gradle
 implementation 'bd.com.shurjopay.plugin:sp-plugin-java:1.0.0'
 ```
-- Gradle Kotlin
-```gradle
-implementation("bd.com.shurjopay.plugin:sp-plugin-java:1.0.0")
-```
 > **_NOTE:_ [_ShurjoMukhi Limited_](https://shurjomukhi.com.bd/) offers another plugin for integrating most popular [**_shurjoPay_**](https://shurjopay.com.bd/) payment gateway with <u>_Spring Application_. Visit our [Spring plugin](https://github.com/shurjopay-plugins/sp-plugin-spring)** 
 ## Implementation
-Our example projects with implementation of **java plugin** are available. Please visit [Example Java Project](https://github.com/shurjopay-plugins/sp-plugin-usage-examples/tree/dev/java-app-java-plugin), [Example Spring Project](https://github.com/shurjopay-plugins/sp-plugin-usage-examples/tree/dev/java-app-java-plugin). <br/>
+Our sample projects with implementation of **java plugin** are available. Please visit [Java Project](https://github.com/shurjopay-plugins/sp-plugin-usage-examples/tree/dev/java-app-java-plugin), [Spring Project](https://github.com/shurjopay-plugins/sp-plugin-usage-examples/tree/dev/java-app-java-plugin). <br/>
 First of all developer needs to configure shurjopay.properties & logback.xml file which should be located on merchant app's class path. Properties file contains four fields ``` SP_USER, SP_PASS, SHURJOPAY_API, SP_CALLBACK, SPLOG_PATH, SPLOG_FILE ```
 - **shurjopay.properties example**
 ```properties
