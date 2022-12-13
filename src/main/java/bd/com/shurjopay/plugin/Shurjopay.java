@@ -57,29 +57,19 @@ public class Shurjopay {
 	 */
 	private ShurjopayConfig spConfig;
 	
-	/**
-	 * Merchant authentication success status code.
-	 */
+	/** Merchant authentication success status code.*/
 	private static final String AUTH_SUCCESS_CODE = "200";
 	
-	/**
-	 * Default IP address.
-	 */
+	/** Default IP address.*/
 	private static final String DEFAULT_IP = "127.0.0.1";
 	
-	/**
-	 * Blank space constant for programmatic use.
-	 */
+	/** Blank space constant for programmatic use.*/
 	private static final String WHITE_SPACE = " ";
 	
-	/**
-	 * JWT token header name.
-	 */
+	/** JWT token header name.*/
 	private static final String AUTH_KEYWORD = "Authorization";
 	
-	/**
-	 * Shurjopay status code.
-	 */
+	/** Shurjopay status code.*/
 	private String spCode;
 
 	/**

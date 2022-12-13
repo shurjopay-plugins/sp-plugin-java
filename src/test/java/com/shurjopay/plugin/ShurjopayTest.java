@@ -100,6 +100,10 @@ class ShurjopayTest {
 		assertNotNull(order.getSpTxnId(), () -> "Order is not found.");
 	}
 	
+	/**
+	 * Prepares dummy payment request with hard code values.
+	 * @return a dummy PaymentReq
+	 */
 	private PaymentReq getPaymentReq() {
 		PaymentReq request = new PaymentReq();
 
@@ -116,7 +120,12 @@ class ShurjopayTest {
 		return request;
 	}
 	
-	
+	/**
+	 * Fills up Shurjopay payment form and submit to Shurjopay
+	 * @param url Shurjopay secure payment URL.
+	 * @param shouldFail Flag to perform with a successful transaction and a failed transaction.
+	 * @throws InterruptedException Chrome driver exception if any occurrence will be occurred with driver.
+	 */
 	private void fillupAndSubmitPaymentForm(String url, boolean shouldFail) throws InterruptedException {
 		WebDriver driver = getChrome();
 		driver.manage().window().maximize();
@@ -151,6 +160,10 @@ class ShurjopayTest {
 		driver.quit();
 	}
 	
+	/**
+	 * Prepares chrome driver instance.
+	 * @return prepared chrome driver.
+	 */
 	private WebDriver getChrome() {
 		System.setProperty("webdriver.chrome.driver", "/home/alamin/git/sp-plugin-java/src/test/resources/drivers/chromedriver");
 		ChromeOptions options = new ChromeOptions();

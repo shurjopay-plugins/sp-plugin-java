@@ -18,26 +18,18 @@ import lombok.experimental.Accessors;
 public class ShurjopayToken implements Serializable {
 	private static final long serialVersionUID = 1960827183789531739L;
 
-	/**
-	 * JWT token to authenticate merchant.
-	 */
+	/** JWT token to authenticate merchant.*/
 	private String token;
 
-	/**
-	 * Secret Payment URL by which customer can pay.
-	 */
+	/** Secret Payment URL by which customer can pay.*/
 	@JsonProperty("execute_url")
 	private String spPaymentApi;
 
-	/**
-	 * JWT token type. i.e. Bearer, Basic etc.
-	 */
+	/** JWT token type. i.e. Bearer, Basic etc.*/
 	@JsonProperty("token_type")
 	private String tokenType;
 
-	/**
-	 * ShurjoPay reserved status code. See more.. {@link ShurjopayStatus}
-	 */
+	/** ShurjoPay reserved status code. See more.. {@link ShurjopayStatus}*/
 	@JsonProperty("sp_code")
 	private String spStatusCode;
 
@@ -48,20 +40,14 @@ public class ShurjopayToken implements Serializable {
 	@JsonProperty("token_create_time")
 	private String tokenCreatedTime;
 
-	/**
-	 * JWT token expired time in second.
-	 */
+	/** JWT token expired time in second.*/
 	@JsonProperty("expires_in")
 	private Integer expiredTimeInSecond;
 
-	/**
-	 * Merchant's registered store id on shurjopay system.
-	 */
+	/** Merchant's registered store id on shurjopay system.*/
 	@JsonProperty("store_id")
 	private Integer storeId;
 
-	/**
-	 * Shurjopay status message. See more.. {@link ShurjopayStatus}
-	 */
+	/** Shurjopay status message. See more.. {@link ShurjopayStatus}*/
 	private String message;
 }

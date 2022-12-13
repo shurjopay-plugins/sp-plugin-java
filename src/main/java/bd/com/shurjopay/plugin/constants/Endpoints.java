@@ -12,29 +12,19 @@ package bd.com.shurjopay.plugin.constants;
  * @since 2022-07-30
  */
 public enum Endpoints {
-	/**
-	 * JWT token end-point.
-	 */
+	/** JWT token end-point. */
 	TOKEN("get_token"),
 	
-	/**
-	 * Initiating secret payment end-point.
-	 */
+	/** Initiating secret payment end-point.*/
 	MAKE_PMNT("secret-pay"),
 	
-	/**
-	 * Verifying initiated payment end-point.
-	 */
+	/** Verifying initiated payment end-point.*/
 	VERIFIED_PMNT("verification"),
 	
-	/**
-	 * Checking payment status end-point.
-	 */
+	/** Checking payment status end-point.*/
 	PMNT_STAT("payment-status");
 	
-	/**
-	 * Representing endpoint's title.
-	 */
+	/** Representing endpoint's title.*/
 	private String title;
 	
 	/**
