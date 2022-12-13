@@ -21,43 +21,29 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor @NoArgsConstructor
 public class PaymentReq extends Payment {
 
-	/**
-	 *  Prefix of a merchant.
-	 */
+	/** Prefix of a merchant.*/
 	private String prefix;
 
-	/**
-	 *  JWT token to authenticate merchant.
-	 */
+	/** JWT token to authenticate merchant.*/
 	@JsonProperty("token")
 	private String authToken;
 
-	/**
-	 * Callback URL to return verify payment id.
-	 */
+	/** Callback URL to return verify payment id.*/
 	@JsonProperty("return_url")
 	private String returnUrl;
 
-	/**
-	 * Callback URL to cancel a shurjoPay payment
-	 */
+	/** Callback URL to cancel a shurjoPay payment*/
 	@JsonProperty("cancel_url")
 	private String cancelUrl;
 
-	/**
-	 * Merchant's registered store id.
-	 */
+	/** Merchant's registered store id */
 	@JsonProperty("store_id")
 	private int storeId;
 
-	/**
-	 * Payment amount in BDT/USD currency.
-	 */
+	/** Payment amount in BDT/USD currency.*/
 	private double amount;
 
-	/**
-	 * Customer's valid postal code.
-	 */
+	/** Customer's valid postal code.*/
 	@JsonProperty("customer_post_code")
 	private String customerPostCode;
 }

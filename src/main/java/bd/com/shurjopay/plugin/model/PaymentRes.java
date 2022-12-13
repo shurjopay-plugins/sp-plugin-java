@@ -21,37 +21,25 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor @NoArgsConstructor
 public class PaymentRes extends Payment{
 	
-	/**
-	 * Secret Payment URL by which customer can pay.
-	 */
+	/** Secret Payment URL by which customer can pay.*/
 	@JsonProperty("checkout_url")
 	private String paymentUrl;
 	
-	/**
-	 * Payment amount in BDT/USD currency.
-	 */
+	/** Payment amount in BDT/USD currency.*/
 	private String amount;
 	
-	/**
-	 * shurjoPay generates a transaction id against a payment.
-	 */
+	/** shurjoPay generates a transaction id against a payment.*/
 	@JsonProperty("sp_order_id")
 	private String spTxnId;
 	
-	/** 
-	 * Shurjopay payment category. e.g. sale, e-commerce
-	 */
+	/** Shurjopay payment category. e.g. sale, e-commerce*/
 	@JsonProperty("intent")
 	private String paymentCategory;
 	
-	/**
-	 *  Transaction status of shurjopay. e.g. Initiated, Failed, Canceled etc.
-	 */
+	/** Transaction status of shurjopay. e.g. Initiated, Failed, Canceled etc.*/
 	private String transactionStatus;
 	
-	/**
-	 * Shurjopay reserved status code. See more.. {@link ShurjopayStatus}
-	 */
+	/** Shurjopay reserved status code. See more.. {@link ShurjopayStatus}*/
 	@JsonProperty("sp_code")
 	private int spCode;
 }

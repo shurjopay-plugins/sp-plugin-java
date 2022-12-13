@@ -13,14 +13,10 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class PropertiesReader {
 	
-	/**
-	 * Static field to store PropertiesReader.
-	 */
+	/** Static field to store PropertiesReader.*/
 	private static PropertiesReader instance = null;
 
-	/**
-     * Instantiates ShurjopayException with message and exception.
-     */
+	/** Instantiates ShurjopayException with message and exception.*/
 	private PropertiesReader() {
 	}
 

@@ -9,7 +9,7 @@ package bd.com.shurjopay.plugin;
  * @since 2022-10-19
  */
 public class ShurjopayException extends Exception{
-	private static final long serialVersionUID = 213095527584273895L;
+	private static final long serialVersionUID = 1886007201833873575L;
 
 	/**
      * Instantiates ShurjopayException with message and exception.
