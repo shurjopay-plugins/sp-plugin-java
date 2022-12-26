@@ -58,7 +58,7 @@ After initializing developer should call _makePayment()_ method with payment req
 	- Returns POJO corresponding this [_JSON_](https://github.com/shurjopay-plugins/sp-plugin-java/blob/develop/src/test/resources/sample-msg/payment-res.json)
 
 ### Verify payment: 
-Developer must call _verifyPayment()_ method with shurjopay transaction id as a string param.
+Developer must call _verifyPayment()_ method after completing payment with shurjopay transaction id as a string param.
 - **Example**
 	- Call verify method
 	 ```java
