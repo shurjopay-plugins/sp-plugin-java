@@ -17,7 +17,7 @@
         </encoder>
     </appender>
     
-    <logger name="bd.com.shurjopay.plugin" level="err" additivity="false">
+    <logger name="com.shurjopay" level="err" additivity="false">
         <appender-ref ref="FILE"/>
     </logger>
 

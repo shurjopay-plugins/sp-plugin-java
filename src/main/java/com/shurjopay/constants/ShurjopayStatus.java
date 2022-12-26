@@ -1,4 +1,4 @@
-package bd.com.shurjopay.plugin.constants;
+package com.shurjopay.constants;
 
 /**
  * All shurjopay's reserved codes and messages.

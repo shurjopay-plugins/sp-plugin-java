@@ -1,4 +1,4 @@
-package bd.com.shurjopay.plugin.constants;
+package com.shurjopay.constants;
 
 /**
  * All of the end-points of shurjopay.

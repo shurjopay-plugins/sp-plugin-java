@@ -1,4 +1,4 @@
-package bd.com.shurjopay.plugin.model;
+package com.shurjopay.model;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

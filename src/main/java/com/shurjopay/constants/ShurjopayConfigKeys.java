@@ -1,4 +1,4 @@
-package bd.com.shurjopay.plugin.constants;
+package com.shurjopay.constants;
 
 /**
  * The configuration keys of shurjopay which are passed by properties file.

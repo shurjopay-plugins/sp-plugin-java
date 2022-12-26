@@ -13,14 +13,14 @@ You can pull binary/jar from central Maven repositories:<br>
 **Maven**
 ```xml
 <dependency>
-    <groupId>bd.com.shurjopay.plugin</groupId>
+    <groupId>com.shurjopay</groupId>
     <artifactId>sp-plugin-java</artifactId>
     <version>1.0.0</version>
 </dependency>
 ```
 **Gradle**
 ```gradle
-implementation 'bd.com.shurjopay.plugin:sp-plugin-java:1.0.0'
+implementation 'com.shurjopay:sp-plugin-java:1.0.0'
 ```
 > **_Attention:_ [_shurjoMukhi Limited_](https://shurjomukhi.com.bd/) offers another plugin for integrating most popular [**_shurjoPay_**](https://shurjopay.com.bd/) payment gateway with <u>_Spring Application_. Visit our [Spring plugin](https://github.com/shurjopay-plugins/sp-plugin-spring)**<hr>
 
