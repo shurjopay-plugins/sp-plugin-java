@@ -69,7 +69,7 @@ Developer must call _verifyPayment()_ method after completing payment with shurj
 Run the java unit test to see shurjopay plugin in action. These tests will run on selenium browser and will provide the complete experience. Just download [source](https://github.com/shurjopay-plugins/sp-plugin-java) and run ```ShurjopayTest``` class.
 Have a look to our other [shurjoPay plugins](https://github.com/shurjopay-plugins)
 ## License
-This code is under the [MIT open source License](http://www.opensource.org/licenses/mit-license.php).
+This code is under the [MIT open source License](https://github.com/shurjopay-plugins/sp-plugin-java/blob/develop/LICENSE).
 #### Please [contact](https://shurjopay.com.bd/#contacts) with shurjoPay team for more detail!
 <hr>
 Copyright ©️2022 Shurjomukhi Limited.
