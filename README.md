@@ -2,7 +2,7 @@
 
 # shurjoPay plugin (JAVA)
 [_**shurjoMukhi Limited**_](https://shurjomukhi.com.bd/) developed plugin for integrating most popular [**_shurjoPay_**](https://shurjopay.com.bd/) payment gateway with java application. _shurjoPay plugin_ helps merchants and service providers to integrate easily.<br/>
-Plugin provides 3 features:
+Plugin provides 2 features:
 - **Make Payment**
 - **Verify payment**
 ## Audience
