@@ -227,14 +227,27 @@ public class Shurjopay {
 		}
 	}
 	
+	/**
+	 * Checks shurjopay token is expired or not.
+	 * @return boolean
+	 */
 	private boolean isAuthenticationRequired() {
 		return !((Objects.nonNull(authToken) && !isTokenExpired(authToken)));
 	}
 
+	/**
+	 * Instantiates HttpClient
+	 * @return HttpClient
+	 */
 	private HttpClient getClient() {
 		return HttpClient.newHttpClient();
 	}
 	
+	/**
+	 * Converts object to JSON object string and prepares request body.
+	 * @param shurjoPayReq various type of request object.
+	 * @return a JSON string.
+	 */
 	private String prepareReqBody(Object shurjoPayReq) {
 		try {
 			ObjectMapper mapper = new ObjectMapper();
@@ -287,12 +300,24 @@ public class Shurjopay {
 		return paymentReq;
 	}
 
+	/**
+	 * Sends request to shurjopay.
+	 * @param httpBody String JSON body.
+	 * @param endPoint shurjopay endpoint
+	 * @return HttpRequest successful http request.
+	 */
 	private HttpRequest postRequest(String httpBody, String endPoint) {
 		
 		return HttpRequest.newBuilder(URI.create(spConfig.getApiBaseUrl().concat(endPoint)))
 						  .POST(HttpRequest.BodyPublishers.ofString(httpBody)).header("Content-Type", "application/json").build();
 	}
 
+	/**
+	 * Sends request to shurjopay.
+	 * @param httpBody String JSON body.
+	 * @param endPoint shurjopay endpoint
+	 * @return HttpRequest successful http request.
+	 */
 	private HttpRequest postRequest(String httpBody, String endPoint, boolean isAuthHead) {
 		
 		return HttpRequest.newBuilder(URI.create(spConfig.getApiBaseUrl().concat(endPoint)))
@@ -300,11 +325,21 @@ public class Shurjopay {
 						  .POST(HttpRequest.BodyPublishers.ofString(httpBody)).header("Content-Type", "application/json").build();
 	}
 
+	/**
+	 * Concatenates Bearer prefix to shurjopay JWT token.
+	 * @param token shurjopay JWT token.
+	 * @param tokenType token type accepted to shurjopay is Bearer.
+	 * @return JWT authentication token with Bearer prefix.
+	 */
 	private String getFormattedToken(String token, String tokenType) {
 		
 		return tokenType.concat(WHITE_SPACE).concat(token);
 	}
 	
+	/**
+	 * Sets up shurjopay configuration and prepare ShurjopayConfig 
+	 * @return ShurjopayConfig with merchant configuration provided by shurjopay
+	 */
 	private ShurjopayConfig getShurjoPayConfig() {
 		Properties spProps = PropertiesReader.instance().getProperties();
 		
