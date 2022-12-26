@@ -26,8 +26,8 @@ implementation 'com.shurjopay:sp-plugin-java:1.0.0'
 
 Our sample projects with implementation of **java plugin** are available. Please visit [Java Project](https://github.com/shurjopay-plugins/sp-plugin-usage-examples/tree/dev/java-app-java-plugin), [Spring Project](https://github.com/shurjopay-plugins/sp-plugin-usage-examples/tree/dev/java-app-java-plugin). <br/>
 Developer needs to configure shurjopay.properties & logback.xml file to use _shurjoPay_. Properties file contains four fields ``` SP_USER, SP_PASS, SHURJOPAY_API, SP_CALLBACK ``` to configure shurjoPay and 2 other fields to configure _shurjoPay_ logging are ```  SPLOG_PATH, SPLOG_FILE. ```
-- Visit [_shurjopay.properties_](https://github.com/shurjopay-plugins/sp-plugin-java/tree/develop/src/main/resources/sample-properties) for **shurjopay.properties example.**
-- Visit [_logback.xml_](https://github.com/shurjopay-plugins/sp-plugin-java/blob/develop/src/main/resources/logback.xml.sample) for **logback.xml example.**
+- Visit [_shurjopay.properties_](https://github.com/shurjopay-plugins/sp-plugin-java/tree/develop/src/test/resources/sample-properties) for **shurjopay.properties example.**
+- Visit [_logback.xml_](https://github.com/shurjopay-plugins/sp-plugin-java/blob/develop/src/test/resources/logback.xml.sample) for **logback.xml example.**
 
 ### Initialize shurjoPay:
 Now time to initialize shurjoPay to perform with features. For that
