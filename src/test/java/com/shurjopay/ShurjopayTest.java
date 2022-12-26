@@ -18,8 +18,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
-import com.shurjopay.Shurjopay;
-import com.shurjopay.ShurjopayException;
 import com.shurjopay.model.PaymentReq;
 import com.shurjopay.model.PaymentRes;
 import com.shurjopay.model.VerifiedPayment;
