@@ -1,10 +1,10 @@
-package bd.com.shurjopay.plugin.model;
+package com.shurjopay.model;
 
 import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.shurjopay.constants.ShurjopayStatus;
 
-import bd.com.shurjopay.plugin.constants.ShurjopayStatus;
 import lombok.Data;
 import lombok.experimental.Accessors;
 

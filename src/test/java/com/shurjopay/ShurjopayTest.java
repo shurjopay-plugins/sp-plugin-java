@@ -1,4 +1,4 @@
-package com.shurjopay.plugin;
+package com.shurjopay;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -18,11 +18,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
-import bd.com.shurjopay.plugin.Shurjopay;
-import bd.com.shurjopay.plugin.ShurjopayException;
-import bd.com.shurjopay.plugin.model.PaymentReq;
-import bd.com.shurjopay.plugin.model.PaymentRes;
-import bd.com.shurjopay.plugin.model.VerifiedPayment;
+import com.shurjopay.Shurjopay;
+import com.shurjopay.ShurjopayException;
+import com.shurjopay.model.PaymentReq;
+import com.shurjopay.model.PaymentRes;
+import com.shurjopay.model.VerifiedPayment;
 
 /**
  * Tests a successful payment cycle and failed payment cycle.

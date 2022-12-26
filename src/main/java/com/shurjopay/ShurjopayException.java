@@ -1,4 +1,4 @@
-package bd.com.shurjopay.plugin;
+package com.shurjopay;
 /**
  * An exception that provides an easy and safe way to track occurrence.
  * <p>

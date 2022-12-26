@@ -1,8 +1,8 @@
-package bd.com.shurjopay.plugin.model;
+package com.shurjopay.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.shurjopay.constants.ShurjopayStatus;
 
-import bd.com.shurjopay.plugin.constants.ShurjopayStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

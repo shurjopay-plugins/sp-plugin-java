@@ -1,4 +1,4 @@
-package bd.com.shurjopay.plugin;
+package com.shurjopay;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -20,15 +20,15 @@ import java.util.function.Supplier;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.shurjopay.constants.Endpoints;
+import com.shurjopay.constants.ShurjopayConfigKeys;
+import com.shurjopay.constants.ShurjopayStatus;
+import com.shurjopay.model.PaymentReq;
+import com.shurjopay.model.PaymentRes;
+import com.shurjopay.model.ShurjopayConfig;
+import com.shurjopay.model.ShurjopayToken;
+import com.shurjopay.model.VerifiedPayment;
 
-import bd.com.shurjopay.plugin.constants.Endpoints;
-import bd.com.shurjopay.plugin.constants.ShurjopayConfigKeys;
-import bd.com.shurjopay.plugin.constants.ShurjopayStatus;
-import bd.com.shurjopay.plugin.model.PaymentReq;
-import bd.com.shurjopay.plugin.model.PaymentRes;
-import bd.com.shurjopay.plugin.model.ShurjopayConfig;
-import bd.com.shurjopay.plugin.model.ShurjopayToken;
-import bd.com.shurjopay.plugin.model.VerifiedPayment;
 import lombok.extern.slf4j.Slf4j;
 
 /**

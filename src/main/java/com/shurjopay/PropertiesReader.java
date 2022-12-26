@@ -1,4 +1,4 @@
-package bd.com.shurjopay.plugin;
+package com.shurjopay;
 
 import java.io.IOException;
 import java.util.Properties;
