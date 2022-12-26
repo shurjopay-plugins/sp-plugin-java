@@ -4,11 +4,11 @@
 	"currency": "BDT",
 	"sp_order_id": "sp63a96f90e8e07",
 	"customer_order_id": "sp09876543",
-	"customer_name": "Maharab kibria",
+	"customer_name": "Mr. John",
 	"customer_address": "Dhaka",
 	"customer_city": "Dhaka",
 	"customer_phone": "01766666666",
-	"customer_email": null,
+	"customer_email": "john@example.com",
 	"client_ip": "102.101.1.1",
 	"intent": "sale",
 	"transactionStatus": "Initiated"
