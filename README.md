@@ -22,10 +22,10 @@ You can pull binary/jar from central Maven repositories:<br>
 ```gradle
 implementation 'bd.com.shurjopay.plugin:sp-plugin-java:1.0.0'
 ```
-> **_NOTICE:_ [_ShurjoMukhi Limited_](https://shurjomukhi.com.bd/) offers another plugin for integrating most popular [**_shurjoPay_**](https://shurjopay.com.bd/) payment gateway with <u>_Spring Application_. Visit our [Spring plugin](https://github.com/shurjopay-plugins/sp-plugin-spring)** 
+> **_Attention:_ [_shurjoMukhi Limited_](https://shurjomukhi.com.bd/) offers another plugin for integrating most popular [**_shurjoPay_**](https://shurjopay.com.bd/) payment gateway with <u>_Spring Application_. Visit our [Spring plugin](https://github.com/shurjopay-plugins/sp-plugin-spring)**<hr>
 
 Our sample projects with implementation of **java plugin** are available. Please visit [Java Project](https://github.com/shurjopay-plugins/sp-plugin-usage-examples/tree/dev/java-app-java-plugin), [Spring Project](https://github.com/shurjopay-plugins/sp-plugin-usage-examples/tree/dev/java-app-java-plugin). <br/>
-First of all developer needs to configure shurjopay.properties & logback.xml file to use _shurjoPay_. Properties file contains four fields ``` SP_USER, SP_PASS, SHURJOPAY_API, SP_CALLBACK ``` and 2 other fields to configure _shurjoPay_ logging are ```  SPLOG_PATH, SPLOG_FILE. ```
+Developer needs to configure shurjopay.properties & logback.xml file to use _shurjoPay_. Properties file contains four fields ``` SP_USER, SP_PASS, SHURJOPAY_API, SP_CALLBACK ``` to configure shurjoPay and 2 other fields to configure _shurjoPay_ logging are ```  SPLOG_PATH, SPLOG_FILE. ```
 - Visit [_shurjopay.properties_](https://github.com/shurjopay-plugins/sp-plugin-java/tree/develop/src/main/resources/sample-properties) for **shurjopay.properties example.**
 - Visit [_logback.xml_](https://github.com/shurjopay-plugins/sp-plugin-java/blob/develop/src/main/resources/logback.xml.sample) for **logback.xml example.**
 
@@ -51,69 +51,23 @@ After initializing developer should call _makePayment()_ method with payment req
 		request.setCustomerCity("Dhaka");
 		request.setCustomerPostCode("1212");
 		request.setCustomerEmail("dummy@gmail.com");
+	
+		// Calls first method to initiate a payment
+		shurjopay.makePayment(request);
 	 ```
-	- You will get java POJO corresponding this [_JSON_](https://github.com/shurjopay-plugins/sp-plugin-java/blob/develop/src/test/resources/sample-msg/payment-res.json)
+	- Returns POJO corresponding this [_JSON_](https://github.com/shurjopay-plugins/sp-plugin-java/blob/develop/src/test/resources/sample-msg/payment-res.json)
 
 ### Verify payment: 
-After a succussful payment merchants or service providers get shurjoPay transaction id by redirect callback url. Developer must call _verifyPayment()_ feature with shurjopay transaction id as a param. shurjopay transaction id is provided by payment response named spTxnId. A successful payment returns payment verification object.
+Developer must call _verifyPayment()_ method with shurjopay transaction id as a string param.
 - **Example**
-	- Request payment verification of a order
+	- Call verify method
 	 ```java
-	 	Parameter: spTxnId
-		Parameter type: String
+	 	shurjopay.verifyPayment(:=spTxnId)
 	 ```
-	- Response
-	 ```java
-	 	spTxnId=sp32aad7c6dad00
-		currency=BDT
-		amount=10
-		payableAmount=10
-		discountAmount=null
-		discpercent=0
-		usdAmt=0
-		usdRate=0
-		method=null
-		spMsg=initiated
-		spCode=1068
-		name=John
-		email=john@example.com
-		address=Holding no-N/A, Road-16, Gulshan-1, Dhaka
-		city=Dhaka
-		value1=value1
-		value2=value2
-		value3=value3
-		value4=value4
-	 ```
-### Check payment status: 
-After a succussfully verified payment (sp_code=1000), merchants or service providers can check payment status. Developer need to call _checkPaymentStatus()_ feature with shurjoPay transaction id param. shurjoPay transaction id is provided by verified payment response named spTxnId. A successfully verified payment with spTxnId returns a payment object.
-- **Example**
-	- Request verification of a order
-	 ```java
-	 	Parameter: spTxnId
-		Parameter type: String
-	 ```
-	- Response order
-	 ```java
-	 	spTxnId=sp32aad7c6dad00
-		currency=BDT
-		amount=10
-		payableAmount=10
-		discountAmount=null
-		discpercent=0
-		usdAmt=0
-		usdRate=0
-		method=null
-		spMsg=initiated
-		spCode=1068
-		customerName=John
-		customerEmail=john@example.com
-		customerAddress=Holding no-N/A, Road-16, Gulshan-1, Dhaka
-		city=Dhaka
-		value1=value1
-		value2=value2
-		value3=value3
-		value4=value4
-	 ```
+	- Returns POJO corresponding this [_JSON_](https://github.com/shurjopay-plugins/sp-plugin-java/blob/develop/src/test/resources/sample-msg/verification-res.json)
+## Want to see shurjoPay visually?
+Run the java unit test to see shurjopay plugin in action. These tests will run on selenium browser and will provide the complete experience. Just download [source](https://github.com/shurjopay-plugins/sp-plugin-java) and run ```ShurjopayTest``` class.
+Have a look to our other [shurjoPay plugins](https://github.com/shurjopay-plugins)
 ## License
 This code is under the [MIT open source License](http://www.opensource.org/licenses/mit-license.php).
 #### Please [contact](https://shurjopay.com.bd/#contacts) with shurjoPay team for more detail!
