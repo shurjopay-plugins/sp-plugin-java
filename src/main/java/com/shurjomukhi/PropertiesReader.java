@@ -1,4 +1,4 @@
-package com.shurjopay;
+package com.shurjomukhi;
 
 import java.io.IOException;
 import java.util.Properties;

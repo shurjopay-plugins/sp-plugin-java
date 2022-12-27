@@ -1,7 +1,7 @@
-package com.shurjopay.model;
+package com.shurjomukhi.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.shurjopay.constants.ShurjopayStatus;
+import com.shurjomukhi.constants.ShurjopayStatus;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

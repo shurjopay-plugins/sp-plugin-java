@@ -1,4 +1,4 @@
-package com.shurjopay.model;
+package com.shurjomukhi.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

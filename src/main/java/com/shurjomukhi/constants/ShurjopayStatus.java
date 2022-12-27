@@ -1,4 +1,4 @@
-package com.shurjopay.constants;
+package com.shurjomukhi.constants;
 
 /**
  * All shurjopay's reserved codes and messages.
