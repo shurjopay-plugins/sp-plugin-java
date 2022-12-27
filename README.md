@@ -55,7 +55,7 @@ After initializing developer should call _makePayment()_ method with payment req
 		// Calls first method to initiate a payment
 		shurjopay.makePayment(request);
 	 ```
-	- Returns POJO corresponding this [_JSON_](https://github.com/shurjopay-plugins/sp-plugin-java/blob/develop/src/test/resources/sample-msg/payment-res.json)
+	- Returns [_POJO_](https://github.com/shurjopay-plugins/sp-plugin-java/blob/develop/src/main/java/com/shurjopay/model/PaymentRes.java) corresponding this [_JSON_](https://github.com/shurjopay-plugins/sp-plugin-java/blob/develop/src/test/resources/sample-msg/payment-res.json)
 
 ### Verify payment: 
 Developer must call _verifyPayment()_ method after completing payment with shurjopay transaction id as a string param.
@@ -64,7 +64,7 @@ Developer must call _verifyPayment()_ method after completing payment with shurj
 	 ```java
 	 	shurjopay.verifyPayment(:=spTxnId)
 	 ```
-	- Returns POJO corresponding this [_JSON_](https://github.com/shurjopay-plugins/sp-plugin-java/blob/develop/src/test/resources/sample-msg/verification-res.json)
+	- Returns [_POJO_](https://github.com/shurjopay-plugins/sp-plugin-java/blob/develop/src/main/java/com/shurjopay/model/VerifiedPayment.java) corresponding this [_JSON_](https://github.com/shurjopay-plugins/sp-plugin-java/blob/develop/src/test/resources/sample-msg/verification-res.json)
 ## Want to see shurjoPay visually?
 Run the java unit test to see shurjopay plugin in action. These tests will run on selenium browser and will provide the complete experience. Just download [source](https://github.com/shurjopay-plugins/sp-plugin-java) and run ```ShurjopayTest``` class.
 Have a look to our other [shurjoPay plugins](https://github.com/shurjopay-plugins)
