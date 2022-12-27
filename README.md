@@ -3,7 +3,7 @@
 Official shurjoPay Java plugin for merchants or service providers to connect with [**_shurjoPay_**](https://shurjopay.com.bd) Payment Gateway ``` v2.1 ``` developed and maintained by [_**ShurjoMukhi Limited**_](https://shurjomukhi.com.bd).
 
 This plugin can be used with any java application or framework (e.g. Spring).
-Also it makes easy for developers to integrate with shurjoPay ``` v2.1 ``` with just three API calls:
+Also it makes easy for developers to integrate with shurjoPay ``` v2.1 ``` with calling three methods only:
 
 1. **makePayment**: create and send payment request
 1. **verifyPayment**: verify payment status at shurjoPay
@@ -51,7 +51,7 @@ SPLOG_PATH= /var/log
 SPLOG_FILE = sp-java-plugin.log
 ```
 - Visit [_shurjopay.properties_](https://github.com/shurjopay-plugins/sp-plugin-java/blob/develop/src/test/resources/shurjopay.properties.sample) for example.
-- If you add ```logback-classic``` dependency in your application then shurjoPay will maintain separate log file to track errors.
+- If you add ```logback-classic``` dependency in your application then shurjoPay will maintain separate log file to track shurjoPay errors only.
 
 ### Step 3: After that, you can initiate payment request to shurjoPay using below code example.
 - Request example
