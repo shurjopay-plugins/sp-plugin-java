@@ -31,10 +31,9 @@ To integrate the shurjoPay Payment Gateway in your Java project do the following
 ```gradle
 implementation 'bd.com.shurjopay.plugin:sp-plugin-java:1.0.0'
 ```
-**Download Jar**
-```txt
-Go to [Maven Central](https://search.maven.org/) and search by 'shurjopay java plugin'. Then download jar file.
-```
+**Download Jar**<br>
+Go to [Maven Central](https://search.maven.org/) and search by 'shurjopay java plugin'. Then download jar file.<br>
+
 > **_Attention:_ [_shurjoMukhi Limited_](https://shurjomukhi.com.bd/) offers another plugin for integrating most popular [**_shurjoPay_**](https://shurjopay.com.bd/) payment gateway with <u>_Spring Application_. Visit our [Spring plugin](https://github.com/shurjopay-plugins/sp-plugin-spring)**<hr>
 
 ### Step 2: Create shurjopay.properties inside project resource path.
