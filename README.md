@@ -75,14 +75,14 @@ SPLOG_FILE = sp-java-plugin.log
 	// Calls first method to initiate a payment
 	shurjopay.makePayment(request);
  ```
-- Returns [_POJO_](https://github.com/shurjopay-plugins/sp-plugin-java/blob/develop/src/main/java/com/shurjopay/model/PaymentRes.java) corresponding this [_JSON_](https://github.com/shurjopay-plugins/sp-plugin-java/blob/develop/src/test/resources/sample-msg/payment-res.json)
+- Returns [_POJO_](https://github.com/shurjopay-plugins/sp-plugin-java/blob/develop/src/main/java/com/shurjomukhi/model/PaymentRes.java) corresponding this [_JSON_](https://github.com/shurjopay-plugins/sp-plugin-java/blob/develop/src/test/resources/sample-msg/payment-res.json)
 
 ### Step 4: Payment verification can be done after each transaction with shurjopay transaction id. 
 - Call verify method
  ```java
 	shurjopay.verifyPayment(:=spTxnId)
  ```
-- Returns [_POJO_](https://github.com/shurjopay-plugins/sp-plugin-java/blob/develop/src/main/java/com/shurjopay/model/VerifiedPayment.java) corresponding this [_JSON_](https://github.com/shurjopay-plugins/sp-plugin-java/blob/develop/src/test/resources/sample-msg/verification-res.json)
+- Returns [_POJO_](https://github.com/shurjopay-plugins/sp-plugin-java/blob/develop/src/main/java/com/shurjomukhi/model/VerifiedPayment.java) corresponding this [_JSON_](https://github.com/shurjopay-plugins/sp-plugin-java/blob/develop/src/test/resources/sample-msg/verification-res.json)
 ### Congrats! Now you are ready to use the java plugin to seamlessly integrate with shurjoPay to make your payment system easy and smooth.
 
 ## Want to see shurjoPay visually?
