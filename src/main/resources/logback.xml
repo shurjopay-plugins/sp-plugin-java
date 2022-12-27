@@ -17,7 +17,7 @@
         </encoder>
     </appender>
     
-    <logger name="com.shurjomukhi" level="INFO" additivity="false">
+    <logger name="com.shurjomukhi" level="ERROR" additivity="false">
         <appender-ref ref="FILE"/>
     </logger>
 

@@ -1,4 +1,4 @@
-package com.shurjopay;
+package com.shurjomukhi;
 /**
  * An exception that provides an easy and safe way to track occurrence.
  * <p>

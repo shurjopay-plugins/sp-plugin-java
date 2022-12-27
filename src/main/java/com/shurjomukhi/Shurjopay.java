@@ -1,4 +1,4 @@
-package com.shurjopay;
+package com.shurjomukhi;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -20,14 +20,14 @@ import java.util.function.Supplier;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.shurjopay.constants.Endpoints;
-import com.shurjopay.constants.ShurjopayConfigKeys;
-import com.shurjopay.constants.ShurjopayStatus;
-import com.shurjopay.model.PaymentReq;
-import com.shurjopay.model.PaymentRes;
-import com.shurjopay.model.ShurjopayConfig;
-import com.shurjopay.model.ShurjopayToken;
-import com.shurjopay.model.VerifiedPayment;
+import com.shurjomukhi.constants.Endpoints;
+import com.shurjomukhi.constants.ShurjopayConfigKeys;
+import com.shurjomukhi.constants.ShurjopayStatus;
+import com.shurjomukhi.model.PaymentReq;
+import com.shurjomukhi.model.PaymentRes;
+import com.shurjomukhi.model.ShurjopayConfig;
+import com.shurjomukhi.model.ShurjopayToken;
+import com.shurjomukhi.model.VerifiedPayment;
 
 import lombok.extern.slf4j.Slf4j;
 

@@ -18,9 +18,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
-import com.shurjopay.model.PaymentReq;
-import com.shurjopay.model.PaymentRes;
-import com.shurjopay.model.VerifiedPayment;
+import com.shurjomukhi.Shurjopay;
+import com.shurjomukhi.ShurjopayException;
+import com.shurjomukhi.model.PaymentReq;
+import com.shurjomukhi.model.PaymentRes;
+import com.shurjomukhi.model.VerifiedPayment;
 
 /**
  * Tests a successful payment cycle and failed payment cycle.
@@ -163,7 +165,7 @@ class ShurjopayTest {
 	 * @return prepared chrome driver.
 	 */
 	private WebDriver getChrome() {
-		System.setProperty("webdriver.chrome.driver", "/home/alamin/git/sp-plugin-java/src/test/resources/drivers/chromedriver");
+		System.setProperty("webdriver.chrome.driver", "src/test/resources/drivers/chromedriver");
 		ChromeOptions options = new ChromeOptions();
 		options.setHeadless(false);
 		
