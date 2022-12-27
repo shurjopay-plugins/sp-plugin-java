@@ -3,7 +3,7 @@
 Official shurjoPay Java plugin for merchants or service providers to connect with [**_shurjoPay_**](https://shurjopay.com.bd) Payment Gateway ``` v2.1 ``` developed and maintained by [_**ShurjoMukhi Limited**_](https://shurjomukhi.com.bd).
 
 This plugin can be used with any java application or framework (e.g. Spring).
-Also it makes it easy for developers to integrate with shurjoPay ``` v2.1 ``` with just three API calls:
+Also it makes easy for developers to integrate with shurjoPay ``` v2.1 ``` with just three API calls:
 
 1. **makePayment**: create and send payment request
 1. **verifyPayment**: verify payment status at shurjoPay
