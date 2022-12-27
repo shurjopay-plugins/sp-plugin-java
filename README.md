@@ -1,19 +1,19 @@
-![image](https://user-images.githubusercontent.com/57352037/155895117-523cfb9e-d895-47bf-a962-2bcdda49ad66.png)
+﻿# ![image](https://user-images.githubusercontent.com/57352037/155895117-523cfb9e-d895-47bf-a962-2bcdda49ad66.png) Java plugin
 
-Official shurjoPay JavaScript package (plugin) for merchants or service providers to connect with [**_shurjoPay_**](https://shurjopay.com.bd) Payment Gateway v2.1 developed and maintained by [_**ShurjoMukhi Limited**_](https://shurjomukhi.com.bd).
+Official shurjoPay Java plugin for merchants or service providers to connect with [**_shurjoPay_**](https://shurjopay.com.bd) Payment Gateway ``` v2.1 ``` developed and maintained by [_**ShurjoMukhi Limited**_](https://shurjomukhi.com.bd).
 
-This plugin package can be used with any javascript application or framework (e.g. React, vue.js, Angular etc).
-Also it makes it easy for developers to integrate with shurjoPay v2.1 with just three API calls:
+This plugin can be used with any java application or framework (e.g. Spring).
+Also it makes it easy for developers to integrate with shurjoPay ``` v2.1 ``` with just three API calls:
 
 1. **makePayment**: create and send payment request
 1. **verifyPayment**: verify payment status at shurjoPay
 1. **paymentStatus**: Check payment details and status
 
-Also reduces many of the things that you had to do manually
+Also reduces many of the things that you had to do manually:
 
-- Handles http request and errors
-- JSON serialization and deserialization
-- Authentication during checkout and verification of payments
+- Handles http request and errors.
+- JSON serialization and deserialization.
+- Authentication during initiating and verifying of payments.
 ## Audience
 This document is intended for the technical personnel of merchants and service providers who wants to integrate our online payment gateway using java plugin provided by _**shurjoMukhi Limited**_.
 ## How to use this shurjoPay plugin
@@ -73,6 +73,11 @@ Properties file contains four fields ``` SP_USER, SP_PASS, SHURJOPAY_API, SP_CAL
 ## Want to see shurjoPay visually?
 Run the java unit test to see shurjopay plugin in action. These tests will run on selenium browser and will provide the complete experience. Just download [source](https://github.com/shurjopay-plugins/sp-plugin-java) and run ```ShurjopayTest``` class.
 Have a look to our other [shurjoPay plugins](https://github.com/shurjopay-plugins)
+## References
+1. [Spring example application](https://github.com/shurjopay-plugins/sp-plugin-usage-examples/tree/dev/spring-app-java-plugin) and [Java example application](https://github.com/shurjopay-plugins/sp-plugin-usage-examples/tree/dev/java-app-java-plugin) showing usage of the java plugin.
+2. [Sample applications and projects](https://github.com/shurjopay-plugins/sp-plugin-usage-examples) in many different languages and frameworks showing shurjopay integration.
+3. [shurjoPay Postman site](https://documenter.getpostman.com/view/6335853/U16dS8ig) illustrating the request and response flow using the sandbox system.
+4. [shurjopay Plugins](https://github.com/shurjopay-plugins) home page on github
 ## License
 This code is under the [MIT open source License](https://github.com/shurjopay-plugins/sp-plugin-java/blob/develop/LICENSE).
 #### Please [contact](https://shurjopay.com.bd/#contacts) with shurjoPay team for more detail!
