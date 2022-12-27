@@ -5,9 +5,10 @@
 Plugin provides 2 features:
 - **Make Payment**
 - **Verify payment**
+- **Check payment status**
 ## Audience
 This document is intended for the technical personnel of merchants and service providers who wants to integrate our online payment gateway using java plugin provided by _**shurjoMukhi Limited**_.
-## How to use shurjoPay java plugin
+## How to use shurjoPay plugin
 You can download source from our [github source](https://github.com/shurjopay-plugins/sp-plugin-java).
 You can pull binary/jar from central Maven repositories:<br>
 **Maven**
