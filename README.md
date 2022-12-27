@@ -33,10 +33,25 @@ implementation 'bd.com.shurjopay.plugin:sp-plugin-java:1.0.0'
 ```
 > **_Attention:_ [_shurjoMukhi Limited_](https://shurjomukhi.com.bd/) offers another plugin for integrating most popular [**_shurjoPay_**](https://shurjopay.com.bd/) payment gateway with <u>_Spring Application_. Visit our [Spring plugin](https://github.com/shurjopay-plugins/sp-plugin-spring)**<hr>
 
-### Step 2: Create shurjopay.properties & logback.xml files inside project resource path.
+### Step 2: Create shurjopay.properties inside project resource path.
 Properties file contains four fields ``` SP_USER, SP_PASS, SHURJOPAY_API, SP_CALLBACK ``` to configure shurjoPay and 2 other fields to configure _shurjoPay_ logging are ```  SPLOG_PATH, SPLOG_FILE. ```
-- Visit [_shurjopay.properties_](https://github.com/shurjopay-plugins/sp-plugin-java/tree/develop/src/test/resources/sample-properties) for **shurjopay.properties example.**
-- Visit [_logback.xml_](https://github.com/shurjopay-plugins/sp-plugin-java/blob/develop/src/test/resources/logback.xml.sample) for **logback.xml example.**
+```properties
+#merchant username and password provided by shurjoPay author
+SP_USER = <merchant_username>
+SP_PASS = <merchant_password>
+
+#shurjoPay API's base path for sandbox
+SHURJOPAY_API = https://engine.shurjopayment.com/api/
+
+#callback URL is used for cancel payment or success payment
+SP_CALLBACK = https://engine.shurjopayment.com/response
+
+#shurjoPay plug-in log file location
+SPLOG_PATH= /var/log
+SPLOG_FILE = sp-java-plugin.log
+```
+- Visit [_shurjopay.properties_](https://github.com/shurjopay-plugins/sp-plugin-java/blob/develop/src/test/resources/shurjopay.properties.sample) for example.
+- If you add ```logback-classic``` dependency in your application then shurjoPay will maintain separate log file to track errors.
 
 ### Step 3: After that, you can initiate payment request to shurjoPay using below code example.
 - Request example
