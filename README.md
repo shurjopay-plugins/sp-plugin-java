@@ -71,8 +71,7 @@ Properties file contains four fields ``` SP_USER, SP_PASS, SHURJOPAY_API, SP_CAL
 ### Congrats! Now you are ready to use the java plugin to seamlessly integrate with shurjoPay to make your payment system easy and smooth.
 
 ## Want to see shurjoPay visually?
-Run the java unit test to see shurjopay plugin in action. These tests will run on selenium browser and will provide the complete experience. Just download [source](https://github.com/shurjopay-plugins/sp-plugin-java) and run ```ShurjopayTest``` class.
-Have a look to our other [shurjoPay plugins](https://github.com/shurjopay-plugins)
+Run the java unit test to see shurjopay plugin in action. These tests will run on selenium browser and will provide the complete experience. Just download source and run ```ShurjopayTest``` class.
 ## References
 1. [Spring example application](https://github.com/shurjopay-plugins/sp-plugin-usage-examples/tree/dev/spring-app-java-plugin) and [Java example application](https://github.com/shurjopay-plugins/sp-plugin-usage-examples/tree/dev/java-app-java-plugin) showing usage of the java plugin.
 2. [Sample applications and projects](https://github.com/shurjopay-plugins/sp-plugin-usage-examples) in many different languages and frameworks showing shurjopay integration.
