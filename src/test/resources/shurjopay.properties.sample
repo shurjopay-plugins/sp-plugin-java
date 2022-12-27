@@ -1,6 +1,6 @@
-#merchant username and password
-SP_USER = sp_sandbox
-SP_PASS = pyyk97hu&6u6
+#merchant username and password provided by shurjoPay author
+SP_USER = <merchant_username>
+SP_PASS = <merchant_password>
 
 #shurjoPay API's base path for sandbox
 SHURJOPAY_API = https://engine.shurjopayment.com/api/
@@ -9,5 +9,5 @@ SHURJOPAY_API = https://engine.shurjopayment.com/api/
 SP_CALLBACK = https://engine.shurjopayment.com/response
 
 #shurjoPay plug-in log file location
-SPLOG_PATH= /home/alamin/git/sp-plugin-java/tmp
-SPLOG_FILE = shurjopay-plugin.log
+SPLOG_PATH= /var/log
+SPLOG_FILE = sp-java-plugin.log
