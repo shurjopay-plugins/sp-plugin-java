@@ -39,7 +39,12 @@ class ShurjopayTest {
 	
 	@BeforeAll
 	void setup() {
-		shurjopay = new Shurjopay();
+		try {
+			shurjopay = new Shurjopay();
+		} catch (ShurjopayException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Test

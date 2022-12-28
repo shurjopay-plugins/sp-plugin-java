@@ -75,8 +75,9 @@ public class Shurjopay {
 	/**
 	 * Instantiates Shurjopay with shurjopay's configurations.
 	 * which are loaded from {@code shurjopay.properties}
+	 * @throws ShurjopayException if shurjopay.properties file not found for instantiating Shurjopay.
 	 */
-	public Shurjopay() {
+	public Shurjopay() throws ShurjopayException{
 		super();
 		this.spConfig = getShurjoPayConfig();
 	}
@@ -337,11 +338,13 @@ public class Shurjopay {
 	}
 	
 	/**
-	 * Sets up shurjopay configuration and prepare ShurjopayConfig 
-	 * @return ShurjopayConfig with merchant configuration provided by shurjopay
+	 * Sets up shurjopay configuration and prepare ShurjopayConfig.
+	 * @return ShurjopayConfig with merchant configuration provided by shurjopay.
+	 * @throws ShurjopayException if the properties file not found then throw exception.
 	 */
-	private ShurjopayConfig getShurjoPayConfig() {
+	private ShurjopayConfig getShurjoPayConfig() throws ShurjopayException {
 		Properties spProps = PropertiesReader.instance().getProperties();
+		if (Objects.isNull(spProps)) throw new ShurjopayException("shurjopay.properties is missing in resource path");
 		
 		return new ShurjopayConfig()
 				   .setUsername(spProps.getProperty(ShurjopayConfigKeys.SP_USER.name()))
