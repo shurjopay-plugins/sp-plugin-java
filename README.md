@@ -89,7 +89,7 @@ SPLOG_FILE = sp-java-plugin.log
 ### Congrats! Now you are ready to use the java plugin to seamlessly integrate with shurjoPay to make your payment system easy and smooth.
 
 ## Want to see shurjoPay visually?
-Run the java unit test to see shurjopay plugin in action. These tests will run on selenium browser and will provide the complete experience. Just download source and run ```ShurjopayTest``` class.
+Run the JUnit test to see shurjopay plugin in action. These tests will run on selenium browser and will provide the complete experience. Just download source and execude command ```mvnw test or mvn test``` in command line/terminal from plugin root path.
 ## References
 1. [Spring example application](https://github.com/shurjopay-plugins/sp-plugin-usage-examples/tree/dev/spring-app-java-plugin) and [Java example application](https://github.com/shurjopay-plugins/sp-plugin-usage-examples/tree/dev/java-app-java-plugin) showing usage of the java plugin.
 2. [Sample applications and projects](https://github.com/shurjopay-plugins/sp-plugin-usage-examples) in many different languages and frameworks showing shurjopay integration.
