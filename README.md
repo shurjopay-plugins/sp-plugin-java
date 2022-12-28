@@ -11,7 +11,7 @@ Also it makes easy for developers to integrate with shurjoPay ``` v2.1 ``` with 
 
 Also reduces many of the things that you had to do manually:
 
-- Handles http request and errors.
+- Handles http requests and errors.
 - JSON serialization and deserialization.
 - Authentication during initiating and verifying of payments.
 ## Audience
