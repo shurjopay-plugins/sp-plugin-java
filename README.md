@@ -54,7 +54,7 @@ SPLOG_PATH= /var/log
 SPLOG_FILE = sp-java-plugin.log
 ```
 - Visit [_shurjopay.properties_](https://github.com/shurjopay-plugins/sp-plugin-java/blob/develop/src/test/resources/shurjopay.properties.sample) for example.
-- If you add ```logback-classic``` dependency in your application then shurjoPay will maintain separate log file to track shurjoPay errors only.
+- If you add ```logback-classic``` dependency in your application then shurjoPay will maintain separate log file to track shurjoPay errors only (optioinal).
 
 ### Step 3: After that, you can initiate payment request to shurjoPay using below code example.
 - Request example
