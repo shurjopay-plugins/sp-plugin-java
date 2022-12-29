@@ -16,7 +16,7 @@
         <maven.compiler.target>8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <github.url>https://github.com/shurjopay-plugins/sp-plugin-java</github.url>
-        <git.scm.uri>scm:git:git@github.com:shurjopay-plugins/sp-plugin-java</git.scm.uri>
+        <git.scm.uri>scm:git:git@github.com:shurjopay-plugins/sp-plugin-java.git</git.scm.uri>
         <org.name>shurjoMukhi Limited</org.name>
     </properties>
 
@@ -86,7 +86,7 @@
     <licenses>
         <license>
             <name>MIT License</name>
-            <url>https://github.com/shurjopay-plugins/sp-plugin-java/blob/develop/LICENSE</url>
+            <url>${github.url}/blob/develop/LICENSE</url>
             <distribution>repo</distribution>
         </license>
     </licenses>
