@@ -5,7 +5,7 @@
 
     <groupId>bd.com.shurjomukhi</groupId>
     <artifactId>sp-plugin-java</artifactId>
-    <version>0.1.0</version>
+    <version>0.3.0</version>
     <packaging>jar</packaging>
     <name>sp-plugin-java</name>
     <description>shurjoPay plugin module for Java application</description>

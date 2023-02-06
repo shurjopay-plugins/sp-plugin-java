@@ -1,5 +1,6 @@
 package com.shurjomukhi.model;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.shurjomukhi.constants.ShurjopayStatus;
 
@@ -36,7 +37,8 @@ public class VerifiedPayment extends Payment{
 	private Double payableAmount;
 	
 	/** Discount amount for the merchant.*/
-	@JsonProperty("discsount_amount")
+	@JsonProperty("discount_amount")
+	@JsonAlias("discsount_amount")
 	private Double discountAmount;
 	
 	/** Discount percent(%) for the merchant.*/
@@ -53,6 +55,7 @@ public class VerifiedPayment extends Payment{
 	
 	/** Received amount.*/
 	@JsonProperty("received_amount")
+	@JsonAlias("recived_amount")
 	private Double receivedAmt;
 	
 	/** Card holder name.*/
@@ -84,7 +87,7 @@ public class VerifiedPayment extends Payment{
 	private String spStatusCode;
 	
 	/** Shurjopay status message. see more.. {@link ShurjopayStatus}*/
-	@JsonProperty("sp_message")
+	@JsonAlias(value = {"sp_massage", "sp_message"})
 	private String spStatusMsg;
 	
 	/** Bank transaction status.*/
