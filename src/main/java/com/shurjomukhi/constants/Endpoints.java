@@ -10,6 +10,7 @@ package com.shurjomukhi.constants;
  * </ul>
  * @author Al - Amin
  * @since 2022-07-30
+ * TODO unnecessary constant definition. Sh
  */
 public enum Endpoints {
 	/** JWT token end-point. */

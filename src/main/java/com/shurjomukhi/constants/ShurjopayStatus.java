@@ -4,6 +4,7 @@ package com.shurjomukhi.constants;
  * All shurjopay's reserved codes and messages.
  * @author Al-Amin
  * @since 2022-10-19
+ * TODO Should use similar constants/enums as https://github.com/shurjomukhi/shurjopay-engine/blob/dev/app/Traits/ShurjopayStatusTrait.php
  */
 public enum ShurjopayStatus {
 
