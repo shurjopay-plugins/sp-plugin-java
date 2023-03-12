@@ -20,7 +20,6 @@ import java.util.function.Supplier;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.shurjomukhi.constants.ShurjopayConfigKeys;
 import com.shurjomukhi.constants.ShurjopayStatus;
 import com.shurjomukhi.model.PaymentReq;
 import com.shurjomukhi.model.PaymentRes;
@@ -56,18 +55,6 @@ public class Shurjopay {
 	 */
 	private final ShurjopayConfig spConfig;
 	
-	/** Merchant authentication success status code.*/
-	private static final String AUTH_SUCCESS_CODE = "200";
-	
-	/** Default IP address.*/
-	private static final String DEFAULT_IP = "127.0.0.1";
-	
-	/** Blank space constant for programmatic use.*/
-	private static final String WHITE_SPACE = " ";
-	
-	/** JWT token header name.*/
-	private static final String AUTH_KEYWORD = "Authorization";
-	
 	/** Shurjopay status code.*/
 	private String spCode;
 
@@ -98,9 +85,9 @@ public class Shurjopay {
 	 */
 	private ShurjopayToken authenticate() throws ShurjopayException{
 		try {
-		Map<String, String> shurjoPayTokenMap = new HashMap<>();
-		shurjoPayTokenMap.put("username", spConfig.getUsername());
-		shurjoPayTokenMap.put("password", spConfig.getPassword());
+			Map<String, String> shurjoPayTokenMap = new HashMap<>();
+			shurjoPayTokenMap.put("username", spConfig.getUsername());
+			shurjoPayTokenMap.put("password", spConfig.getPassword());
 
 			String requestBody = prepareReqBody(shurjoPayTokenMap);
 			HttpRequest request = postRequest(requestBody, "get_token");
@@ -108,21 +95,21 @@ public class Shurjopay {
 			authToken = response.body().get();
 			spCode = authToken.getSpStatusCode();
 
-		if (!spCode.equals(AUTH_SUCCESS_CODE)) throw new ShurjopayException("Code: "+ spCode +" Message: " + ShurjopayStatus.messageByCode(spCode));
-		log.info("Merchant authentication successful!");
-		
-		return authToken;
+			if (!spCode.equals("200")) throw new ShurjopayException("Code: "+ spCode +" Message: " + ShurjopayStatus.messageByCode(spCode));
+			log.info("Merchant authentication successful!");
+
+			return authToken;
 		}
 		catch (InterruptedException e) {
 			
-			throw new ShurjopayException("Error occrued when sending authentication request.", e);
+			throw new ShurjopayException("Error occurred when sending authentication request.", e);
 		}
 		catch (IOException e) {
-			
-			throw new ShurjopayException("Error occrued when sending authentication request.", e);
+
+			throw new ShurjopayException("Error occurred when sending authentication request.", e);
 		}
-		
-		
+
+
 	}
 
 	/**
@@ -277,7 +264,7 @@ public class Shurjopay {
 	 * <code>
 	 * Return URL, Cancel URL, JWT token, Client IP address, Merchant Store Id
 	 * </code>
-	 * @param paymentReq
+	 * @param paymentReq {@link PaymentReq}
 	 * @return {@link PaymentReq} with shurjoPay's default values
 	 */
 	public PaymentReq getDefaultInfo(PaymentReq paymentReq) {
@@ -292,9 +279,8 @@ public class Shurjopay {
 			paymentReq.setClientIp(InetAddress.getLocalHost().getHostAddress());
 			
 		} catch (UnknownHostException e) {
-			
 			log.warn("Client IP does not found. Setting default ip address..", e);
-			paymentReq.setClientIp(DEFAULT_IP);
+			paymentReq.setClientIp("127.0.0.1");
 		}
 		
 		return paymentReq;
@@ -321,7 +307,7 @@ public class Shurjopay {
 	private HttpRequest postRequest(String httpBody, String endPoint, boolean isAuthHead) {
 		
 		return HttpRequest.newBuilder(URI.create(spConfig.getApiBaseUrl().concat(endPoint)))
-						  .header(AUTH_KEYWORD, getFormattedToken(authToken.getToken(), authToken.getTokenType()))
+						  .header("Authorization", getFormattedToken(authToken.getToken(), authToken.getTokenType()))
 						  .POST(HttpRequest.BodyPublishers.ofString(httpBody)).header("Content-Type", "application/json").build();
 	}
 
@@ -333,7 +319,7 @@ public class Shurjopay {
 	 */
 	private String getFormattedToken(String token, String tokenType) {
 		
-		return tokenType.concat(WHITE_SPACE).concat(token);
+		return tokenType.concat(" ").concat(token);
 	}
 	
 	/**
@@ -346,9 +332,9 @@ public class Shurjopay {
 		if (Objects.isNull(spProps)) throw new ShurjopayException("shurjopay.properties is missing in resource path");
 		
 		return new ShurjopayConfig()
-				   .setUsername(spProps.getProperty(ShurjopayConfigKeys.SP_USER.name()))
-				   .setPassword(spProps.getProperty(ShurjopayConfigKeys.SP_PASS.name()))
-				   .setApiBaseUrl(spProps.getProperty(ShurjopayConfigKeys.SHURJOPAY_API.name()))
-				   .setCallbackUrl(spProps.getProperty(ShurjopayConfigKeys.SP_CALLBACK.name()));
+				   .setUsername(spProps.getProperty("SP_USER"))
+				   .setPassword(spProps.getProperty("SP_PASS"))
+				   .setApiBaseUrl(spProps.getProperty("SHURJOPAY_API"))
+				   .setCallbackUrl(spProps.getProperty("SP_CALLBACK"));
 	}
 }
