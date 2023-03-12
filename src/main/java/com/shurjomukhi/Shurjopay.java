@@ -99,17 +99,9 @@ public class Shurjopay {
 			log.info("Merchant authentication successful!");
 
 			return authToken;
-		}
-		catch (InterruptedException e) {
-			
+		} catch (InterruptedException | IOException e) {
 			throw new ShurjopayException("Error occurred when sending authentication request.", e);
 		}
-		catch (IOException e) {
-
-			throw new ShurjopayException("Error occurred when sending authentication request.", e);
-		}
-
-
 	}
 
 	/**
