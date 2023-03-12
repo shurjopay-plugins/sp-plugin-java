@@ -73,7 +73,7 @@ class ShurjopayTest {
 	@Order(3)
 	@DisplayName("For checking order status (Success payment test): ")
 	void testCheckPaymentStatus() throws ShurjopayException {
-		VerifiedPayment verifyPayment = shurjopay.checkPaymentStatus(paymentRes.getSpTxnId());
+		VerifiedPayment verifyPayment = shurjopay.verifyPayment(paymentRes.getSpTxnId());
 		assertNotNull(verifyPayment.getSpTxnId(), () -> "Order is not found.");
 	}
 	
@@ -95,14 +95,6 @@ class ShurjopayTest {
 	void testVerifyOrderFailed() {
 		Throwable exception = assertThrows(ShurjopayException.class, () -> shurjopay.verifyPayment(paymentRes.getSpTxnId()));
 		assertEquals("Code: 1005 Message: Bank transaction failed.", exception.getMessage());
-	}
-
-	@Test
-	@Order(6)
-	@DisplayName("For checking order status (Failed payment test): ")
-	void testCheckPaymentStatusFailed() throws ShurjopayException {
-		VerifiedPayment order = shurjopay.checkPaymentStatus(paymentRes.getSpTxnId());
-		assertNotNull(order.getSpTxnId(), () -> "Order is not found.");
 	}
 	
 	/**

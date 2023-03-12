@@ -184,37 +184,6 @@ public class Shurjopay {
 	}
 
 	/**
-	 * Checks status of a successfully verified or initiated payment.
-	 * 
-	 * @param spTxnId
-	 * @return order object if order verified successfully.
-	 * @throws ShurjopayException
-	 */
-	public VerifiedPayment checkPaymentStatus(String spTxnId) throws ShurjopayException {
-		try {
-			if (isAuthenticationRequired()) authToken = authenticate();
-			
-			Map<String, String> orderMap = new HashMap<String, String>();
-			orderMap.put("order_id", spTxnId);
-			
-			String requestBody = prepareReqBody(orderMap);
-			HttpRequest request = postRequest(requestBody, "payment-status", true);
-			HttpResponse<Supplier<VerifiedPayment[]>> response = getClient().send(request, new JsonBodyHandler<>(VerifiedPayment[].class));
-			log.info("Checking payment status...");
-
-			return response.body().get()[0];
-		} catch (IOException e) {
-			
-			log.error("Error occrued when fetching payment status request.", e);
-			throw new ShurjopayException("Error occrued when fetching payment status request.", e);
-		} catch (InterruptedException e) {
-			
-			log.error("Error occrued when fetching payment status request.", e);
-			throw new ShurjopayException("Error occrued when fetching payment status request.", e);
-		}
-	}
-	
-	/**
 	 * Checks shurjopay token is expired or not.
 	 * @return boolean
 	 */
