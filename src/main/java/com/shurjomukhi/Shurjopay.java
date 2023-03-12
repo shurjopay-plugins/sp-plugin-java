@@ -125,14 +125,9 @@ public class Shurjopay {
 			log.info("Payment URL has been generated.");
 	
 			return paymentRes;
-		} catch (IOException e) {
-			
-			log.error("Error occrued when sending make payment request.", e);
-			throw new ShurjopayException("Error occrued when sending make payment request.", e);
-		} catch (InterruptedException e) {
-			
-			log.error("Error occrued when sending make payment request.", e);
-			throw new ShurjopayException("Error occrued when sending make payment request.", e);
+		} catch (IOException | InterruptedException e) {
+			log.error("Error occurred when sending make payment request.", e);
+			throw new ShurjopayException("Error occurred when sending make payment request.", e);
 		}
 	}
 
@@ -164,13 +159,8 @@ public class Shurjopay {
 			log.info("shurjopay status for Verify Payment: {}", verifiedPaymentRes.getSpStatusMsg());
 			
 			return verifiedPaymentRes;
-		} catch (IOException e) {
-			
-			log.error("Error occrued when sending verify payment request.", e);
-			throw new ShurjopayException("Error occrued when sending verify payment request.", e);
-		} catch (InterruptedException e) {
-			
-			log.error("Error occrued when sending verify payment request.", e);
+		} catch (IOException | InterruptedException e) {
+			log.error("Error occurred when sending verify payment request.", e);
 			throw new ShurjopayException("Error occrued when sending verify payment request.", e);
 		}
 	}
