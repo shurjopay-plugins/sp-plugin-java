@@ -90,7 +90,7 @@ public class Shurjopay {
 			shurjoPayTokenMap.put("password", spConfig.getPassword());
 
 			String requestBody = prepareReqBody(shurjoPayTokenMap);
-			HttpRequest request = postRequest(requestBody, "get_token");
+			HttpRequest request = postRequest(requestBody, "get_token", false);
 			HttpResponse<Supplier<ShurjopayToken>> response = getClient().send(request, new JsonBodyHandler<>(ShurjopayToken.class));
 			authToken = response.body().get();
 			spCode = authToken.getSpStatusCode();
@@ -124,7 +124,7 @@ public class Shurjopay {
 			if (isAuthenticationRequired()) authToken = authenticate();
 			
 			String requestBody = prepareReqBody(getDefaultInfo(payload));
-			HttpRequest request = postRequest(requestBody, "secret-pay");
+			HttpRequest request = postRequest(requestBody, "secret-pay", false);
 			HttpClient client = getClient();
 			HttpResponse<Supplier<PaymentRes>> response = client.send(request, new JsonBodyHandler<>(PaymentRes.class));
 			paymentRes = response.body().get();
@@ -290,25 +290,15 @@ public class Shurjopay {
 	 * Sends request to shurjopay.
 	 * @param httpBody String JSON body.
 	 * @param endPoint shurjopay endpoint
-	 * @return HttpRequest successful http request.
-	 */
-	private HttpRequest postRequest(String httpBody, String endPoint) {
-		
-		return HttpRequest.newBuilder(URI.create(spConfig.getApiBaseUrl().concat(endPoint)))
-						  .POST(HttpRequest.BodyPublishers.ofString(httpBody)).header("Content-Type", "application/json").build();
-	}
-
-	/**
-	 * Sends request to shurjopay.
-	 * @param httpBody String JSON body.
-	 * @param endPoint shurjopay endpoint
+	 * @param isAuthHead true if needed "Authorization" header otherwise false
 	 * @return HttpRequest successful http request.
 	 */
 	private HttpRequest postRequest(String httpBody, String endPoint, boolean isAuthHead) {
-		
-		return HttpRequest.newBuilder(URI.create(spConfig.getApiBaseUrl().concat(endPoint)))
-						  .header("Authorization", getFormattedToken(authToken.getToken(), authToken.getTokenType()))
-						  .POST(HttpRequest.BodyPublishers.ofString(httpBody)).header("Content-Type", "application/json").build();
+		var request = HttpRequest.newBuilder(URI.create(spConfig.getApiBaseUrl().concat(endPoint)));
+		request.POST(HttpRequest.BodyPublishers.ofString(httpBody));
+		request.header("Content-Type", "application/json").build();
+		if(isAuthHead) request.header("Authorization", getFormattedToken(authToken.getToken(), authToken.getTokenType()));
+		return request.build();
 	}
 
 	/**
