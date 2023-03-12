@@ -171,6 +171,14 @@
                 <artifactId>maven-wrapper-plugin</artifactId>
                 <version>3.1.1</version>
             </plugin>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <groupId>org.apache.maven.plugins</groupId>
+                <configuration>
+                    <source>11</source>
+                    <target>11</target>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>

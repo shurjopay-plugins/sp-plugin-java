@@ -20,7 +20,6 @@ import java.util.function.Supplier;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.shurjomukhi.constants.Endpoints;
 import com.shurjomukhi.constants.ShurjopayConfigKeys;
 import com.shurjomukhi.constants.ShurjopayStatus;
 import com.shurjomukhi.model.PaymentReq;
@@ -55,7 +54,7 @@ public class Shurjopay {
 	 * Shurjopay properties holder model instance.<br>
 	 * See more.. {@link ShurjopayConfig}
 	 */
-	private ShurjopayConfig spConfig;
+	private final ShurjopayConfig spConfig;
 	
 	/** Merchant authentication success status code.*/
 	private static final String AUTH_SUCCESS_CODE = "200";
@@ -104,7 +103,7 @@ public class Shurjopay {
 		shurjoPayTokenMap.put("password", spConfig.getPassword());
 
 			String requestBody = prepareReqBody(shurjoPayTokenMap);
-			HttpRequest request = postRequest(requestBody, Endpoints.TOKEN.title());
+			HttpRequest request = postRequest(requestBody, "get_token");
 			HttpResponse<Supplier<ShurjopayToken>> response = getClient().send(request, new JsonBodyHandler<>(ShurjopayToken.class));
 			authToken = response.body().get();
 			spCode = authToken.getSpStatusCode();
@@ -138,7 +137,7 @@ public class Shurjopay {
 			if (isAuthenticationRequired()) authToken = authenticate();
 			
 			String requestBody = prepareReqBody(getDefaultInfo(payload));
-			HttpRequest request = postRequest(requestBody, Endpoints.MAKE_PMNT.title());
+			HttpRequest request = postRequest(requestBody, "secret-pay");
 			HttpClient client = getClient();
 			HttpResponse<Supplier<PaymentRes>> response = client.send(request, new JsonBodyHandler<>(PaymentRes.class));
 			paymentRes = response.body().get();
@@ -175,7 +174,7 @@ public class Shurjopay {
 			verifiedPaymentReq.put("order_id", spTxnId);
 
 			String requestBody = prepareReqBody(verifiedPaymentReq);
-			HttpRequest request = postRequest(requestBody, Endpoints.VERIFIED_PMNT.title(), true);
+			HttpRequest request = postRequest(requestBody, "verification", true);
 			
 			HttpResponse<Supplier<VerifiedPayment[]>> response = getClient().send(request, new JsonBodyHandler<>(VerifiedPayment[].class));
 			VerifiedPayment verifiedPaymentRes = response.body().get()[0];
@@ -212,7 +211,7 @@ public class Shurjopay {
 			orderMap.put("order_id", spTxnId);
 			
 			String requestBody = prepareReqBody(orderMap);
-			HttpRequest request = postRequest(requestBody, Endpoints.PMNT_STAT.title(), true);
+			HttpRequest request = postRequest(requestBody, "payment-status", true);
 			HttpResponse<Supplier<VerifiedPayment[]>> response = getClient().send(request, new JsonBodyHandler<>(VerifiedPayment[].class));
 			log.info("Checking payment status...");
 
@@ -270,7 +269,7 @@ public class Shurjopay {
 		LocalDateTime createdAt = LocalDateTime.parse(shurjoPayTokenRes.getTokenCreatedTime(), format);
 		int diff = (int) ChronoUnit.SECONDS.between(createdAt, LocalDateTime.now());
 		
-		return shurjoPayTokenRes.getExpiredTimeInSecond() <= diff ? true : false;
+		return shurjoPayTokenRes.getExpiredTimeInSecond() <= diff;
 	}
 	
 	/**

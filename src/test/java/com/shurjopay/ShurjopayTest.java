@@ -169,9 +169,10 @@ class ShurjopayTest {
 	 * @return prepared chrome driver.
 	 */
 	private WebDriver getChrome() {
-		System.setProperty("webdriver.chrome.driver", "src/test/resources/drivers/chromedriver");
+		System.setProperty("webdriver.chrome.driver", "src/test/resources/drivers/chromedriver.exe");
 		ChromeOptions options = new ChromeOptions();
 		options.setHeadless(false);
+		options.addArguments("--remote-allow-origins=*");
 		
 		WebDriver driver = new ChromeDriver(options);
 		driver.manage().window().maximize();
