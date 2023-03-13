@@ -1,5 +1,10 @@
 package com.shurjomukhi;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.shurjomukhi.model.*;
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.URI;
@@ -11,23 +16,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.temporal.ChronoUnit;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Properties;
+import java.util.*;
 import java.util.function.Supplier;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.shurjomukhi.constants.ShurjopayStatus;
-import com.shurjomukhi.model.PaymentReq;
-import com.shurjomukhi.model.PaymentRes;
-import com.shurjomukhi.model.ShurjopayConfig;
-import com.shurjomukhi.model.ShurjopayToken;
-import com.shurjomukhi.model.VerifiedPayment;
-
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * shurjopay service with payment functionalities.
@@ -43,24 +33,18 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class Shurjopay {
 
-	/**
-	 * Merchant login response model instance.<br>
-	 * See more.. {@link ShurjopayToken}
-	 */
+	/** Merchant login response model instance.<br> See more.. {@link ShurjopayToken} */
 	private ShurjopayToken authToken;
 	
-	/**
-	 * Shurjopay properties holder model instance.<br>
-	 * See more.. {@link ShurjopayConfig}
-	 */
+	/** Shurjopay properties holder model instance.<br> See more.. {@link ShurjopayConfig} */
 	private final ShurjopayConfig spConfig;
 	
 	/** Shurjopay status code.*/
 	private String spCode;
 
 	/**
-	 * Instantiates Shurjopay with shurjopay's configurations.
-	 * which are loaded from {@code shurjopay.properties}
+	 * Instantiates Shurjopay with shurjopay's configurations. which are loaded from {@code shurjopay.properties}
+	 *
 	 * @throws ShurjopayException if shurjopay.properties file not found for instantiating Shurjopay.
 	 */
 	public Shurjopay() throws ShurjopayException{
@@ -71,6 +55,7 @@ public class Shurjopay {
 	/**
 	 * Instantiates auto-warble bean for spring plugin with shurjopay's configurations.
 	 * which are loaded from default spring properties e.g. {@code application.properties} or {@code application.yml}
+	 *
 	 * @param config Shurjopay properties provided by shurjopay author.
 	 */
 	public Shurjopay(ShurjopayConfig config) {
@@ -79,7 +64,8 @@ public class Shurjopay {
 	}
 
 	/**
-	 * Authenticates merchant to perform a payment process.
+	 * Authenticates merchant to perform a payment process
+	 *
 	 * @return authToken Shurjopay login response. See more.. {@link ShurjopayToken}
 	 * @throws ShurjopayException Unauthorized exception if username/password is wrong or not provided.
 	 */
@@ -106,6 +92,7 @@ public class Shurjopay {
 
 	/**
 	 * Initiates payment to shurjopay payment gateway
+	 *
 	 * @param payload Payment request {@link PaymentReq} to initiate a payment
 	 * @return Payment response object contains redirect URL to reach payment page, order id to verify order in shurjoPay.
 	 * @throws ShurjopayException If any mandatory field is missed, exception occurred.
@@ -130,8 +117,6 @@ public class Shurjopay {
 			throw new ShurjopayException("Error occurred when sending make payment request.", e);
 		}
 	}
-
-	
 
 	/**
 	 * Verifies an initiated payment after back transaction.
@@ -167,7 +152,8 @@ public class Shurjopay {
 
 	/**
 	 * Checks shurjopay token is expired or not.
-	 * @return boolean
+	 *
+	 * @return boolean - true if authenticated otherwise false
 	 */
 	private boolean isAuthenticationRequired() {
 		return !((Objects.nonNull(authToken) && !isTokenExpired(authToken)));
@@ -175,14 +161,16 @@ public class Shurjopay {
 
 	/**
 	 * Instantiates HttpClient
-	 * @return HttpClient
+	 *
+	 * @return HttpClient - {@link HttpClient}
 	 */
 	private HttpClient getClient() {
 		return HttpClient.newHttpClient();
 	}
 	
 	/**
-	 * Converts object to JSON object string and prepares request body.
+	 * Converts object to JSON object string and prepares request body
+	 *
 	 * @param shurjoPayReq various type of request object.
 	 * @return a JSON string.
 	 */
@@ -211,10 +199,9 @@ public class Shurjopay {
 	}
 	
 	/**
-	 * Prepares Payment request object with default values such as
-	 * <code>
-	 * Return URL, Cancel URL, JWT token, Client IP address, Merchant Store Id
-	 * </code>
+	 * Prepares Payment request object with default values such as <code>
+	 * Return URL, Cancel URL, JWT token, Client IP address, Merchant Store Id </code>
+	 *
 	 * @param paymentReq {@link PaymentReq}
 	 * @return {@link PaymentReq} with shurjoPay's default values
 	 */
@@ -238,7 +225,8 @@ public class Shurjopay {
 	}
 
 	/**
-	 * Sends request to shurjopay.
+	 * Sends request to shurjopay
+	 *
 	 * @param httpBody String JSON body.
 	 * @param endPoint shurjopay endpoint
 	 * @param isAuthHead true if needed "Authorization" header otherwise false
@@ -253,18 +241,19 @@ public class Shurjopay {
 	}
 
 	/**
-	 * Concatenates Bearer prefix to shurjopay JWT token.
+	 * Concatenates Bearer prefix to shurjopay JWT token
+	 *
 	 * @param token shurjopay JWT token.
 	 * @param tokenType token type accepted to shurjopay is Bearer.
 	 * @return JWT authentication token with Bearer prefix.
 	 */
 	private String getFormattedToken(String token, String tokenType) {
-		
 		return tokenType.concat(" ").concat(token);
 	}
 	
 	/**
-	 * Sets up shurjopay configuration and prepare ShurjopayConfig.
+	 * Sets up shurjopay configuration and prepare ShurjopayConfig
+	 *
 	 * @return ShurjopayConfig with merchant configuration provided by shurjopay.
 	 * @throws ShurjopayException if the properties file not found then throw exception.
 	 */

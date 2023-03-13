@@ -2,7 +2,7 @@ package com.shurjomukhi.model;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.shurjomukhi.constants.ShurjopayStatus;
+import com.shurjomukhi.ShurjopayStatus;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

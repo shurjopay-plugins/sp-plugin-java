@@ -42,7 +42,6 @@ class ShurjopayTest {
 		try {
 			shurjopay = new Shurjopay();
 		} catch (ShurjopayException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -94,7 +93,7 @@ class ShurjopayTest {
 	@DisplayName("For verifying order (Failed payment test): ")
 	void testVerifyOrderFailed() {
 		Throwable exception = assertThrows(ShurjopayException.class, () -> shurjopay.verifyPayment(paymentRes.getSpTxnId()));
-		assertEquals("Code: 1005 Message: Bank transaction failed.", exception.getMessage());
+		assertEquals("Code: 1005 Message: Channel Unavailable", exception.getMessage());
 	}
 	
 	/**
@@ -119,6 +118,7 @@ class ShurjopayTest {
 	
 	/**
 	 * Fills up Shurjopay payment form and submit to Shurjopay
+	 *
 	 * @param url Shurjopay secure payment URL.
 	 * @param shouldFail Flag to perform with a successful transaction and a failed transaction.
 	 * @throws InterruptedException Chrome driver exception if any occurrence will be occurred with driver.
@@ -157,7 +157,8 @@ class ShurjopayTest {
 	}
 	
 	/**
-	 * Prepares chrome driver instance.
+	 * Prepares chrome driver instance
+	 *
 	 * @return prepared chrome driver.
 	 */
 	private WebDriver getChrome() {

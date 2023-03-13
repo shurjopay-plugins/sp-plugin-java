@@ -3,7 +3,7 @@ package com.shurjomukhi.model;
 import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.shurjomukhi.constants.ShurjopayStatus;
+import com.shurjomukhi.ShurjopayStatus;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
