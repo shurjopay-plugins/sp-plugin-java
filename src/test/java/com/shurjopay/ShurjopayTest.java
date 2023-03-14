@@ -25,7 +25,8 @@ import com.shurjomukhi.model.PaymentRes;
 import com.shurjomukhi.model.VerifiedPayment;
 
 /**
- * Tests a successful payment cycle and failed payment cycle.
+ * Tests a successful payment cycle and failed payment cycle
+ *
  * @author Al - Amin
  * @since 2022-06-14
  */
@@ -97,7 +98,8 @@ class ShurjopayTest {
 	}
 	
 	/**
-	 * Prepares dummy payment request with hard code values.
+	 * Prepares dummy payment request with hard code values
+	 *
 	 * @return a dummy PaymentReq
 	 */
 	private PaymentReq getPaymentReq() {

@@ -20,8 +20,8 @@ import java.util.*;
 import java.util.function.Supplier;
 
 /**
- * shurjopay service with payment functionalities.
- * <p>
+ * shurjopay service with payment functionalities.<p>
+ *
  * {@code authenticate()} method provides functionality to authenticate authorized merchant.</p><p>
  * {@code makePayment()} method provides functionality to submit a payment.</p><p>
  * {@code verifyPayment()} method provides functionality to verify a submitted payment.</p><p>

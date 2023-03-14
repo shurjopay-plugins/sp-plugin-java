@@ -111,7 +111,8 @@ public enum ShurjopayStatus {
 	private final String message;
 
 	/**
-	 * Instantiates ShurjopayStatus.
+	 * Instantiates ShurjopayStatus
+	 *
 	 * @param code Shurjopay's status code.
 	 * @param message Shurjopay's status message.
 	 */
@@ -121,7 +122,8 @@ public enum ShurjopayStatus {
 	}
 	
 	/**
-	 * Gets shurjopay reserved status code.
+	 * Gets shurjopay reserved status code
+	 *
 	 * @return Shurjopay status code.
 	 */
 	public String code() {
@@ -130,6 +132,7 @@ public enum ShurjopayStatus {
 	
 	/**
 	 * Gets shurjopay's status message.
+	 *
 	 * @return Shurjopay status message.
 	 */
 	public String message() {
@@ -138,6 +141,7 @@ public enum ShurjopayStatus {
 	
 	/**
 	 * Loads message by code.
+	 *
 	 * @param code Shurjopay status code.
 	 * @return Shurjopay status message.
 	 */
