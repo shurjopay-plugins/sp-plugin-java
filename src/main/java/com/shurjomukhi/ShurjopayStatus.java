@@ -10,8 +10,8 @@ public enum ShurjopayStatus {
 	/** Failed payment status */
 	PAYMENT_FAILED("1001", "shurjoPay transaction failed"),
 
-	/** Canceled payment status */
-	PAYMENT_CANCEL("1002", "shurjoPay transaction cancelled"),
+	/** Cancelled payment status */
+	PAYMENT_CANCELLED("1002", "shurjoPay transaction cancelled"),
 
 	/** OTP is not matched */
 	OTP_MISMATCH("1006", "OTP is not matched during mobile wallet transaction"),
