@@ -22,7 +22,7 @@ public class Payment{
 
 	/** Client IP from where shurjoPay payment is initiated. */
 	@JsonProperty("client_ip")
-	protected String clientIp;
+	protected String clientIp = "127.0.0.1";
 	
 	/** Payment amount in currency. shurjoPay supports only BDT and USD. */
 	protected String currency;

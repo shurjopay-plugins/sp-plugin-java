@@ -1,7 +1,8 @@
 package com.shurjomukhi;
 
 /**
- * All shurjopay's reserved codes and messages.
+ * Status code, details of shurjopay system defined as ENUM constants
+ *
  * @author Al-Amin
  * @since 2022-10-19
  */

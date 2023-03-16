@@ -164,7 +164,11 @@ class ShurjopayTest {
 	 * @return prepared chrome driver.
 	 */
 	private WebDriver getChrome() {
-		System.setProperty("webdriver.chrome.driver", "src/test/resources/drivers/chromedriver.exe");
+
+		String osName = System.getProperty("os.name");
+		String chromeDriver = osName.contains("Windows") ? "chromedriver.exe" : osName.contains("Linux") ? "chromedriver" : "chromedriver_mac";
+		System.setProperty("webdriver.chrome.driver", "src/test/resources/drivers/".concat(chromeDriver));
+
 		ChromeOptions options = new ChromeOptions();
 		options.setHeadless(false);
 		options.addArguments("--remote-allow-origins=*");

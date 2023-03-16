@@ -42,6 +42,15 @@ public class Shurjopay {
 	/** Shurjopay status code.*/
 	private String spCode;
 
+	/** shurjoPay API token URL*/
+	private String TOKEN_URL;
+
+	/** shurjoPay API secret pay URL*/
+	private String SECRET_PAY_URL;
+
+	/** shurjoPay API verification URL*/
+	private String VERIFICATION_URL;
+
 	/**
 	 * Instantiates Shurjopay with shurjopay's configurations. which are loaded from {@code shurjopay.properties}
 	 *
@@ -50,6 +59,7 @@ public class Shurjopay {
 	public Shurjopay() throws ShurjopayException{
 		super();
 		this.spConfig = getShurjoPayConfig();
+		setShurjoPayApiUrl("/get_token", "/secret-pay", "/verification");
 	}
 
 	/**
@@ -61,6 +71,7 @@ public class Shurjopay {
 	public Shurjopay(ShurjopayConfig config) {
 		super();
 		this.spConfig = config;
+		setShurjoPayApiUrl("/get_token", "/secret-pay", "/verification");
 	}
 
 	/**
@@ -76,7 +87,7 @@ public class Shurjopay {
 			shurjoPayTokenMap.put("password", spConfig.getPassword());
 
 			String requestBody = prepareReqBody(shurjoPayTokenMap);
-			HttpRequest request = postRequest(requestBody, "get_token", false);
+			HttpRequest request = postRequest(requestBody, TOKEN_URL, false);
 			HttpResponse<Supplier<ShurjopayToken>> response = getClient().send(request, new JsonBodyHandler<>(ShurjopayToken.class));
 			authToken = response.body().get();
 			spCode = authToken.getSpStatusCode();
@@ -103,7 +114,7 @@ public class Shurjopay {
 			if (isAuthenticationRequired()) authToken = authenticate();
 			
 			String requestBody = prepareReqBody(getDefaultInfo(payload));
-			HttpRequest request = postRequest(requestBody, "secret-pay", false);
+			HttpRequest request = postRequest(requestBody, SECRET_PAY_URL, false);
 			HttpClient client = getClient();
 			HttpResponse<Supplier<PaymentRes>> response = client.send(request, new JsonBodyHandler<>(PaymentRes.class));
 			paymentRes = response.body().get();
@@ -133,7 +144,7 @@ public class Shurjopay {
 			verifiedPaymentReq.put("order_id", spTxnId);
 
 			String requestBody = prepareReqBody(verifiedPaymentReq);
-			HttpRequest request = postRequest(requestBody, "verification", true);
+			HttpRequest request = postRequest(requestBody, VERIFICATION_URL, true);
 			
 			HttpResponse<Supplier<VerifiedPayment[]>> response = getClient().send(request, new JsonBodyHandler<>(VerifiedPayment[].class));
 			VerifiedPayment verifiedPaymentRes = response.body().get()[0];
@@ -215,10 +226,8 @@ public class Shurjopay {
 		
 		try {
 			paymentReq.setClientIp(InetAddress.getLocalHost().getHostAddress());
-			
 		} catch (UnknownHostException e) {
 			log.warn("Client IP does not found. Setting default ip address..", e);
-			paymentReq.setClientIp("127.0.0.1");
 		}
 		
 		return paymentReq;
@@ -228,12 +237,12 @@ public class Shurjopay {
 	 * Sends request to shurjopay
 	 *
 	 * @param httpBody String JSON body.
-	 * @param endPoint shurjopay endpoint
+	 * @param url request URL
 	 * @param isAuthHead true if needed "Authorization" header otherwise false
 	 * @return HttpRequest successful http request.
 	 */
-	private HttpRequest postRequest(String httpBody, String endPoint, boolean isAuthHead) {
-		var request = HttpRequest.newBuilder(URI.create(spConfig.getApiBaseUrl().concat(endPoint)));
+	private HttpRequest postRequest(String httpBody, String url, boolean isAuthHead) {
+		var request = HttpRequest.newBuilder(URI.create(url));
 		request.POST(HttpRequest.BodyPublishers.ofString(httpBody));
 		request.header("Content-Type", "application/json").build();
 		if(isAuthHead) request.header("Authorization", getFormattedToken(authToken.getToken(), authToken.getTokenType()));
@@ -266,5 +275,19 @@ public class Shurjopay {
 				   .setPassword(spProps.getProperty("SP_PASS"))
 				   .setApiBaseUrl(spProps.getProperty("SHURJOPAY_API"))
 				   .setCallbackUrl(spProps.getProperty("SP_CALLBACK"));
+	}
+
+	/**
+	 * Prepare shurjoPay API URL based on methods' endpoint.
+	 *
+	 * @param tokenEndpoint {@link String}
+	 * @param secretPayEndpoint {@link String}
+	 * @param verificationEndpoint {@link String}
+	 */
+	private void setShurjoPayApiUrl(String tokenEndpoint, String secretPayEndpoint, String verificationEndpoint){
+		String BASE_URL = spConfig.getApiBaseUrl();
+		TOKEN_URL = BASE_URL.concat(tokenEndpoint);
+		SECRET_PAY_URL = BASE_URL.concat(secretPayEndpoint);
+		VERIFICATION_URL = BASE_URL.concat(verificationEndpoint);
 	}
 }
