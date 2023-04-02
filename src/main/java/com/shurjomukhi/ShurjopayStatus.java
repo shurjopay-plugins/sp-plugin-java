@@ -36,7 +36,7 @@ public enum ShurjopayStatus {
 	BKASH_DUPLICATE_PAYMENT("1061", "Bkash does not allow same payment transaction within 10 minutes"),
 
 	/** Merchant's authentication failed status */
-	AUTHENTICATION_FAILED("1064", "shurjoPay merchant's authentication failed. Check username and password!"),
+	AUTHENTICATION_FAILED("1064", "shurjoPay merchant's authentication failed. Check username and password"),
 
 	/** DBBL timeout status */
 	DBBL_TIMEOUT("1065", "Payment is initiated but not completed"),
