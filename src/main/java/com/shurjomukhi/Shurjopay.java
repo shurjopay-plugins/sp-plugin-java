@@ -242,22 +242,11 @@ public class Shurjopay {
 	 * @return HttpRequest successful http request.
 	 */
 	private HttpRequest postRequest(String httpBody, String url, boolean isAuthHead) {
-		var request = HttpRequest.newBuilder(URI.create(url));
-		request.POST(HttpRequest.BodyPublishers.ofString(httpBody));
-		request.header("Content-Type", "application/json").build();
-		if(isAuthHead) request.header("Authorization", getFormattedToken(authToken.getToken(), authToken.getTokenType()));
-		return request.build();
-	}
-
-	/**
-	 * Concatenates Bearer prefix to shurjopay JWT token
-	 *
-	 * @param token shurjopay JWT token.
-	 * @param tokenType token type accepted to shurjopay is Bearer.
-	 * @return JWT authentication token with Bearer prefix.
-	 */
-	private String getFormattedToken(String token, String tokenType) {
-		return tokenType.concat(" ").concat(token);
+		var builder = HttpRequest.newBuilder(URI.create(url))
+				.POST(HttpRequest.BodyPublishers.ofString(httpBody))
+				.header("Content-Type", "application/json");
+		if (isAuthHead) builder.header("Authorization", authToken.getFormatted());
+		return builder.build();
 	}
 	
 	/**

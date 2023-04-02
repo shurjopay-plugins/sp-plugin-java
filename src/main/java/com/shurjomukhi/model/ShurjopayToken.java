@@ -2,6 +2,7 @@ package com.shurjomukhi.model;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.shurjomukhi.ShurjopayStatus;
 
@@ -47,4 +48,9 @@ public class ShurjopayToken implements Serializable {
 
 	/** Shurjopay status message. See more.. {@link ShurjopayStatus} */
 	private String message;
+
+	@JsonIgnore
+	public String getFormatted() {
+		return tokenType.concat(" ").concat(token);
+	}
 }
