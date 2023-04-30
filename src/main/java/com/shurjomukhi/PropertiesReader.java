@@ -6,7 +6,8 @@ import java.util.Properties;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * A reader to read shurjopay's properties.
+ * A reader to read shurjopay's properties
+ *
  * @author Al - Amin
  * @since 2022-06-13
  */
@@ -21,15 +22,13 @@ public class PropertiesReader {
 	}
 
 	/**
-	 * Loads shurjopay's properties from {@code shurjopay.properties} file.
-	 * <hr>
-	 * <b>Shurjopay's properties:</b>
-	 * <ul>
-	 * 	<li>Merchant username provided by shurjopay.</li>
-	 * 	<li>Merchant password provided by shurjopay.</li>
-	 * 	<li>Shurjopay base URL to access end-points.</li>
-	 * 	<li>Shurjopay logging file information.</li>
-	 * </ul>
+	 * Loads shurjopay's properties from {@code shurjopay.properties} file<hr><b>
+	 * Shurjopay's properties: </b><ul><li>
+	 * Merchant username provided by shurjopay. </li><li>
+	 * Merchant password provided by shurjopay. </li><li>
+	 * Shurjopay base URL to access end-points. </li><li>
+	 * Shurjopay logging file information. </li></ul>
+	 *
 	 * @return Shurjopay's properties.
 	 */
 	public Properties getProperties(){
@@ -44,7 +43,8 @@ public class PropertiesReader {
 	}
 
 	/**
-	 * Creates singleton PropertiesReader instance.
+	 * Creates singleton PropertiesReader instance
+	 *
 	 * @return the {@link PropertiesReader} instance.
 	 */
 	public static PropertiesReader instance() {

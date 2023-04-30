@@ -25,7 +25,8 @@ import com.shurjomukhi.model.PaymentRes;
 import com.shurjomukhi.model.VerifiedPayment;
 
 /**
- * Tests a successful payment cycle and failed payment cycle.
+ * Tests a successful payment cycle and failed payment cycle
+ *
  * @author Al - Amin
  * @since 2022-06-14
  */
@@ -42,7 +43,6 @@ class ShurjopayTest {
 		try {
 			shurjopay = new Shurjopay();
 		} catch (ShurjopayException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -73,7 +73,7 @@ class ShurjopayTest {
 	@Order(3)
 	@DisplayName("For checking order status (Success payment test): ")
 	void testCheckPaymentStatus() throws ShurjopayException {
-		VerifiedPayment verifyPayment = shurjopay.checkPaymentStatus(paymentRes.getSpTxnId());
+		VerifiedPayment verifyPayment = shurjopay.verifyPayment(paymentRes.getSpTxnId());
 		assertNotNull(verifyPayment.getSpTxnId(), () -> "Order is not found.");
 	}
 	
@@ -94,19 +94,12 @@ class ShurjopayTest {
 	@DisplayName("For verifying order (Failed payment test): ")
 	void testVerifyOrderFailed() {
 		Throwable exception = assertThrows(ShurjopayException.class, () -> shurjopay.verifyPayment(paymentRes.getSpTxnId()));
-		assertEquals("Code: 1005 Message: Bank transaction failed.", exception.getMessage());
-	}
-
-	@Test
-	@Order(6)
-	@DisplayName("For checking order status (Failed payment test): ")
-	void testCheckPaymentStatusFailed() throws ShurjopayException {
-		VerifiedPayment order = shurjopay.checkPaymentStatus(paymentRes.getSpTxnId());
-		assertNotNull(order.getSpTxnId(), () -> "Order is not found.");
+		assertEquals("Code: 1005 Message: Channel Unavailable", exception.getMessage());
 	}
 	
 	/**
-	 * Prepares dummy payment request with hard code values.
+	 * Prepares dummy payment request with hard code values
+	 *
 	 * @return a dummy PaymentReq
 	 */
 	private PaymentReq getPaymentReq() {
@@ -127,6 +120,7 @@ class ShurjopayTest {
 	
 	/**
 	 * Fills up Shurjopay payment form and submit to Shurjopay
+	 *
 	 * @param url Shurjopay secure payment URL.
 	 * @param shouldFail Flag to perform with a successful transaction and a failed transaction.
 	 * @throws InterruptedException Chrome driver exception if any occurrence will be occurred with driver.
@@ -165,13 +159,19 @@ class ShurjopayTest {
 	}
 	
 	/**
-	 * Prepares chrome driver instance.
+	 * Prepares chrome driver instance
+	 *
 	 * @return prepared chrome driver.
 	 */
 	private WebDriver getChrome() {
-		System.setProperty("webdriver.chrome.driver", "src/test/resources/drivers/chromedriver");
+
+		String osName = System.getProperty("os.name");
+		String chromeDriver = osName.contains("Windows") ? "chromedriver.exe" : osName.contains("Linux") ? "chromedriver" : "chromedriver_mac";
+		System.setProperty("webdriver.chrome.driver", "src/test/resources/drivers/".concat(chromeDriver));
+
 		ChromeOptions options = new ChromeOptions();
 		options.setHeadless(false);
+		options.addArguments("--remote-allow-origins=*");
 		
 		WebDriver driver = new ChromeDriver(options);
 		driver.manage().window().maximize();

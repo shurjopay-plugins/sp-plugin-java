@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * HTTP request, response body handler to handle JSON to POJO and vice versa
+ *
  * @author Al-Amin
  * @since 2022-09-15
  */
@@ -18,7 +19,8 @@ public class JsonBodyHandler<W> implements HttpResponse.BodyHandler<Supplier<W>>
 	
 	/**
      * Instantiates JsonBodyHandler
-     * @param wClass
+	 *
+     * @param wClass {@link Class<W>}
      */
 	public JsonBodyHandler(Class<W> wClass) {
 		this.wClass = wClass;
@@ -30,7 +32,7 @@ public class JsonBodyHandler<W> implements HttpResponse.BodyHandler<Supplier<W>>
 	}
 
 	/**
-	 * @param targetType
+	 * @param targetType {@link Class<W>}
 	 * @return mapped JSON object
 	 */
 	public static <W> HttpResponse.BodySubscriber<Supplier<W>> asJSON(Class<W> targetType) {
@@ -39,8 +41,8 @@ public class JsonBodyHandler<W> implements HttpResponse.BodyHandler<Supplier<W>>
     }
 
 	/**
-	 * @param inputStream
-	 * @param targetType
+	 * @param inputStream {@link InputStream}
+	 * @param targetType {@link Class<W>}
 	 * @return mapped JSON object
 	 */
     public static <W> Supplier<W> toSupplierOfType(InputStream inputStream, Class<W> targetType) {
