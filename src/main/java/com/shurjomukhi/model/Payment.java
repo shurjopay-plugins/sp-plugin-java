@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
@@ -22,6 +23,7 @@ public class Payment{
 
 	/** Client IP from where shurjoPay payment is initiated. */
 	@JsonProperty("client_ip")
+	@Builder.Default
 	protected String clientIp = "127.0.0.1";
 	
 	/** Payment amount in currency. shurjoPay supports only BDT and USD. */

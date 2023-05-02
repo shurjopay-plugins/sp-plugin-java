@@ -3,7 +3,7 @@ SP_USER = <merchant_username>
 SP_PASS = <merchant_password>
 
 #shurjoPay API's base path for sandbox
-SHURJOPAY_API = https://sandbox.shurjopayment.com/api/
+SHURJOPAY_API = https://sandbox.shurjopayment.com/api
 
 #callback URL is used for cancel payment or success payment
 SP_CALLBACK = https://sandbox.shurjopayment.com/response
