@@ -167,7 +167,7 @@ public class Shurjopay {
 	 * @return boolean - true if authenticated otherwise false
 	 */
 	private boolean isAuthenticationRequired() {
-		return !((Objects.nonNull(authToken) && !isTokenExpired(authToken)));
+		return !((Objects.nonNull(authToken) || !isTokenExpired(authToken)));
 	}
 
 	/**
