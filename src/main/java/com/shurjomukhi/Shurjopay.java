@@ -11,6 +11,7 @@ import java.net.URI;
 import java.net.UnknownHostException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
+import java.net.http.HttpRequest.Builder;
 import java.net.http.HttpResponse;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -242,7 +243,7 @@ public class Shurjopay {
 	 * @return HttpRequest successful http request.
 	 */
 	private HttpRequest postRequest(String httpBody, String url, boolean isAuthHead) {
-		var builder = HttpRequest.newBuilder(URI.create(url))
+		Builder builder = HttpRequest.newBuilder(URI.create(url))
 				.POST(HttpRequest.BodyPublishers.ofString(httpBody))
 				.header("Content-Type", "application/json");
 		if (isAuthHead) builder.header("Authorization", authToken.getFormatted());

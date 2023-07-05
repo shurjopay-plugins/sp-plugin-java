@@ -5,7 +5,7 @@
 
     <groupId>bd.com.shurjomukhi</groupId>
     <artifactId>sp-plugin-java</artifactId>
-    <version>0.2.6</version>
+    <version>0.2.16</version>
     <packaging>jar</packaging>
     <name>sp-plugin-java</name>
     <description>shurjoPay plugin module for Java application</description>
@@ -170,14 +170,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-wrapper-plugin</artifactId>
                 <version>3.1.1</version>
-            </plugin>
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <groupId>org.apache.maven.plugins</groupId>
-                <configuration>
-                    <source>11</source>
-                    <target>11</target>
-                </configuration>
             </plugin>
         </plugins>
     </build>

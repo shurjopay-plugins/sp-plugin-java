@@ -91,6 +91,9 @@ public class VerifiedPayment extends Payment{
 	@JsonAlias(value = {"sp_massage", "sp_message"})
 	private String spStatusMsg;
 	
+	@JsonProperty("is_verify")
+	private int verified;
+	
 	/** Bank transaction status. */
 	@JsonProperty("transaction_status")
 	private String txnStatus;
